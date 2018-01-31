@@ -10,7 +10,7 @@ export class GitMirrorTask {
         try {
             this.gitMirrorRepositoryUri = taskLib.getInput('gitMirrorRepositoryUri', true);
             this.gitMirrorPersonalAccessToken = taskLib.getInput('gitMirrorPersonalAccessToken', true);
-            this.sourceGitRepositoryUri = '$(Build.Repository.Uri)';
+            this.sourceGitRepositoryUri = taskLib.getInput('$(Build.Repository.Uri)', true);
         }
         catch (e) {
             //
