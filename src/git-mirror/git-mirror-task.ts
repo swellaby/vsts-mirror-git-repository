@@ -28,7 +28,7 @@ export class GitMirrorTask {
             console.log('********* ' + this.sourceGitRepositoryUri);
         }
         catch (e) {
-            taskLib.setResult(taskLib.TaskResult.Failed, e);
+            // taskLib.setResult(taskLib.TaskResult.Failed, e);
         }
     }
 
