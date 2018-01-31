@@ -22,8 +22,8 @@ export class GitMirrorTask {
             // check if git exists as a tool
             taskLib.which('git', true);
 
-            // this.gitCloneMirror();
-            // this.gitPushMirror();
+            this.gitCloneMirror();
+            this.gitPushMirror();
 
             console.log('********* ' + this.sourceGitRepositoryUri);
         }
@@ -33,33 +33,40 @@ export class GitMirrorTask {
     }
 
     private gitCloneMirror() {
-        taskLib.tool('git')
-                .arg('clone')
-                .arg('--mirror')
-                .arg(this.sourceGitRepositoryUri)
-                .exec();
+        console.log('***** git clone mirror ***** - ' + this.sourceGitRepositoryUri);
+        console.log('***** git clone mirror ***** - ' + this.sourceGitRepositoryUri);
+        // taskLib.tool('git')
+        //         .arg('clone')
+        //         .arg('--mirror')
+        //         .arg(this.sourceGitRepositoryUri)
+        //         .exec();
     }
 
     private gitPushMirror() {
-        taskLib.tool('git')
-                .arg('-C')
-                .arg(this.getSourceGitFolder(this.sourceGitRepositoryUri))
-                .arg('push')
-                .arg('--mirror')
-                .arg(this.getAuthenticatedGitUri(this.destinationGitRepositoryUri, this.gitMirrorPersonalAccessToken))
-                .exec();
+        console.log('***** git push mirror ***** - ' + this.getSourceGitFolder(this.sourceGitRepositoryUri));
+        console.log('***** git push mirror ***** - ' + this.getAuthenticatedGitUri(this.destinationGitRepositoryUri, this.gitMirrorPersonalAccessToken));
+        // taskLib.tool('git')
+        //         .arg('-C')
+        //         .arg(this.getSourceGitFolder(this.sourceGitRepositoryUri))
+        //         .arg('push')
+        //         .arg('--mirror')
+        //         .arg(this.getAuthenticatedGitUri(this.destinationGitRepositoryUri, this.gitMirrorPersonalAccessToken))
+        //         .exec();
     }
 
     private getSourceGitFolder(uri: string): string {
-        //
-
-        return '';
+        return uri.substring(uri.lastIndexOf('/') + 1) + '.git';
     }
 
     private getAuthenticatedGitUri(uri: string, token: string): string {
-        //
-
-        return '';
+        const protocol = uri.substring(0, uri.indexOf('//'));
+        if (protocol === 'http' || protocol === 'https') {    
+            const address = uri.substring(uri.indexOf('//') + 2);
+            return protocol + '//' + token + '@' + address;
+        }
+        else {
+            return token + '@' + uri;
+        }    
     }
 }
 
