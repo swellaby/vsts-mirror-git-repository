@@ -37,11 +37,12 @@ export class GitMirrorTask {
 
     private gitCloneMirror() {
         console.log("Attempting to: git clone --mirror " + this.sourceGitRepositoryUri);
-        
+
         taskLib
             .tool("git")
             .arg("clone")
             .arg("--mirror")
+            .arg("--verbose")
             .arg(this.sourceGitRepositoryUri)
             .exec();
     }
