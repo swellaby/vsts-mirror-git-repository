@@ -34,7 +34,6 @@ export class GitMirrorTask {
 
     private gitCloneMirror() {
         console.log('***** git clone mirror ***** - ' + this.sourceGitRepositoryUri);
-        console.log('***** git clone mirror ***** - ' + this.sourceGitRepositoryUri);
         // taskLib.tool('git')
         //         .arg('clone')
         //         .arg('--mirror')
@@ -55,17 +54,30 @@ export class GitMirrorTask {
     }
 
     private getSourceGitFolder(uri: string): string {
-        return uri.substring(uri.lastIndexOf('/') + 1) + '.git';
+        if (uri !== undefined) {
+            return uri.substring(uri.lastIndexOf('/') + 1) + '.git';
+        }
+        else {
+            throw new Error('source uri is undefined');
+        }
     }
 
     private getAuthenticatedGitUri(uri: string, token: string): string {
-        const protocol = uri.substring(0, uri.indexOf('//'));
-        if (protocol === 'http' || protocol === 'https') {    
-            const address = uri.substring(uri.indexOf('//') + 2);
-            return protocol + '//' + token + '@' + address;
+        if (uri === undefined) {
+            throw new Error('destination uri is undefined');
+        }
+        else if (token === undefined) {
+            throw new Error('personal access token is undefined');
         }
         else {
-            return token + '@' + uri;
+            const protocol = uri.substring(0, uri.indexOf('//'));
+            if (protocol === 'http' || protocol === 'https') {
+                const address = uri.substring(uri.indexOf('//') + 2);
+                return protocol + '//' + token + '@' + address;
+            }
+            else {
+                return token + '@' + uri;
+            }
         }    
     }
 }
