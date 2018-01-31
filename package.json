@@ -7,7 +7,7 @@
         "build": "npm run clean && tsc && webpack",
         "test": "nyc mocha --reporter mocha-junit-reporter --reporter-options mochaFile=./.test-results/test-results.xml src/**/*.js",
         "clean": "del-cli ./src/**/*.js ./src/**/*.js.map ./index.js ./index.js.map ./.nyc_output ./.coverage ./.test-results ./.release *.vsix .taskkey",
-        "package": "tfx extension create --rev-version --manifest-globs manifest.json"
+        "package": "tfx extension create --manifest-globs manifest.json"
     },
     "author": {
         "name": "Travis Kosarek",

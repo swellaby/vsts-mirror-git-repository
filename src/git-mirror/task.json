@@ -11,9 +11,9 @@
         "Minor": 1,
         "Patch": 0
     },
-    "instanceNameFormat": "Mirror Git Repository to $(gitMirrorRepositoryUrl)",
+    "instanceNameFormat": "Mirror Git Repository to $(gitMirrorRepositoryUri)",
     "inputs": [{
-        "name": "gitMirrorRepositoryUrl",
+        "name": "gitMirrorRepositoryUri",
         "type": "string",
         "label": "Git Repository to Mirror to",
         "defaultValue": "",

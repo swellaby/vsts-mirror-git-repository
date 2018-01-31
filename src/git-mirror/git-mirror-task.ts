@@ -2,11 +2,15 @@ import * as taskLib from 'vsts-task-lib';
 
 export class GitMirrorTask {
 
-    private gitMirrorRepositoryUrl: string;
+    private gitMirrorRepositoryUri: string;
+    private gitMirrorPersonalAccessToken: string;
+    private sourceGitRepositoryUri: string;
 
     public constructor() {
         try {
-            this.gitMirrorRepositoryUrl = taskLib.getInput('gitMirrorRepositoryUrl', true);
+            this.gitMirrorRepositoryUri = taskLib.getInput('gitMirrorRepositoryUri', true);
+            this.gitMirrorPersonalAccessToken = taskLib.getInput('gitMirrorPersonalAccessToken', true);
+            this.sourceGitRepositoryUri = '$(Build.Repository.Uri)';
         }
         catch (e) {
             //
@@ -15,7 +19,11 @@ export class GitMirrorTask {
 
     public run() {
         try {
-            console.log('********* ' + this.gitMirrorRepositoryUrl);
+            // check if git exists as a tool
+            taskLib.which('git', true);
+
+
+            console.log('********* ' + this.sourceGitRepositoryUri);
         }
         catch (e) {
             taskLib.setResult(taskLib.TaskResult.Failed, e);
@@ -23,6 +31,18 @@ export class GitMirrorTask {
         finally {
             // this.onComplete();
         }
+    }
+
+    private gitCloneMirror() {
+        taskLib.tool('git')
+                .arg('clone')
+                .arg('--mirror')
+                .arg('$(Build.Repository.Uri)')
+                .exec();
+    }
+
+    private gitPushMirror() {
+        //
     }
 
     private onComplete() {
