@@ -24,8 +24,6 @@ export class GitMirrorTask {
 
             this.gitCloneMirror();
             this.gitPushMirror();
-
-            console.log('********* ' + this.sourceGitRepositoryUri);
         }
         catch (e) {
             // taskLib.setResult(taskLib.TaskResult.Failed, e);
@@ -33,7 +31,6 @@ export class GitMirrorTask {
     }
 
     private gitCloneMirror() {
-        console.log('***** git clone mirror ***** - ' + this.sourceGitRepositoryUri);
         // taskLib.tool('git')
         //         .arg('clone')
         //         .arg('--mirror')
@@ -42,7 +39,6 @@ export class GitMirrorTask {
     }
 
     private gitPushMirror() {
-        console.log('***** git push mirror ***** - ' + this.getSourceGitFolder(this.sourceGitRepositoryUri));
         console.log('***** git push mirror ***** - ' + this.getAuthenticatedGitUri(this.destinationGitRepositoryUri, this.gitMirrorPersonalAccessToken));
         // taskLib.tool('git')
         //         .arg('-C')
@@ -70,9 +66,12 @@ export class GitMirrorTask {
             throw new Error('personal access token is undefined');
         }
         else {
+            console.log('getAuthenticatedGitUrl = uri.indexOf = ' + uri.indexOf('//'));
             const protocol = uri.substring(0, uri.indexOf('//'));
+            console.log('getAuthenticatedGitUrl = protocol = ' + protocol);
             if (protocol === 'http' || protocol === 'https') {
                 const address = uri.substring(uri.indexOf('//') + 2);
+                console.log('getAuthenticatedGitUrl = address = ' + address);
                 return protocol + '//' + token + '@' + address;
             }
             else {
