@@ -5,7 +5,12 @@ export class GitMirrorTask {
     private gitMirrorRepositoryUrl: string;
 
     public constructor() {
-        this.gitMirrorRepositoryUrl = taskLib.getInput('gitMirrorRepositoryUrl', true);
+        try {
+            this.gitMirrorRepositoryUrl = taskLib.getInput('gitMirrorRepositoryUrl', true);
+        }
+        catch (e) {
+            //
+        }
     }
 
     public run() {

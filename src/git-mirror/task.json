@@ -16,7 +16,7 @@
         "name": "gitMirrorRepositoryUrl",
         "type": "string",
         "label": "Git Repository to Mirror to",
-        "defaultValue": "*** Build repository uri +++ $(Build.Repository.Uri)",
+        "defaultValue": "",
         "required": true,
         "helpMarkDown": "The URL of a Git repository to mirror to. Example: https://github.com/traviskosarek/traviskosarek-com.git"
     }, {
