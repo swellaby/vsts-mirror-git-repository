@@ -66,13 +66,14 @@ export class GitMirrorTask {
             throw new Error('personal access token is undefined');
         }
         else {
-            console.log('getAuthenticatedGitUrl = uri.indexOf = ' + uri.indexOf('//'));
-            const protocol = uri.substring(0, uri.indexOf('//'));
+            const colonSlashSlash = '://';
+            console.log('getAuthenticatedGitUrl = uri.indexOf = ' + uri.indexOf(colonSlashSlash));
+            const protocol = uri.substring(0, uri.indexOf(colonSlashSlash));
             console.log('getAuthenticatedGitUrl = protocol = ' + protocol);
             if (protocol === 'http' || protocol === 'https') {
-                const address = uri.substring(uri.indexOf('//') + 2);
+                const address = uri.substring(uri.indexOf(colonSlashSlash) + colonSlashSlash.length);
                 console.log('getAuthenticatedGitUrl = address = ' + address);
-                return protocol + '//' + token + '@' + address;
+                return protocol + colonSlashSlash + token + '@' + address;
             }
             else {
                 return token + '@' + uri;
