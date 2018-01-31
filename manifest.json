@@ -1,0 +1,60 @@
+{
+    "manifestVersion": 1,
+    "id": "git-clone-mirror-vsts-task",
+    "name": "Git Mirror Repo",
+    "version": "0.1.16",
+    "publisher": "travis-kosarek",
+    "tags": [
+        "git",
+        "clone",
+        "mirror",
+        "--mirror",
+        "repo",
+        "repository"
+    ],
+    "targets": [{
+        "id": "Microsoft.VisualStudio.Services"
+    }],
+    "description": "A straightforward cross-platform utility to mirror a Git repository to another location during a build or release",
+    "categories": [
+        "Build and release"
+    ],
+    "icons": ["images/extension-icon.png"],
+    "files": [{
+        "path": ".release"
+    }],
+    "content": {
+        "details": {
+            "path": "OVERVIEW.md"
+        }
+    },
+    "links": {
+        "getstarted": {
+            "uri": "https://github.com"
+        },
+        "support": {
+            "uri": "https://github.com"
+        },
+        "repository": {
+            "uri": "https://github.com"
+        },
+        "issues": {
+            "uri": "https://github.com"
+        }
+    },
+    "repository": {
+        "type": "git",
+        "uri": "https://github.com"
+    },
+    "contributions": [{
+        "id": "git-clone-mirror-vsts-task",
+        "description": "A simple cross-platform utility to mirror a Git repository to another location",
+        "type": "ms.vss-distributed-task.task",
+        "targets": [
+            "ms.vss-distributed-task.tasks"
+        ],
+        "properties": {
+            "name": ".release/git-mirror"
+        }
+    }]
+}

@@ -1,0 +1,35 @@
+{
+    "id": "80d1525a-7e0e-4b3b-9667-e27700cc11b0",
+    "name": "git-clone-mirror-vsts-task",
+    "friendlyName": "Git Mirror Repo",
+    "description": "A straightforward cross-platform utility to mirror a Git repository to another location",
+    "helpMarkDown": "",
+    "category": "Utility",
+    "author": "Travis Kosarek",
+    "version": {
+        "Major": 0,
+        "Minor": 1,
+        "Patch": 0
+    },
+    "instanceNameFormat": "Mirror Git Repository to $(gitMirrorRepositoryUrl)",
+    "inputs": [{
+        "name": "gitMirrorRepositoryUrl",
+        "type": "string",
+        "label": "Git Repository to Mirror to",
+        "defaultValue": "*** Build repository uri +++ $(Build.Repository.Uri)",
+        "required": true,
+        "helpMarkDown": "The URL of a Git repository to mirror to. Example: https://github.com/traviskosarek/traviskosarek-com.git"
+    }, {
+        "name": "gitMirrorPersonalAccessToken",
+        "type": "string",
+        "label": "Personal Access Token",
+        "required": true,
+        "helpMarkDown": "A Personal Access token that grants access to push to a Git repository",
+        "defaultValue": ""
+    }],
+    "execution": {
+        "Node": {
+            "target": "git-mirror-task.js"
+        }
+    }
+}

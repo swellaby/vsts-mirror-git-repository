@@ -1,0 +1,16 @@
+# IDE
+.vscode
+
+# vendor modules
+node_modules
+
+# generated
+*.js
+*.js.map
+.nyc_output
+coverage
+.release
+
+# package
+*.vsix
+*.taskkey
