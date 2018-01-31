@@ -5,7 +5,7 @@
     "scripts": {
         "lint": "tslint -c tslint.json 'src/**/*.ts'",
         "build": "npm run clean && tsc && webpack",
-        "test": "npm run build && nyc mocha --reporter mocha-junit-reporter --reporter-options mochaFile=./.test-results/test-results.xml src/**/*.js",
+        "test": "nyc mocha --reporter mocha-junit-reporter --reporter-options mochaFile=./.test-results/test-results.xml src/**/*.js",
         "clean": "del-cli ./src/**/*.js ./src/**/*.js.map ./index.js ./index.js.map ./.nyc_output ./.coverage ./.test-results ./.release *.vsix .taskkey",
         "package": "tfx extension create --rev-version --manifest-globs manifest.json"
     },
