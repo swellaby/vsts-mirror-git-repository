@@ -13,7 +13,7 @@ export class GitMirrorTask {
             this.gitMirrorPersonalAccessToken = taskLib.getInput('gitMirrorPersonalAccessToken', true);
         }
         catch (e) {
-            taskLib.setResult(taskLib.TaskResult.Failed, e);
+            // taskLib.setResult(taskLib.TaskResult.Failed, e);
         }
     }
 
