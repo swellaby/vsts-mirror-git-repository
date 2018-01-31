@@ -29,13 +29,15 @@ export class GitMirrorTask {
             }
 
             this.gitCloneMirror();
-            this.gitPushMirror();
+            // this.gitPushMirror();
         } catch (e) {
             // taskLib.setResult(taskLib.TaskResult.Failed, e);
         }
     }
 
     private gitCloneMirror() {
+        console.log("Attempting to: git clone --mirror " + this.sourceGitRepositoryUri);
+        
         taskLib
             .tool("git")
             .arg("clone")
@@ -45,13 +47,18 @@ export class GitMirrorTask {
     }
 
     private gitPushMirror() {
+        const sourceGitFolder = this.getSourceGitFolder(this.sourceGitRepositoryUri);
+        const authenticatedGitUrl = this.getAuthenticatedGitUri(this.destinationGitRepositoryUri, this.gitMirrorPersonalAccessToken);
+
+        console.log("Attempting to: git -C " + sourceGitFolder + " push --mirror " + authenticatedGitUrl);
+        
         taskLib
             .tool("git")
             .arg("-C")
-            .arg(this.getSourceGitFolder(this.sourceGitRepositoryUri))
+            .arg(sourceGitFolder)
             .arg("push")
             .arg("--mirror")
-            .arg(this.getAuthenticatedGitUri(this.destinationGitRepositoryUri, this.gitMirrorPersonalAccessToken))
+            .arg(authenticatedGitUrl)
             .exec();
     }
 
