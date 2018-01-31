@@ -1,18 +1,16 @@
-import * as taskLib from 'vsts-task-lib';
+import * as taskLib from "vsts-task-lib";
 
 export class GitMirrorTask {
-
     private destinationGitRepositoryUri: string;
     private gitMirrorPersonalAccessToken: string;
     private sourceGitRepositoryUri: string;
 
     public constructor() {
         try {
-            this.sourceGitRepositoryUri = taskLib.getInput('sourceGitRepositoryUri', true);
-            this.destinationGitRepositoryUri = taskLib.getInput('destinationGitRepositoryUri', true);
-            this.gitMirrorPersonalAccessToken = taskLib.getInput('gitMirrorPersonalAccessToken', true);
-        }
-        catch (e) {
+            this.sourceGitRepositoryUri = taskLib.getInput("sourceGitRepositoryUri", true);
+            this.destinationGitRepositoryUri = taskLib.getInput("destinationGitRepositoryUri", true);
+            this.gitMirrorPersonalAccessToken = taskLib.getInput("gitMirrorPersonalAccessToken", true);
+        } catch (e) {
             // taskLib.setResult(taskLib.TaskResult.Failed, e);
         }
     }
@@ -20,65 +18,56 @@ export class GitMirrorTask {
     public run() {
         try {
             // check if git exists as a tool
-            taskLib.which('git', true);
+            taskLib.which("git", true);
+
+            if (this.sourceGitRepositoryUri === undefined) {
+                throw new Error("Source Git Repository cannot be undefined");
+            } else if (this.destinationGitRepositoryUri === undefined) {
+                throw new Error("Destination Git Repository cannot be undefined");
+            } else if (this.gitMirrorPersonalAccessToken === undefined) {
+                throw new Error("Personal Access Token cannot be undefined");
+            }
 
             this.gitCloneMirror();
             this.gitPushMirror();
-        }
-        catch (e) {
+        } catch (e) {
             // taskLib.setResult(taskLib.TaskResult.Failed, e);
         }
     }
 
     private gitCloneMirror() {
-        // taskLib.tool('git')
-        //         .arg('clone')
-        //         .arg('--mirror')
-        //         .arg(this.sourceGitRepositoryUri)
-        //         .exec();
+        taskLib
+            .tool("git")
+            .arg("clone")
+            .arg("--mirror")
+            .arg(this.sourceGitRepositoryUri)
+            .exec();
     }
 
     private gitPushMirror() {
-        console.log('***** git push mirror ***** - ' + this.getAuthenticatedGitUri(this.destinationGitRepositoryUri, this.gitMirrorPersonalAccessToken));
-        // taskLib.tool('git')
-        //         .arg('-C')
-        //         .arg(this.getSourceGitFolder(this.sourceGitRepositoryUri))
-        //         .arg('push')
-        //         .arg('--mirror')
-        //         .arg(this.getAuthenticatedGitUri(this.destinationGitRepositoryUri, this.gitMirrorPersonalAccessToken))
-        //         .exec();
+        taskLib
+            .tool("git")
+            .arg("-C")
+            .arg(this.getSourceGitFolder(this.sourceGitRepositoryUri))
+            .arg("push")
+            .arg("--mirror")
+            .arg(this.getAuthenticatedGitUri(this.destinationGitRepositoryUri, this.gitMirrorPersonalAccessToken))
+            .exec();
     }
 
     private getSourceGitFolder(uri: string): string {
-        if (uri !== undefined) {
-            return uri.substring(uri.lastIndexOf('/') + 1) + '.git';
-        }
-        else {
-            throw new Error('source uri is undefined');
-        }
+        return uri.substring(uri.lastIndexOf("/") + 1) + ".git";
     }
 
     private getAuthenticatedGitUri(uri: string, token: string): string {
-        if (uri === undefined) {
-            throw new Error('destination uri is undefined');
+        const colonSlashSlash = "://";
+        const protocol = uri.substring(0, uri.indexOf(colonSlashSlash));
+        if (protocol === "http" || protocol === "https") {
+            const address = uri.substring(uri.indexOf(colonSlashSlash) + colonSlashSlash.length);
+            return protocol + colonSlashSlash + token + "@" + address;
+        } else {
+            return token + "@" + uri;
         }
-        else if (token === undefined) {
-            throw new Error('personal access token is undefined');
-        }
-        else {
-            const colonSlashSlash = '://';
-            console.log('getAuthenticatedGitUrl = uri.indexOf = ' + uri.indexOf(colonSlashSlash));
-            const protocol = uri.substring(0, uri.indexOf(colonSlashSlash));
-            console.log('getAuthenticatedGitUrl = protocol = ' + protocol);
-            if (protocol === 'http' || protocol === 'https') {
-                const address = uri.substring(uri.indexOf(colonSlashSlash) + colonSlashSlash.length);
-                console.log('getAuthenticatedGitUrl = address = ' + address);
-                return protocol + colonSlashSlash + token + '@' + address;
-            }
-            else {
-                return token + '@' + uri;
-            }
-        }    
     }
 }
 

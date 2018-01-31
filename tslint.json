@@ -69,7 +69,7 @@
         "ordered-imports": [
             false
         ],
-        "quotemark": [true, "single", "avoid-escape"],
+        "quotemark": [true, "double", "avoid-escape"],
         "radix": false,
         "semicolon": [true, "always"],
         "switch-default": true,
