@@ -4,7 +4,7 @@
     "description": "A simple cross-platform utility to mirror a Git repository to another location",
     "scripts": {
         "lint": "tslint -c tslint.json 'src/**/*.ts'",
-        "build": "npm run clean && tsc && webpack --config build/webpack/webpack.config.js",
+        "build": "npm run clean && tsc && webpack",
         "test": "npm run build && nyc mocha src/**/*.js",
         "clean": "del-cli ./src/**/*.js ./src/**/*.js.map ./index.js ./index.js.map ./.nyc_output ./coverage ./.release *.vsix .taskkey",
         "package": "tfx extension create --rev-version --manifest-globs manifest.json"
