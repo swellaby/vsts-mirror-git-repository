@@ -1,5 +1,4 @@
 import * as taskLib from "vsts-task-lib";
-import * as cmd from "node-cmd";
 
 export class GitMirrorTask {
     private destinationGitRepositoryUri: string;
@@ -19,9 +18,7 @@ export class GitMirrorTask {
     public run() {
         try {
             // check if git exists as a tool
-            const toolPath = taskLib.which("git", true);
-
-            console.log("tool path" + toolPath);
+            taskLib.which("git", true);
 
             if (this.sourceGitRepositoryUri === undefined) {
                 throw new Error("Source Git Repository cannot be undefined");
@@ -41,15 +38,14 @@ export class GitMirrorTask {
     private gitCloneMirror() {
         console.log("Attempting to: git clone --mirror " + this.sourceGitRepositoryUri);
 
-        cmd.run("git clone --mirror " + this.sourceGitRepositoryUri);
+        taskLib
+            .tool("git")
+            .arg("clone")
+            .arg("--mirror")
+            .arg(this.sourceGitRepositoryUri)
+            .exec();
 
         console.log("clone finished");
-        // taskLib
-        //     .tool("git")
-        //     .arg("clone")
-        //     .arg("--mirror")
-        //     .arg(this.sourceGitRepositoryUri)
-        //     .exec();
     }
 
     private gitPushMirror() {

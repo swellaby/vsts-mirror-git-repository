@@ -16,7 +16,6 @@
     "license": "ISC",
     "private": true,
     "dependencies": {
-        "node-cmd": "^3.0.0",
         "vsts-task-lib": "^2.1.0"
     },
     "devDependencies": {
