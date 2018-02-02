@@ -1,15 +1,17 @@
 import * as taskLib from "vsts-task-lib";
 
 export class GitMirrorTask {
-    private destinationGitRepositoryUri: string;
-    private gitMirrorPersonalAccessToken: string;
     private sourceGitRepositoryUri: string;
+    private sourceGitRepositoryPersonalAccessToken: string;
+    private destinationGitRepositoryUri: string;
+    private destinationGitRepositoryPersonalAccessToken: string;
 
     public constructor() {
         try {
             this.sourceGitRepositoryUri = taskLib.getInput("sourceGitRepositoryUri", true);
+            this.sourceGitRepositoryPersonalAccessToken = taskLib.getInput("sourceGitRepositoryPersonalAccessToken", false);
             this.destinationGitRepositoryUri = taskLib.getInput("destinationGitRepositoryUri", true);
-            this.gitMirrorPersonalAccessToken = taskLib.getInput("gitMirrorPersonalAccessToken", true);
+            this.destinationGitRepositoryPersonalAccessToken = taskLib.getInput("destinationGitRepositoryPersonalAccessToken", true);
         } catch (e) {
             // taskLib.setResult(taskLib.TaskResult.Failed, e);
         }
@@ -24,7 +26,7 @@ export class GitMirrorTask {
                 throw new Error("Source Git Repository cannot be undefined");
             } else if (this.destinationGitRepositoryUri === undefined) {
                 throw new Error("Destination Git Repository cannot be undefined");
-            } else if (this.gitMirrorPersonalAccessToken === undefined) {
+            } else if (this.destinationGitRepositoryPersonalAccessToken === undefined) {
                 throw new Error("Personal Access Token cannot be undefined");
             }
 
@@ -36,23 +38,23 @@ export class GitMirrorTask {
     }
 
     private gitCloneMirror() {
+        const authenticatedSourceGitUrl = this.getAuthenticatedGitUri(this.sourceGitRepositoryUri, this.sourceGitRepositoryPersonalAccessToken);
+
         console.log("Attempting to: git clone --mirror " + this.sourceGitRepositoryUri);
 
         taskLib
             .tool("git")
             .arg("clone")
             .arg("--mirror")
-            .arg(this.sourceGitRepositoryUri)
+            .arg(authenticatedSourceGitUrl)
             .exec();
-
-        console.log("clone finished");
     }
 
     private gitPushMirror() {
         const sourceGitFolder = this.getSourceGitFolder(this.sourceGitRepositoryUri);
-        const authenticatedGitUrl = this.getAuthenticatedGitUri(this.destinationGitRepositoryUri, this.gitMirrorPersonalAccessToken);
+        const authenticatedDestinationGitUrl = this.getAuthenticatedGitUri(this.destinationGitRepositoryUri, this.destinationGitRepositoryPersonalAccessToken);
 
-        console.log("Attempting to: git -C " + sourceGitFolder + " push --mirror " + authenticatedGitUrl);
+        console.log("Attempting to: git -C " + sourceGitFolder + " push --mirror " + authenticatedDestinationGitUrl);
         
         taskLib
             .tool("git")
@@ -60,7 +62,7 @@ export class GitMirrorTask {
             .arg(sourceGitFolder)
             .arg("push")
             .arg("--mirror")
-            .arg(authenticatedGitUrl)
+            .arg(authenticatedDestinationGitUrl)
             .exec();
     }
 
@@ -69,14 +71,19 @@ export class GitMirrorTask {
     }
 
     private getAuthenticatedGitUri(uri: string, token: string): string {
-        const colonSlashSlash = "://";
-        const protocol = uri.substring(0, uri.indexOf(colonSlashSlash));
-        if (protocol === "http" || protocol === "https") {
-            const address = uri.substring(uri.indexOf(colonSlashSlash) + colonSlashSlash.length);
-            return protocol + colonSlashSlash + token + "@" + address;
-        } else {
-            return token + "@" + uri;
+        if (token === undefined) {
+            return uri;
         }
+        else {
+            const colonSlashSlash = "://";
+            const protocol = uri.substring(0, uri.indexOf(colonSlashSlash));
+            if (protocol === "http" || protocol === "https") {
+                const address = uri.substring(uri.indexOf(colonSlashSlash) + colonSlashSlash.length);
+                return protocol + colonSlashSlash + token + "@" + address;
+            } else {
+                return token + "@" + uri;
+            }
+        }    
     }
 }
 

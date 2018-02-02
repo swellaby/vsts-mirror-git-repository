@@ -21,6 +21,14 @@
             "helpMarkDown": "The URL of a Git repository to be used as the mirror's source. The default value of '$(Build.Repository.Uri)' will use the VSTS repository connected to this build. Example: https://github.com/traviskosarek/traviskosarek-com.git"
         },
         {
+            "name": "sourceGitRepositoryPersonalAccessToken",
+            "type": "string",
+            "label": "Source Repository - Personal Access Token",
+            "required": false,
+            "helpMarkDown": "A Personal Access token that grants access to pull to a Git repository",
+            "defaultValue": ""
+        },
+        {
             "name": "destinationGitRepositoryUri",
             "type": "string",
             "label": "Destination Git Repository",
@@ -29,9 +37,9 @@
             "helpMarkDown": "The URL of a Git repository to be used as the mirror destination. Example: https://github.com/traviskosarek/traviskosarek-com.git"
         },
         {
-            "name": "gitMirrorPersonalAccessToken",
+            "name": "destinationGitRepositoryPersonalAccessToken",
             "type": "string",
-            "label": "Personal Access Token",
+            "label": "Destination Repository - Personal Access Token",
             "required": true,
             "helpMarkDown": "A Personal Access token that grants access to push to a Git repository",
             "defaultValue": ""
