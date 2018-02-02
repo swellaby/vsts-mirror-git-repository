@@ -40,6 +40,8 @@ export class GitMirrorTask {
     private gitCloneMirror() {
         console.log("Attempting to: git clone --mirror " + this.sourceGitRepositoryUri);
 
+        taskLib.command("git clone --mirror " + this.sourceGitRepositoryUri, null, null);
+
         taskLib
             .tool("git")
             .arg("clone")
