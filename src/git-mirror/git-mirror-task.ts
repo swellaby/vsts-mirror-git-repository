@@ -42,12 +42,13 @@ export class GitMirrorTask {
 
         taskLib.command("git clone --mirror " + this.sourceGitRepositoryUri, null, null);
 
-        taskLib
-            .tool("git")
-            .arg("clone")
-            .arg("--mirror")
-            .arg(this.sourceGitRepositoryUri)
-            .exec();
+        console.log("clone finished");
+        // taskLib
+        //     .tool("git")
+        //     .arg("clone")
+        //     .arg("--mirror")
+        //     .arg(this.sourceGitRepositoryUri)
+        //     .exec();
     }
 
     private gitPushMirror() {
