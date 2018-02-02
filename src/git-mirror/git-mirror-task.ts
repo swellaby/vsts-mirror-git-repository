@@ -13,7 +13,7 @@ export class GitMirrorTask {
             this.destinationGitRepositoryUri = taskLib.getInput("destinationGitRepositoryUri", true);
             this.destinationGitRepositoryPersonalAccessToken = taskLib.getInput("destinationGitRepositoryPersonalAccessToken", true);
         } catch (e) {
-            // taskLib.setResult(taskLib.TaskResult.Failed, e);
+            taskLib.setResult(taskLib.TaskResult.Failed, e);
         }
     }
 
@@ -33,7 +33,7 @@ export class GitMirrorTask {
             this.gitCloneMirror();
             // this.gitPushMirror();
         } catch (e) {
-            // taskLib.setResult(taskLib.TaskResult.Failed, e);
+            taskLib.setResult(taskLib.TaskResult.Failed, e);
         }
     }
 
