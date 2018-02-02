@@ -41,7 +41,7 @@ export class GitMirrorTask {
         taskLib
             .tool("git")
             .arg("clone")
-            .arg("--mirror")
+            // .arg("--mirror")
             .arg(this.sourceGitRepositoryUri)
             .exec();
     }
