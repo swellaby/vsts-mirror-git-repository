@@ -18,7 +18,7 @@ export class GitMirrorTask {
     public run() {
         try {
             // check if git exists as a tool
-            let toolPath = taskLib.which("git", true);
+            const toolPath = taskLib.which("git", true);
 
             console.log("tool path" + toolPath);
 
@@ -43,7 +43,7 @@ export class GitMirrorTask {
         taskLib
             .tool("git")
             .arg("clone")
-            // .arg("--mirror")
+            .arg("--mirror")
             .arg(this.sourceGitRepositoryUri)
             .exec();
     }
