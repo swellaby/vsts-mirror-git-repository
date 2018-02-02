@@ -1,4 +1,5 @@
 import * as taskLib from "vsts-task-lib";
+import * as shell from "shelljs";
 
 export class GitMirrorTask {
     private destinationGitRepositoryUri: string;
@@ -40,7 +41,7 @@ export class GitMirrorTask {
     private gitCloneMirror() {
         console.log("Attempting to: git clone --mirror " + this.sourceGitRepositoryUri);
 
-        taskLib.command("git clone --mirror " + this.sourceGitRepositoryUri, null, null);
+        shell.exec("git clone --mirror " + this.sourceGitRepositoryUri);
 
         console.log("clone finished");
         // taskLib
