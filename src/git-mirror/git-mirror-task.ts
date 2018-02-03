@@ -30,9 +30,13 @@ export class GitMirrorTask {
                 throw new Error("Personal Access Token cannot be undefined");
             }
 
-            this.gitCloneMirror();
-            this.gitPushMirror();
-            
+            this.gitCloneMirror().then((code) => {
+                console.log("code1 = " + code);
+                this.gitPushMirror().then((code) => {
+                    console.log("code2 = " + code);
+                });
+            });
+
         } catch (e) {
             taskLib.setResult(taskLib.TaskResult.Failed, e);
         }
@@ -43,14 +47,12 @@ export class GitMirrorTask {
 
         console.log("Attempting to: git clone --mirror " + this.sourceGitRepositoryUri);
 
-        taskLib
+        return taskLib
             .tool("git")
             .arg("clone")
             .arg("--mirror")
             .arg(authenticatedSourceGitUrl)
             .exec();
-        
-        console.log("Completed 'git clone --mirror'");
     }
 
     private gitPushMirror() {
@@ -59,7 +61,7 @@ export class GitMirrorTask {
 
         console.log("Attempting to: git -C " + sourceGitFolder + " push --mirror " + authenticatedDestinationGitUrl);
         
-        taskLib
+        return taskLib
             .tool("git")
             .arg("-C")
             .arg(sourceGitFolder)
@@ -67,8 +69,6 @@ export class GitMirrorTask {
             .arg("--mirror")
             .arg(authenticatedDestinationGitUrl)
             .exec();
-        
-        console.log("Completed 'git push --mirror'");
     }
 
     private getSourceGitFolder(uri: string): string {
