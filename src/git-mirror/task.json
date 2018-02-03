@@ -3,7 +3,6 @@
     "name": "git-clone-mirror-vsts-task",
     "friendlyName": "Git Mirror Repo",
     "description": "A straightforward cross-platform utility to mirror a Git repository to another location",
-    "helpMarkDown": "",
     "category": "Utility",
     "author": "Travis Kosarek",
     "version": {
