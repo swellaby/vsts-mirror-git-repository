@@ -22,6 +22,10 @@ export class GitMirrorTask {
             // check if git exists as a tool
             taskLib.which("git", true);
 
+            taskLib.getVariables().forEach((variable) => {
+                console.log(variable);
+            });
+
             if (this.sourceGitRepositoryUri === undefined) {
                 throw new Error("Source Git Repository cannot be undefined");
             } else if (this.destinationGitRepositoryUri === undefined) {
