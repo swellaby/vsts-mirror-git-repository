@@ -31,7 +31,8 @@ export class GitMirrorTask {
             }
 
             this.gitCloneMirror();
-            // this.gitPushMirror();
+            this.gitPushMirror();
+            
         } catch (e) {
             taskLib.setResult(taskLib.TaskResult.Failed, e);
         }
@@ -48,6 +49,8 @@ export class GitMirrorTask {
             .arg("--mirror")
             .arg(authenticatedSourceGitUrl)
             .exec();
+        
+        console.log("Completed 'git clone --mirror'");
     }
 
     private gitPushMirror() {
@@ -64,6 +67,8 @@ export class GitMirrorTask {
             .arg("--mirror")
             .arg(authenticatedDestinationGitUrl)
             .exec();
+        
+        console.log("Completed 'git push --mirror'");
     }
 
     private getSourceGitFolder(uri: string): string {
