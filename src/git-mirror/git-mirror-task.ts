@@ -31,9 +31,13 @@ export class GitMirrorTask {
             }
 
             this.gitCloneMirror().then((code) => {
-                console.log("code1 = " + code);
+                if (code !== 0) {
+                    taskLib.setResult(taskLib.TaskResult.Failed, "An error occurred when attempting to clone the source repository. Please check output for more details.");
+                }
                 this.gitPushMirror().then((code) => {
-                    console.log("code2 = " + code);
+                    if (code !== 0) {
+                        taskLib.setResult(taskLib.TaskResult.Failed, "An error occurred when attempting to push to the destination repository. Please check output for more details.");
+                    }
                 });
             });
 
