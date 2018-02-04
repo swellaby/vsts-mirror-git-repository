@@ -10,10 +10,7 @@ export class GitMirrorTask {
         try {
             if (taskLib.getVariable("agent.name") !== undefined) {
                 console.log("*** variables");
-                console.log("*** agent.name = " + taskLib.getVariable("agent.name"));
-                taskLib.getVariables().forEach((variable) => {
-                    console.log(variable);
-                });
+                console.log(taskLib.getVariables().length);
                 console.log("*** end variables");
                 this.sourceGitRepositoryUri = taskLib.getInput("sourceGitRepositoryUri", true);
                 this.sourceGitRepositoryPersonalAccessToken = taskLib.getInput("sourceGitRepositoryPersonalAccessToken", false);
