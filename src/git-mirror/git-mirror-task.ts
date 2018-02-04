@@ -8,51 +8,50 @@ export class GitMirrorTask {
 
     public constructor() {
         try {
-            console.log("**** variables");
-            taskLib.getVariables().forEach((variable) => {
-                console.log(variable);
-            });
-            console.log("**** end variables");
-
-            this.sourceGitRepositoryUri = taskLib.getInput("sourceGitRepositoryUri", true);
-            this.sourceGitRepositoryPersonalAccessToken = taskLib.getInput("sourceGitRepositoryPersonalAccessToken", false);
-            this.destinationGitRepositoryUri = taskLib.getInput("destinationGitRepositoryUri", true);
-            this.destinationGitRepositoryPersonalAccessToken = taskLib.getInput("destinationGitRepositoryPersonalAccessToken", true);
+            if (taskLib.getVariable("agent.name") !== undefined) {
+                this.sourceGitRepositoryUri = taskLib.getInput("sourceGitRepositoryUri", true);
+                this.sourceGitRepositoryPersonalAccessToken = taskLib.getInput("sourceGitRepositoryPersonalAccessToken", false);
+                this.destinationGitRepositoryUri = taskLib.getInput("destinationGitRepositoryUri", true);
+                this.destinationGitRepositoryPersonalAccessToken = taskLib.getInput("destinationGitRepositoryPersonalAccessToken", true);                
+            } 
         } catch (e) {
             taskLib.setResult(taskLib.TaskResult.Failed, e);
         }
     }
 
     public run() {
-        try {
+        if (taskLib.getVariable("agent.name") !== undefined) {
+
             if (this.sourceGitRepositoryUri === undefined ||
                 this.destinationGitRepositoryUri === undefined ||
                 this.destinationGitRepositoryPersonalAccessToken === undefined) {
-                taskLib.setResult(taskLib.TaskResult.SucceededWithIssues, "");
+                taskLib.setResult(taskLib.TaskResult.Failed, "");
                 return;
             }
 
-            // check if git exists as a tool
-            taskLib.which("git", true);
+            try {
+                // check if git exists as a tool
+                taskLib.which("git", true);
 
-            this.gitCloneMirror().then((code) => {
-                if (code !== 0) {
-                    taskLib.setResult(taskLib.TaskResult.Failed, "An error occurred when attempting to clone the source repository. Please check output for more details.");
-                }
-                this.gitPushMirror().then((code) => {
+                this.gitCloneMirror().then((code) => {
                     if (code !== 0) {
-                        taskLib.setResult(taskLib.TaskResult.Failed, "An error occurred when attempting to push to the destination repository. Please check output for more details.");
+                        taskLib.setResult(taskLib.TaskResult.Failed, "An error occurred when attempting to clone the source repository. Please check output for more details.");
                     }
+                    this.gitPushMirror().then((code) => {
+                        if (code !== 0) {
+                            taskLib.setResult(taskLib.TaskResult.Failed, "An error occurred when attempting to push to the destination repository. Please check output for more details.");
+                        }
+                    }).catch((err) => {
+                        taskLib.setResult(taskLib.TaskResult.Failed, err);
+                    });
                 }).catch((err) => {
                     taskLib.setResult(taskLib.TaskResult.Failed, err);
                 });
-            }).catch((err) => {
-                taskLib.setResult(taskLib.TaskResult.Failed, err);
-            });
 
-        } catch (e) {
-            taskLib.setResult(taskLib.TaskResult.Failed, e);
-        }
+            } catch (e) {
+                taskLib.setResult(taskLib.TaskResult.Failed, e);
+            }
+        }    
     }
 
     public gitCloneMirror() {
