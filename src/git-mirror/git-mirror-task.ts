@@ -9,6 +9,11 @@ export class GitMirrorTask {
     public constructor() {
         try {
             if (taskLib.getVariable("agent.name") !== undefined) {
+                console.log("*** variables");
+                taskLib.getVariables().forEach((variable) => {
+                    console.log(variable);
+                });
+                console.log("*** end variables");
                 this.sourceGitRepositoryUri = taskLib.getInput("sourceGitRepositoryUri", true);
                 this.sourceGitRepositoryPersonalAccessToken = taskLib.getInput("sourceGitRepositoryPersonalAccessToken", false);
                 this.destinationGitRepositoryUri = taskLib.getInput("destinationGitRepositoryUri", true);
