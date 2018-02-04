@@ -5,7 +5,8 @@
     "scripts": {
         "lint": "tslint -c tslint.json 'src/**/*.ts'",
         "build": "npm run clean && tsc && webpack",
-        "test": "nyc mocha --reporter mocha-junit-reporter --reporter-options mochaFile=./.test-results/test-results.xml src/**/*.js",
+        "test": "nyc mocha --reporter mocha-multi-reporters --reporter-options configFile=mocha-config.json src/**/*.js",
+        "test-dev": "npm run build && npm run test",
         "clean": "del-cli ./src/**/*.js ./src/**/*.js.map ./index.js ./index.js.map ./.nyc_output ./.coverage ./.test-results ./.release *.vsix .taskkey",
         "package": "tfx extension create --manifest-globs manifest.json"
     },
@@ -28,12 +29,15 @@
         "del-cli": "^1.1.0",
         "mocha": "^5.0.0",
         "mocha-junit-reporter": "^1.17.0",
+        "mocha-multi-reporters": "^1.1.7",
         "nyc": "^11.4.1",
         "require-dir": "^0.3.2",
         "run-sequence": "^2.2.1",
         "sinon": "^4.2.2",
+        "sinon-stub-promise": "^4.0.0",
         "tfx-cli": "^0.5.3",
         "tslint": "^5.9.1",
+        "tslint-no-unused-expression-chai": "0.0.3",
         "typescript": "^2.6.2",
         "webpack": "^3.10.0"
     },

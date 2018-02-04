@@ -8,6 +8,12 @@ export class GitMirrorTask {
 
     public constructor() {
         try {
+            console.log("**** variables");
+            taskLib.getVariables().forEach((variable) => {
+                console.log(variable);
+            });
+            console.log("**** end variables");
+
             this.sourceGitRepositoryUri = taskLib.getInput("sourceGitRepositoryUri", true);
             this.sourceGitRepositoryPersonalAccessToken = taskLib.getInput("sourceGitRepositoryPersonalAccessToken", false);
             this.destinationGitRepositoryUri = taskLib.getInput("destinationGitRepositoryUri", true);
@@ -19,16 +25,15 @@ export class GitMirrorTask {
 
     public run() {
         try {
+            if (this.sourceGitRepositoryUri === undefined ||
+                this.destinationGitRepositoryUri === undefined ||
+                this.destinationGitRepositoryPersonalAccessToken === undefined) {
+                taskLib.setResult(taskLib.TaskResult.SucceededWithIssues, "");
+                return;
+            }
+
             // check if git exists as a tool
             taskLib.which("git", true);
-
-            if (this.sourceGitRepositoryUri === undefined) {
-                throw new Error("Source Git Repository cannot be undefined");
-            } else if (this.destinationGitRepositoryUri === undefined) {
-                throw new Error("Destination Git Repository cannot be undefined");
-            } else if (this.destinationGitRepositoryPersonalAccessToken === undefined) {
-                throw new Error("Personal Access Token cannot be undefined");
-            }
 
             this.gitCloneMirror().then((code) => {
                 if (code !== 0) {
@@ -38,7 +43,11 @@ export class GitMirrorTask {
                     if (code !== 0) {
                         taskLib.setResult(taskLib.TaskResult.Failed, "An error occurred when attempting to push to the destination repository. Please check output for more details.");
                     }
+                }).catch((err) => {
+                    taskLib.setResult(taskLib.TaskResult.Failed, err);
                 });
+            }).catch((err) => {
+                taskLib.setResult(taskLib.TaskResult.Failed, err);
             });
 
         } catch (e) {
@@ -46,7 +55,7 @@ export class GitMirrorTask {
         }
     }
 
-    private gitCloneMirror() {
+    public gitCloneMirror() {
         const authenticatedSourceGitUrl = this.getAuthenticatedGitUri(this.sourceGitRepositoryUri, this.sourceGitRepositoryPersonalAccessToken);
 
         console.log("Attempting to: git clone --mirror " + this.sourceGitRepositoryUri);
@@ -59,7 +68,7 @@ export class GitMirrorTask {
             .exec();
     }
 
-    private gitPushMirror() {
+    public gitPushMirror() {
         const sourceGitFolder = this.getSourceGitFolder(this.sourceGitRepositoryUri);
         const authenticatedDestinationGitUrl = this.getAuthenticatedGitUri(this.destinationGitRepositoryUri, this.destinationGitRepositoryPersonalAccessToken);
 
@@ -75,11 +84,11 @@ export class GitMirrorTask {
             .exec();
     }
 
-    private getSourceGitFolder(uri: string): string {
+    public getSourceGitFolder(uri: string): string {
         return uri.substring(uri.lastIndexOf("/") + 1) + ".git";
     }
 
-    private getAuthenticatedGitUri(uri: string, token: string): string {
+    public getAuthenticatedGitUri(uri: string, token: string): string {
         if (token === undefined) {
             return uri;
         }
