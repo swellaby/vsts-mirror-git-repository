@@ -8,10 +8,7 @@ export class GitMirrorTask {
 
     public constructor() {
         try {
-            if (taskLib.getVariable("agent.name") !== undefined) {
-                console.log("*** variables");
-                console.log(taskLib.getVariables().length);
-                console.log("*** end variables");
+            if (this.taskIsRunnning()) {
                 this.sourceGitRepositoryUri = taskLib.getInput("sourceGitRepositoryUri", true);
                 this.sourceGitRepositoryPersonalAccessToken = taskLib.getInput("sourceGitRepositoryPersonalAccessToken", false);
                 this.destinationGitRepositoryUri = taskLib.getInput("destinationGitRepositoryUri", true);
@@ -23,7 +20,7 @@ export class GitMirrorTask {
     }
 
     public run() {
-        if (taskLib.getVariable("agent.name") !== undefined) {
+        if (this.taskIsRunnning()) {
 
             if (this.sourceGitRepositoryUri === undefined ||
                 this.destinationGitRepositoryUri === undefined ||
@@ -104,6 +101,10 @@ export class GitMirrorTask {
                 return token + "@" + uri;
             }
         }    
+    }
+
+    public taskIsRunnning(): number {
+        return taskLib.getVariables().length;
     }
 }
 

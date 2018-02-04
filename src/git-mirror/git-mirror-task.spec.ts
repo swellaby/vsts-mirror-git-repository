@@ -14,8 +14,6 @@ let destinationUri;
 let destinationPAT;
 let getInputStub;
 
-const buildAgentVariable = "agent.name";
-
 let sandbox;
 
 beforeEach(function() {
@@ -66,10 +64,8 @@ describe("GitMirrorTask", () => {
             // arrange
             let taskSucceeded = true;
 
-            const getVariableStub = sandbox.stub(taskLib, "getVariable").callsFake((name: string) => {
-                if (name === buildAgentVariable) {
-                    return "buildAgentVariable";
-                }
+            const getVariablesStub = sandbox.stub(taskLib, "getVariables").callsFake(() => {
+                return ["1", "2", "3"];
             });
 
             const setResultStub = sandbox.stub(taskLib, "setResult").callsFake((result: taskLib.TaskResult, message: string) => {
@@ -85,7 +81,7 @@ describe("GitMirrorTask", () => {
             expect(taskSucceeded).to.be.true;
 
             // cleanup
-            getVariableStub.restore();
+            getVariablesStub.restore();
             setResultStub.restore();
         });
 
@@ -94,10 +90,8 @@ describe("GitMirrorTask", () => {
             sourceUri = undefined;
             let taskSucceeded = true;
 
-            const getVariableStub = sandbox.stub(taskLib, "getVariable").callsFake((name: string) => {
-                if (name === buildAgentVariable) {
-                    return "buildAgentVariable";
-                }
+            const getVariablesStub = sandbox.stub(taskLib, "getVariables").callsFake(() => {
+                return ["1", "2", "3"];
             });
 
             const setResultStub = sandbox.stub(taskLib, "setResult").callsFake((result: taskLib.TaskResult, message: string) => {
@@ -113,7 +107,7 @@ describe("GitMirrorTask", () => {
             expect(taskSucceeded).to.be.false;
 
             // cleanup
-            getVariableStub.restore();
+            getVariablesStub.restore();
             setResultStub.restore();
         });
 
@@ -122,10 +116,8 @@ describe("GitMirrorTask", () => {
             sourcePAT = undefined;
             let taskSucceeded = true;
 
-            const getVariableStub = sandbox.stub(taskLib, "getVariable").callsFake((name: string) => {
-                if (name === buildAgentVariable) {
-                    return "buildAgentVariable";
-                }
+            const getVariablesStub = sandbox.stub(taskLib, "getVariables").callsFake(() => {
+                return ["1", "2", "3"];
             });
 
             const setResultStub = sandbox.stub(taskLib, "setResult").callsFake((result: taskLib.TaskResult, message: string) => {
@@ -141,7 +133,7 @@ describe("GitMirrorTask", () => {
             expect(taskSucceeded).to.be.true;
 
             // cleanup
-            getVariableStub.restore();
+            getVariablesStub.restore();
             setResultStub.restore();
         });
 
@@ -150,10 +142,8 @@ describe("GitMirrorTask", () => {
             destinationUri = undefined;
             let taskSucceeded = true;
 
-            const getVariableStub = sandbox.stub(taskLib, "getVariable").callsFake((name: string) => {
-                if (name === buildAgentVariable) {
-                    return "buildAgentVariable";
-                }
+            const getVariablesStub = sandbox.stub(taskLib, "getVariables").callsFake(() => {
+                return ["1", "2", "3"];
             });
 
             const setResultStub = sandbox.stub(taskLib, "setResult").callsFake((result: taskLib.TaskResult, message: string) => {
@@ -169,7 +159,7 @@ describe("GitMirrorTask", () => {
             expect(taskSucceeded).to.be.false;
 
             // cleanup
-            getVariableStub.restore();
+            getVariablesStub.restore();
             setResultStub.restore();
         });
 
@@ -184,10 +174,8 @@ describe("GitMirrorTask", () => {
                 }
             });
 
-            const getVariableStub = sandbox.stub(taskLib, "getVariable").callsFake((name: string) => {
-                if (name === buildAgentVariable) {
-                    return "buildAgentVariable";
-                }
+            const getVariablesStub = sandbox.stub(taskLib, "getVariables").callsFake(() => {
+                return ["1", "2", "3"];
             });
 
             // act
@@ -197,7 +185,7 @@ describe("GitMirrorTask", () => {
             expect(taskSucceeded).to.be.false;
 
             // cleanup
-            getVariableStub.restore();
+            getVariablesStub.restore();
             setResultStub.restore();
         });
     });
@@ -208,10 +196,8 @@ describe("GitMirrorTask", () => {
             let gitToolExists = false;
             let throwErrorIfGitDoesNotExist = false;
 
-            const getVariableStub = sandbox.stub(taskLib, "getVariable").callsFake((name: string) => {
-                if (name === buildAgentVariable) {
-                    return "buildAgentVariable";
-                }
+            const getVariablesStub = sandbox.stub(taskLib, "getVariables").callsFake(() => {
+                return ["1", "2", "3"];
             });
 
             const whichStub = sandbox.stub(taskLib, "which").callsFake((tool: string, check?: boolean) => {
@@ -239,7 +225,7 @@ describe("GitMirrorTask", () => {
             expect(throwErrorIfGitDoesNotExist).to.be.true;
 
             // cleanup
-            getVariableStub.restore();
+            getVariablesStub.restore();
             whichStub.restore();
             gitCloneMirrorStub.restore();
             gitPushMirrorStub.restore();
