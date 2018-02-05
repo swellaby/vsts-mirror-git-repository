@@ -1,4 +1,5 @@
 import * as taskLib from "vsts-task-lib";
+import * as validUrl from "valid-url";
 
 export class GitMirrorTask {
     private sourceGitRepositoryUri: string;
@@ -22,13 +23,6 @@ export class GitMirrorTask {
     public run() {
         if (this.taskIsRunnning()) {
 
-            if (this.sourceGitRepositoryUri === undefined ||
-                this.destinationGitRepositoryUri === undefined ||
-                this.destinationGitRepositoryPersonalAccessToken === undefined) {
-                taskLib.setResult(taskLib.TaskResult.Failed, "");
-                return;
-            }
-
             try {
                 // check if git exists as a tool
                 taskLib.which("git", true);
@@ -36,6 +30,7 @@ export class GitMirrorTask {
                 this.gitCloneMirror().then((code) => {
                     if (code !== 0) {
                         taskLib.setResult(taskLib.TaskResult.Failed, "An error occurred when attempting to clone the source repository. Please check output for more details.");
+                        return;
                     }
                     this.gitPushMirror().then((code) => {
                         if (code !== 0) {
@@ -57,8 +52,6 @@ export class GitMirrorTask {
     public gitCloneMirror() {
         const authenticatedSourceGitUrl = this.getAuthenticatedGitUri(this.sourceGitRepositoryUri, this.sourceGitRepositoryPersonalAccessToken);
 
-        console.log("Attempting to: git clone --mirror " + this.sourceGitRepositoryUri);
-
         return taskLib
             .tool("git")
             .arg("clone")
@@ -71,8 +64,6 @@ export class GitMirrorTask {
         const sourceGitFolder = this.getSourceGitFolder(this.sourceGitRepositoryUri);
         const authenticatedDestinationGitUrl = this.getAuthenticatedGitUri(this.destinationGitRepositoryUri, this.destinationGitRepositoryPersonalAccessToken);
 
-        console.log("Attempting to: git -C " + sourceGitFolder + " push --mirror " + authenticatedDestinationGitUrl);
-        
         return taskLib
             .tool("git")
             .arg("-C")
@@ -84,26 +75,28 @@ export class GitMirrorTask {
     }
 
     public getSourceGitFolder(uri: string): string {
+        if (!validUrl.isUri(uri)) {
+            throw new Error("Provided URI '" + uri + "' is not a valid URI");
+        }
         return uri.substring(uri.lastIndexOf("/") + 1) + ".git";
     }
 
     public getAuthenticatedGitUri(uri: string, token: string): string {
-        if (token === undefined) {
+        if (!validUrl.isUri(uri)) {
+            throw new Error("Provided URI '" + uri + "' is not a valid URI");
+        }
+        else if (token === undefined) {
             return uri;
         }
         else {
             const colonSlashSlash = "://";
             const protocol = uri.substring(0, uri.indexOf(colonSlashSlash));
-            if (protocol === "http" || protocol === "https") {
-                const address = uri.substring(uri.indexOf(colonSlashSlash) + colonSlashSlash.length);
-                return protocol + colonSlashSlash + token + "@" + address;
-            } else {
-                return token + "@" + uri;
-            }
+            const address = uri.substring(uri.indexOf(colonSlashSlash) + colonSlashSlash.length);
+            return protocol + colonSlashSlash + token + "@" + address;
         }    
     }
 
-    public taskIsRunnning(): number {
+    private taskIsRunnning(): number {
         return taskLib.getVariables().length;
     }
 }
