@@ -19,6 +19,10 @@
             "path": "OVERVIEW.md"
         }
     },
+    "branding": {
+        "color": "rgb(0, 0, 0)",
+        "theme": "light"
+    },
     "links": {
         "getstarted": {
             "uri": "https://github.com"
