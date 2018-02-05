@@ -4,11 +4,11 @@
     "name": "Git Mirror Repo",
     "version": "0.1.20",
     "publisher": "travis-kosarek",
-    "tags": ["git", "clone", "mirror", "--mirror", "repo", "repository"],
+    "tags": ["git", "clone", "push", "mirror", "--mirror", "repo", "repository"],
     "targets": [{
         "id": "Microsoft.VisualStudio.Services"
     }],
-    "description": "A straightforward cross-platform utility to mirror a Git repository to another location during a build or release",
+    "description": "A straightforward utility to mirror a Git repository to another location",
     "categories": ["Build and release"],
     "icons": { "default": "images/extension-icon.png" },
     "files": [{
