@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "mirror-git-repository",
     "name": "Mirror Git Repository",
-    "version": "0.1.0",
+    "version": "0.1.58",
     "publisher": "travis-kosarek",
     "tags": ["git", "clone", "push", "mirror", "--mirror", "repo", "repository"],
     "targets": [{
