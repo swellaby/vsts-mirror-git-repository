@@ -37,44 +37,44 @@ You will need to use a Personal Access Token to get write access to whatever Des
 
 ## Frequently Asked Questions
 
-#### Can I use this task to mirror to other Git Source Control Platforms?
+### Can I use this task to mirror to other Git Source Control Platforms?
 
-_**tl;dr** Yes, it should work with any Git repository._
+&nbsp;&nbsp;&nbsp;&nbsp;_**tl;dr** Yes, it should work with any Git repository._
 
 This task is built solely on top of [Git][git-url] commands. As long as the build agent has read access to the source repository and write access to the destination repository, the endpoints are not specific to any Git Source Control Platform.
 
-#### Why should I choose this task over one of the other Git mirroring tasks available on the marketplace?
+### Why should I choose this task over one of the other Git mirroring tasks available on the marketplace?
 
-_**tl;dr** It works without modifying the out-of-the-box VSTS Build Agent Docker Image_
+&nbsp;&nbsp;&nbsp;&nbsp;_**tl;dr** It works without modifying the out-of-the-box VSTS Build Agent Docker Image_
 
 As of this task being published, the other tasks on the Marketplace that perform similar actions are written with Powershell scripts and do not work out-of-the-box with the [VSTS Build Agent Docker Image][docker-vsts-agent-url]. To fill this gap, we decided to develop our own task that is written in [NodeJS][nodejs-url]. *Note that this task does require the build agent to have [NodeJS][nodejs-url] installed.*
 
-#### Does the task create a Destination Git Repository if it doesnt exist?
+### Does the task create a Destination Git Repository if it doesnt exist?
 
-_**tl;dr** No._
+&nbsp;&nbsp;&nbsp;&nbsp;_**tl;dr** No._
 
 The Destination Git Repository must exist before it can be pushed to.
 
-#### But what is the task _really_ doing under the hood?
+### But what is the task _really_ doing under the hood?
 
-_**tl;dr** Go to our [Github repo][repo-url]_
+&nbsp;&nbsp;&nbsp;&nbsp;_**tl;dr** Go to our [Github repo][repo-url]_
 
 The task is using basic git commands to mirror the repository. If you would like more details on what commands are being ran, you can find the details at this Github page: [Mirror a Repository in Another Location][mirror-instructions-url]
 
 If you would like to see the code directly, feel free to browse our [Github repo][repo-url]
 
-#### Help! The task seems to hang and won't continue!
+### Help! The task seems to hang and won't continue!
 
-_**tl;dr** Check your variables, check your access._
+&nbsp;&nbsp;&nbsp;&nbsp;_**tl;dr** Check your variables, check your access._
 
 It is highly likely that the cause of a hanging issue is that the build agent is not able to access the Source Git Repository URL. Some things to check:
 
 1. The Source Git Repository URL is correct.
 2. You may need to include a Personal Access Token to give the build agent access to the Source Git Repository data.
 
-_Note: The task does not give the build agent read or write access to your VSTS repositories by default._
+&nbsp;&nbsp;&nbsp;&nbsp;_Note: The task does not give the build agent read or write access to your VSTS repositories by default._
 
-#### I have other questions and/or need to report an issue
+### I have other questions and/or need to report an issue
 
 Please report any issues to our [Github Issues page][repo-issues-url].
 
@@ -83,13 +83,14 @@ Feel free to leave a question or a comment on our [Github repo][repo-url] or on 
 <br/>
 
 ## Generator
+
 Want to make your own VSTS Task? This task was initially created by this [swell generator][parent-generator-url]!
 
 <br/>
 
 ## Icon Credits
-The Git logo is the orginal property of [Jason Long][jason-long-twitter-url] and is used/modified under the [Creative Commons Attribution 3.0 Unported License][cc3-license-url]. Thank you Jason for allowing us to modify your logo!
 
+The Git logo is the orginal property of [Jason Long][jason-long-twitter-url] and is used/modified under the [Creative Commons Attribution 3.0 Unported License][cc3-license-url]. Thank you Jason for allowing us to modify your logo!
 
 [parent-generator-url]: https://github.com/swellaby/generator-swell
 [logo-image]: images/extension-icon.png
