@@ -104,7 +104,7 @@ The Git logo is the orginal property of [Jason Long](https://twitter.com/jasonlo
 [icon-author-url]: http://www.freepik.com
 [flaticon-url]: http://www.flaticon.com
 [cc3-url]: http://creativecommons.org/licenses/by/3.0
-[logo-image]: src/git-mirror/extension-icon.png
+[logo-image]: images/extension-icon.png
 [task-add-image]: images/definition-task-add.png
 [config-task-image]: images/config-task.png
 [scan-passed-image]: images/scan-passed.png
