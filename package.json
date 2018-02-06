@@ -1,7 +1,7 @@
 {
-    "name": "git-clone-mirror-vsts-task",
+    "name": "vsts-mirror-git-repository",
     "version": "0.1.0",
-    "description": "A simple cross-platform utility to mirror a Git repository to another location",
+    "description": "A straightforward utility to mirror one Git repository to another location",
     "scripts": {
         "lint": "tslint -c tslint.json 'src/**/*.ts'",
         "build": "npm run clean && tsc && webpack",
@@ -11,9 +11,14 @@
         "package": "tfx extension create --manifest-globs manifest.json"
     },
     "author": {
-        "name": "Travis Kosarek",
-        "email": "travis.kosarek@gmail.com"
+        "name": "swellaby",
+        "email": "opensource@swellaby.com",
+        "url": "http://swellaby.com"
     },
+    "contributors": [{
+        "name": "Travis Kosarek",
+        "url": "https://github.com/traviskosarek"
+    }],
     "license": "ISC",
     "private": true,
     "dependencies": {

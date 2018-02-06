@@ -51,7 +51,7 @@
         "uri": "https://github.com"
     },
     "contributions": [{
-        "id": "git-clone-mirror-vsts-task",
+        "id": "mirror-git-repository-vsts-task",
         "description": "A straightforward utility to mirror one Git repository to another location",
         "type": "ms.vss-distributed-task.task",
         "targets": ["ms.vss-distributed-task.tasks"],

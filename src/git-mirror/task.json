@@ -1,6 +1,6 @@
 {
     "id": "4e842f83-9438-4acb-994c-c8c31137dea9",
-    "name": "mirror-git-repository",
+    "name": "mirror-git-repository-vsts-task",
     "friendlyName": "Mirror Git Repository",
     "description": "A straightforward utility to mirror one Git repository to another location",
     "category": "Utility",

@@ -39,13 +39,13 @@ You will need to use a Personal Access Token to get write access to whatever Des
 
 #### Can I use this task to mirror to other Git Source Control Platforms?
 
-_**tl;dr** Yes, it works with any Git repository._
+_**tl;dr** Yes, it should work with any Git repository._
 
 This task is built solely on top of [Git](https://git-scm.com/) commands. As long as the build agent has read access to the source repository and write access to the destination repository, the endpoints are not specific to any Git Source Control Platform.
 
 #### Why should I choose this task over one of the other Git mirroring tasks available on the marketplace?
 
-_**tl;dr** Because it is awesome... Oh! and it works with the VSTS Build Agent Docker Image_
+_**tl;dr** It works without modifying the out-of-the-box VSTS Build Agent Docker Image_
 
 As of this task being published, the other tasks on the Marketplace that perform similar actions are written with Powershell scripts and do not work out-of-the-box with the [VSTS Build Agent Docker Image](https://hub.docker.com/r/microsoft/vsts-agent/). To fill this gap, we decided to develop our own task that is written in [NodeJS](https://nodejs.org). *Note that this task does require the build agent to have [NodeJS](https://nodejs.org) installed.*
 
@@ -70,7 +70,7 @@ _**tl;dr** Check your variables, check your access._
 It is highly likely that the cause of a hanging issue is that the build agent is not able to access the Source Git Repository URL. Some things to check:
 
 1. The Source Git Repository URL is correct.
-2. You may need to pass a Personal Access Token to retrieve the Source Git Repository data.
+2. You may need to include a Personal Access Token to give the build agent access to the Source Git Repository data.
 
 _Note: The task does not give the build agent read or write access to your VSTS repositories by default._
 
