@@ -2,7 +2,7 @@
     "id": "80d1525a-7e0e-4b3b-9667-e27700cc11b0",
     "name": "git-clone-mirror-vsts-task",
     "friendlyName": "Git Mirror Repo",
-    "description": "A straightforward cross-platform utility to mirror a Git repository to another location",
+    "description": "A straightforward utility to mirror one Git repository to another location",
     "category": "Utility",
     "author": "Travis Kosarek",
     "version": {
@@ -17,14 +17,14 @@
             "label": "Source Git Repository",
             "defaultValue": "$(Build.Repository.Uri)",
             "required": true,
-            "helpMarkDown": "The URL of a Git repository to be used as the mirror's source. The default value of '$(Build.Repository.Uri)' will use the VSTS repository connected to this build. Example: https://github.com/traviskosarek/traviskosarek-com.git"
+            "helpMarkDown": "The URL of a Git repository to be used as the mirror's source. The default value of '$(Build.Repository.Uri)' will use the VSTS repository connected to this build.\n\nExample: https://github.com/traviskosarek/traviskosarek-com.git"
         },
         {
             "name": "sourceGitRepositoryPersonalAccessToken",
             "type": "string",
             "label": "Source Repository - Personal Access Token",
             "required": false,
-            "helpMarkDown": "A Personal Access token that grants access to pull to a Git repository",
+            "helpMarkDown": "A Personal Access token that grants read access to the Git repository used as the Source Git Repository",
             "defaultValue": ""
         },
         {
@@ -33,14 +33,14 @@
             "label": "Destination Git Repository",
             "defaultValue": "",
             "required": true,
-            "helpMarkDown": "The URL of a Git repository to be used as the mirror destination. Example: https://github.com/traviskosarek/traviskosarek-com.git"
+            "helpMarkDown": "The URL of a Git repository to be used as the mirror's destination.\n\nExample: https://github.com/traviskosarek/traviskosarek-com.git"
         },
         {
             "name": "destinationGitRepositoryPersonalAccessToken",
             "type": "string",
             "label": "Destination Repository - Personal Access Token",
             "required": true,
-            "helpMarkDown": "A Personal Access token that grants access to push to a Git repository",
+            "helpMarkDown": "A Personal Access token that grants write access to the Git repository used as the Destination Git Repository",
             "defaultValue": ""
         }
     ],

@@ -8,7 +8,7 @@
     "targets": [{
         "id": "Microsoft.VisualStudio.Services"
     }],
-    "description": "A straightforward utility to mirror a Git repository to another location",
+    "description": "A straightforward utility to mirror one Git repository to another location",
     "categories": ["Build and release"],
     "icons": { "default": "images/extension-icon.png" },
     "files": [{
@@ -17,6 +17,9 @@
     "content": {
         "details": {
             "path": "OVERVIEW.md"
+        },
+        "license": {
+            "path": "LICENSE"
         }
     },
     "branding": {
@@ -24,16 +27,22 @@
         "theme": "light"
     },
     "links": {
+        "home": {
+            "uri": "http://swellaby.com"
+        },
         "getstarted": {
             "uri": "https://github.com"
         },
         "support": {
-            "uri": "https://github.com"
+            "uri": "https://github.com/issues"
         },
         "repository": {
             "uri": "https://github.com"
         },
         "issues": {
+            "uri": "https://github.com/issues"
+        },
+        "license": {
             "uri": "https://github.com"
         }
     },
@@ -43,7 +52,7 @@
     },
     "contributions": [{
         "id": "git-clone-mirror-vsts-task",
-        "description": "A simple cross-platform utility to mirror a Git repository to another location",
+        "description": "A straightforward utility to mirror one Git repository to another location",
         "type": "ms.vss-distributed-task.task",
         "targets": ["ms.vss-distributed-task.tasks"],
         "properties": {
