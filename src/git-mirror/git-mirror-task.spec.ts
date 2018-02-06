@@ -727,7 +727,7 @@ describe("GitMirrorTask", () => {
 
         it("should return a uri with the PAT token injected given the uri contains a http protocol", () => {
             // arrange
-            const uri = "https://github.com/swellaby/vsts-mirror-git-repository";
+            const uri = "http://github.com/swellaby/vsts-mirror-git-repository";
             const token = "token";
             let isErrorThrown = false;
             let authenticatedUri;
