@@ -12,26 +12,50 @@
 
 The purpose of the Mirror Git Repository task is to facilitate the copying of changes of one Git Repository to another.
 
-_Example Use Case:_ You want to manage code in a VSTS repository but also want a copy of that code to appear on Github so it is publicly viewable.
-
 ## Task Configuration
 
-The IP Address Scanner has a few key inputs that you'll need to plug your respective values into. 
+The process of mirroring a Git repository consists of two basic steps:
 
-- *VSTS Account Name*  -   
-The name of your VSTS account. If you are not sure of your account name, look at the part before `.visualstudio.com/...` in the url. For example, `https://fabrikam.visualstudio.com/...` the account name would be `fabrikam`
-- *Personal Access Token* -  
-This is the token the scanner will use to communicate with your VSTS account. This should be the token of a member of the Collection Administrators group, and we highly recommend you use a [definition variable] to store the value. If you've got more than one VSTS account you will be scanning then we also recommend giving your token access to all your accounts. See the [below section]() for more information about this variable, and the [PAT documentation]() for information on creating Tokens.
+1. Clone a source repository
+2. Push that repository to another location
 
-Below is a sample configuration screenshot with random data.
-![Example Task Configuration]()
+Both of these steps may require additional access in order to read or write to the relevant repositories. In order to provide that access, Personal Access Tokens (PATs) are used to grant the build agent the access it needs to perform these actions.
 
+- *Source Git Repository*  -
 
-You will need to use a Personal Access Token to get write access to whatever Destination Git Repository you want to push to.
+The HTTPS endpoint of the Git Repository you want to copy from. This field is **required**. The default value of this field `$(Build.Repository.Uri)` will populate the field with the source repository the build is linked to. An example of valid input would be: `https://github.com/swellaby/vsts-mirror-git-repository.git`
 
-[How to create a Personal Access Token on Github][github-pat-token-url]
+- *Source Repository - Personal Access Token* -
 
-[How to create a Personal Access Token on VSTS][vsts-pat-token-url]
+A Personal Access Token (PAT) that grants read access to the repository in the `Source Git Repository` field. This field is **optional**. If the Git repository in the `Source Git Repository` field is public, this field does not need to be populated. Check out the **Best Practices** section below for more details on managing PAT Tokens securely.
+
+- *Destination Git Repository*  -
+
+The HTTPS endpoint of the Git Repository you want to copy to. This field is **required**. An example of valid input would be: `https://github.com/swellaby/vsts-mirror-git-repository.git`
+
+- *Destination Repository - Personal Access Token* -
+
+A Personal Access Token (PAT) that grants write access to the repository in the `Destination Git Repository` field. This field is **required**. Check out the **Best Practices** section below for more details on managing PAT Tokens securely.
+
+<br/>
+
+## Best Practices
+
+### Generating Personal Access Tokens
+
+In order to use this task, you will need to create Personal Access Tokens to the appropriate repositories. Below are some links on how to achieve this:
+
+- [How to create a Personal Access Token on Github][github-pat-token-url]
+- [How to create a Personal Access Token on VSTS][vsts-pat-token-url]
+
+## Securing Personal Access Tokens during the build
+
+While you have the ability to enter the PAT tokens into the task in plain-text, it is best practice to mask these tokens so that your repositories remain secure. VSTS supports the ability to manage and inject secure variables at build time. There are currently two ways to achieve this in VSTS:
+
+1. [Use a Secret Process Variable directly on the build definition][vsts-secret-variables]
+2. [Use a Secret variable from a Variable Group linked to the build definition][vsts-secret-variable-group]
+
+By using secret variables in your build task, your PAT tokens will be masked in build output.
 
 <br/>
 
@@ -45,7 +69,7 @@ This task is built solely on top of [Git][git-url] commands. As long as the buil
 
 ### Why should I choose this task over one of the other Git mirroring tasks available on the marketplace?
 
-&nbsp;&nbsp;&nbsp;&nbsp;_**tl;dr** It works without modifying the out-of-the-box VSTS Build Agent Docker Image_
+&nbsp;&nbsp;&nbsp;&nbsp;_**tl;dr** It works without modifying the VSTS Build Agent Docker Image_
 
 As of this task being published, the other tasks on the Marketplace that perform similar actions are written with Powershell scripts and do not work out-of-the-box with the [VSTS Build Agent Docker Image][docker-vsts-agent-url]. To fill this gap, we decided to develop our own task that is written in [NodeJS][nodejs-url]. *Note that this task does require the build agent to have [NodeJS][nodejs-url] installed.*
 
@@ -57,7 +81,7 @@ The Destination Git Repository must exist before it can be pushed to.
 
 ### But what is the task _really_ doing under the hood?
 
-&nbsp;&nbsp;&nbsp;&nbsp;_**tl;dr** Go to our [Github repo][repo-url]_
+&nbsp;&nbsp;&nbsp;&nbsp;_**tl;dr** Check out our [Github repo][repo-url]_
 
 The task is using basic git commands to mirror the repository. If you would like more details on what commands are being ran, you can find the details at this Github page: [Mirror a Repository in Another Location][mirror-instructions-url]
 
@@ -105,7 +129,9 @@ The Git logo is the orginal property of [Jason Long][jason-long-twitter-url] and
 [git-url]: https://git-scm.com/
 [license-badge]: https://img.shields.io/github/license/swellaby/vsts-traffic-monitor.svg
 [nodejs-url]: https://nodejs.org
-[vsts-pat-token-url]: (https://docs.microsoft.com/en-us/vsts/accounts/use-personal-access-tokens-to-authenticate#create-personal-access-tokens-to-authenticate-access)
+[vsts-pat-token-url]: https://docs.microsoft.com/en-us/vsts/accounts/use-personal-access-tokens-to-authenticate#create-personal-access-tokens-to-authenticate-access
 [github-pat-token-url]: https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/#creating-a-token
+[vsts-secret-variables]: https://docs.microsoft.com/en-us/vsts/build-release/concepts/definitions/build/variables?tabs=batch#secret-variables
+[vsts-secret-variable-group]: https://docs.microsoft.com/en-us/vsts/build-release/concepts/library/variable-groups
 [jason-long-twitter-url]: https://twitter.com/jasonlong
 [cc3-license-url]: https://creativecommons.org/licenses/by/3.0/

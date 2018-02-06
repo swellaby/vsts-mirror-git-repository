@@ -16,7 +16,7 @@
     }],
     "content": {
         "details": {
-            "path": "OVERVIEW.md"
+            "path": "README.md"
         },
         "license": {
             "path": "LICENSE"
