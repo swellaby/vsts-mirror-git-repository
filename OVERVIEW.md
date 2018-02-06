@@ -10,7 +10,7 @@
 
 ## Overview
 
-The purpose of the Mirror Git Repository task is to help facilitate the copying of changes of one Git Repository to another.
+The purpose of the Mirror Git Repository task is to facilitate the copying of changes of one Git Repository to another.
 
 _Example Use Case:_ You want to manage code in a VSTS repository but also want a copy of that code to appear on Github so it is publicly viewable.
 
@@ -104,7 +104,7 @@ The Git logo is the orginal property of [Jason Long](https://twitter.com/jasonlo
 [icon-author-url]: http://www.freepik.com
 [flaticon-url]: http://www.flaticon.com
 [cc3-url]: http://creativecommons.org/licenses/by/3.0
-[logo-image]: .release/git-mirror/extension-icon.png
+[logo-image]: src/git-mirror/extension-icon.png
 [task-add-image]: images/definition-task-add.png
 [config-task-image]: images/config-task.png
 [scan-passed-image]: images/scan-passed.png
