@@ -18,9 +18,9 @@ let getInputStub;
 let sandbox;
 
 beforeEach(function() {
-    sourceUri = "https://github.com/traviskosarek/traviskosarek-com";
+    sourceUri = "https://github.com/swellaby/vsts-mirror-git-repository";
     sourcePAT = "xxxxxxxxxx";
-    destinationUri = "https://github.com/traviskosarek/traviskosarek-com";
+    destinationUri = "https://github.com/swellaby/vsts-mirror-git-repository";
     destinationPAT = "xxxxxxxxxx";
 
     sandbox = sinon.sandbox.create();
@@ -643,7 +643,7 @@ describe("GitMirrorTask", () => {
 
         it("should extract a folder name from a given uri", () => {
             // arrange
-            const sourceGitUri = "https://github.com/traviskosarek/traviskosarek-com";
+            const sourceGitUri = "https://github.com/swellaby/vsts-mirror-git-repository";
             let isErrorThrown = false;
             
             const task = new GitMirrorTask();
@@ -658,7 +658,7 @@ describe("GitMirrorTask", () => {
             }
             // assert
             expect(isErrorThrown).to.be.false;
-            expect(folder).to.be.equal("traviskosarek-com.git");
+            expect(folder).to.be.equal("vsts-mirror-git-repository.git");
         });
     });
 
@@ -705,7 +705,7 @@ describe("GitMirrorTask", () => {
 
         it("should return URI if no token is specified", () => {
             // arrange
-            const uri = "https://github.com/traviskosarek/traviskosarek-com";
+            const uri = "https://github.com/swellaby/vsts-mirror-git-repository";
             const token = undefined;
             let isErrorThrown = false;
             let authenticatedUri;
@@ -727,7 +727,7 @@ describe("GitMirrorTask", () => {
 
         it("should return a uri with the PAT token injected given the uri contains a http protocol", () => {
             // arrange
-            const uri = "http://github.com/traviskosarek/traviskosarek-com";
+            const uri = "https://github.com/swellaby/vsts-mirror-git-repository";
             const token = "token";
             let isErrorThrown = false;
             let authenticatedUri;
@@ -744,12 +744,12 @@ describe("GitMirrorTask", () => {
             
             // assert
             expect(isErrorThrown).to.be.false;
-            expect(authenticatedUri).to.be.equal("http://" + token + "@" + "github.com/traviskosarek/traviskosarek-com");
+            expect(authenticatedUri).to.be.equal("http://" + token + "@" + "github.com/swellaby/vsts-mirror-git-repository");
         });
 
         it("should return a uri with the PAT token injected given the uri contains a https protocol", () => {
             // arrange
-            const uri = "https://github.com/traviskosarek/traviskosarek-com";
+            const uri = "https://github.com/swellaby/vsts-mirror-git-repository";
             const token = "token";
             let isErrorThrown = false;
             let authenticatedUri;
@@ -766,7 +766,7 @@ describe("GitMirrorTask", () => {
             
             // assert
             expect(isErrorThrown).to.be.false;
-            expect(authenticatedUri).to.be.equal("https://" + token + "@" + "github.com/traviskosarek/traviskosarek-com");
+            expect(authenticatedUri).to.be.equal("https://" + token + "@" + "github.com/swellaby/vsts-mirror-git-repository");
         });
     });
 });
