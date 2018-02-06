@@ -87,12 +87,12 @@ If you would like to see the code directly, feel free to browse our [Github repo
 
 &nbsp;&nbsp;&nbsp;&nbsp;_**tl;dr** Check your variables, check your access._
 
-It is highly likely that the cause of a hanging issue is that the build agent is not able to access the Source Git Repository URL. If you were executing the Git commands manually, this would be seen by Git prompting for credentials. This prompt will not show within the build output. 
+It is highly likely that the cause of a hanging issue is that the build agent is not able to access the Git Repository URL you provided. If you were executing the Git commands manually, this would be seen by Git prompting for credentials. This prompt will not show within the build output. 
 
 Some things to check if you are experiencing this issue:
 
-1. The Source Git Repository URL is correct.
-2. You may need to include a Personal Access Token to give the build agent access to the Source Git Repository data.
+1. Check that both of the Git Repository URLs you provided are correct.
+2. You may need to include a Personal Access Token to give the build agent access to the Git Repository.
 
 &nbsp;&nbsp;&nbsp;&nbsp;_Note: The task does not give the build agent read or write access to your VSTS repositories by default._
 
