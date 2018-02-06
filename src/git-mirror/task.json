@@ -4,7 +4,8 @@
     "friendlyName": "Mirror Git Repository",
     "description": "A straightforward utility to mirror one Git repository to another location",
     "category": "Utility",
-    "author": "Travis Kosarek",
+    "author": "Swellaby",
+    "helpMarkDown": "[More Information](https://github.com/swellaby/vsts-mirror-git-repository)",
     "version": {
         "Major": 0,
         "Minor": 1,

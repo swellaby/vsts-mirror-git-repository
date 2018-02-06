@@ -3,7 +3,7 @@
     "id": "mirror-git-repository",
     "name": "Mirror Git Repository",
     "version": "0.1.58",
-    "publisher": "travis-kosarek",
+    "publisher": "Swellaby",
     "tags": ["git", "clone", "push", "mirror", "--mirror", "repo", "repository"],
     "targets": [{
         "id": "Microsoft.VisualStudio.Services"
@@ -31,24 +31,24 @@
             "uri": "http://swellaby.com"
         },
         "getstarted": {
-            "uri": "https://github.com"
+            "uri": "https://github.com/swellaby/vsts-mirror-git-repository/blob/master/README.md"
         },
         "support": {
-            "uri": "https://github.com/issues"
+            "uri": "https://github.com/swellaby/vsts-mirror-git-repository/issues"
         },
         "repository": {
-            "uri": "https://github.com"
+            "uri": "https://github.com/swellaby/vsts-mirror-git-repository"
         },
         "issues": {
-            "uri": "https://github.com/issues"
+            "uri": "https://github.com/swellaby/vsts-mirror-git-repository/issues"
         },
         "license": {
-            "uri": "https://github.com"
+            "uri": "https://github.com/swellaby/vsts-mirror-git-repository/blob/master/LICENSE"
         }
     },
     "repository": {
         "type": "git",
-        "uri": "https://github.com"
+        "uri": "https://github.com/swellaby/vsts-mirror-git-repository"
     },
     "contributions": [{
         "id": "mirror-git-repository-vsts-task",
