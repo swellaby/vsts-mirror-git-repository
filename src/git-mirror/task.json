@@ -1,7 +1,7 @@
 {
-    "id": "80d1525a-7e0e-4b3b-9667-e27700cc11b0",
-    "name": "git-clone-mirror-vsts-task",
-    "friendlyName": "Git Mirror Repo",
+    "id": "4e842f83-9438-4acb-994c-c8c31137dea9",
+    "name": "mirror-git-repository",
+    "friendlyName": "Mirror Git Repository",
     "description": "A straightforward utility to mirror one Git repository to another location",
     "category": "Utility",
     "author": "Travis Kosarek",
@@ -24,7 +24,7 @@
             "type": "string",
             "label": "Source Repository - Personal Access Token",
             "required": false,
-            "helpMarkDown": "A Personal Access token that grants read access to the Git repository used as the Source Git Repository",
+            "helpMarkDown": "A Personal Access Token that grants read access to the Git repository used as the Source Git Repository",
             "defaultValue": ""
         },
         {
@@ -40,7 +40,7 @@
             "type": "string",
             "label": "Destination Repository - Personal Access Token",
             "required": true,
-            "helpMarkDown": "A Personal Access token that grants write access to the Git repository used as the Destination Git Repository",
+            "helpMarkDown": "A Personal Access Token that grants write access to the Git repository used as the Destination Git Repository",
             "defaultValue": ""
         }
     ],

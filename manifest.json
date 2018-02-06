@@ -1,8 +1,8 @@
 {
     "manifestVersion": 1,
-    "id": "git-clone-mirror-vsts-task",
-    "name": "Git Mirror Repo",
-    "version": "0.1.20",
+    "id": "mirror-git-repository",
+    "name": "Mirror Git Repository",
+    "version": "0.1.0",
     "publisher": "travis-kosarek",
     "tags": ["git", "clone", "push", "mirror", "--mirror", "repo", "repository"],
     "targets": [{
