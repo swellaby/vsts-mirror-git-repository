@@ -10,7 +10,7 @@
     }],
     "description": "A straightforward utility to mirror one Git repository to another location",
     "categories": ["Build and release"],
-    "icons": { "default": "images/extension-icon.png" },
+    "icons": { "default": "src/git-mirror/extension-icon.png" },
     "files": [{
         "path": ".release"
     }],

@@ -12,7 +12,7 @@
 
 The purpose of the Mirror Git Repository task is to help facilitate the copying of changes of one Git Repository to another.
 
-_Example Use Case:_ You primarily manage your code in a VSTS repository but want a copy of that code to appear on Github so it is publicly viewable.
+_Example Use Case:_ You want to manage code in a VSTS repository but also want a copy of that code to appear on Github so it is publicly viewable.
 
 ## Task Configuration
 
@@ -35,9 +35,9 @@ You will need to use a Personal Access Token to get write access to whatever Des
 
 <br/>
 
-## Frequently Asked Questionss
+## Frequently Asked Questions
 
-#### Your example is mirroring from VSTS to Github, am I able to use this task to mirror to other Git Source Control Platforms?
+#### Can I use this task to mirror to other Git Source Control Platforms?
 
 _**tl;dr** Yes, it works with any Git repository._
 
@@ -45,9 +45,9 @@ This task is built solely on top of [Git](https://git-scm.com/) commands. As lon
 
 #### Why should I choose this task over one of the other Git mirroring tasks available on the marketplace?
 
-_**tl;dr** Because it is awesome and works with the VSTS Build Agent Docker Image_
+_**tl;dr** Because it is awesome... Oh! and it works with the VSTS Build Agent Docker Image_
 
-As of this task being published, the other tasks on the Marketplace that perform the same actions do not natively work with the [VSTS Build Agent Docker Image](https://hub.docker.com/r/microsoft/vsts-agent/) because they are written with Powershell scripts. In order to have an out-of-the-box solution, we decided to develop our own task that is written in [NodeJS](https://nodejs.org). *Note that this task does require the build agent to have [NodeJS](https://nodejs.org) installed.*
+As of this task being published, the other tasks on the Marketplace that perform similar actions are written with Powershell scripts and do not work out-of-the-box with the [VSTS Build Agent Docker Image](https://hub.docker.com/r/microsoft/vsts-agent/). To fill this gap, we decided to develop our own task that is written in [NodeJS](https://nodejs.org). *Note that this task does require the build agent to have [NodeJS](https://nodejs.org) installed.*
 
 #### Does the task create a Destination Git Repository if it doesnt exist?
 
@@ -104,7 +104,7 @@ The Git logo is the orginal property of [Jason Long](https://twitter.com/jasonlo
 [icon-author-url]: http://www.freepik.com
 [flaticon-url]: http://www.flaticon.com
 [cc3-url]: http://creativecommons.org/licenses/by/3.0
-[logo-image]: images/extension-icon.png
+[logo-image]: .release/git-mirror/extension-icon.png
 [task-add-image]: images/definition-task-add.png
 [config-task-image]: images/config-task.png
 [scan-passed-image]: images/scan-passed.png
