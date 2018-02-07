@@ -120,7 +120,7 @@ The Git logo is the orginal property of [Jason Long][jason-long-twitter-url] and
 [github-pat-token-url]: https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/#creating-a-token
 [git-url]: https://git-scm.com/
 [jason-long-twitter-url]: https://twitter.com/jasonlong
-[license-badge]: https://img.shields.io/github/license/swellaby/mirror-git-repository.svg?style=flat-square
+[license-badge]: https://img.shields.io/github/license/swellaby/vsts-mirror-git-repository.svg?style=flat-square
 [logo-image]: https://raw.githubusercontent.com/swellaby/vsts-mirror-git-repository/master/images/extension-icon.png
 [marketplace-version-badge]: https://img.shields.io/vscode-marketplace/v/swellaby.mirror-git-repository.svg?style=flat-square
 [marketplace-installs-badge]: https://img.shields.io/vscode-marketplace/d/swellaby.mirror-git-repository.svg?style=flat-square
