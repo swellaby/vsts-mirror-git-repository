@@ -62,7 +62,6 @@ afterEach(function() {
 describe("GitMirrorTask", () => {
     describe("constructor", () => {
         it("should allow defined values for all input fields", () => {
-            // arrange
             let taskSucceeded = true;
 
             const getVariablesStub = sandbox.stub(taskLib, "getVariables").callsFake(() => {
@@ -74,20 +73,13 @@ describe("GitMirrorTask", () => {
                     taskSucceeded = false;
                 }
             });
-
-            // act
+            
             const task = new GitMirrorTask();
 
-            // assert
             expect(taskSucceeded).to.be.true;
-
-            // cleanup
-            getVariablesStub.restore();
-            setResultStub.restore();
         });
 
         it("should fail the task if the source Git repository uri is undefined", () => {
-            // arrange
             sourceUri = undefined;
             let taskSucceeded = true;
 
@@ -101,19 +93,12 @@ describe("GitMirrorTask", () => {
                 }
             });
 
-            // act
             const task = new GitMirrorTask();
 
-            // assert
             expect(taskSucceeded).to.be.false;
-
-            // cleanup
-            getVariablesStub.restore();
-            setResultStub.restore();
         });
 
         it("should allow an undefined value for the source Git repository PAT", () => {
-            // arrange
             sourcePAT = undefined;
             let taskSucceeded = true;
 
@@ -127,19 +112,12 @@ describe("GitMirrorTask", () => {
                 }
             });
 
-            // act
             const task = new GitMirrorTask();
 
-            // assert
             expect(taskSucceeded).to.be.true;
-
-            // cleanup
-            getVariablesStub.restore();
-            setResultStub.restore();
         });
 
         it("should fail the task if the destination Git repository uri is undefined", () => {
-            // arrange
             destinationUri = undefined;
             let taskSucceeded = true;
 
@@ -152,20 +130,13 @@ describe("GitMirrorTask", () => {
                     taskSucceeded = false;
                 }
             });
-
-            // act
+            
             const task = new GitMirrorTask();
-
-            // assert
+            
             expect(taskSucceeded).to.be.false;
-
-            // cleanup
-            getVariablesStub.restore();
-            setResultStub.restore();
         });
 
         it("should fail the task if the destination Git repository PAT is undefined", () => {
-            // arrange
             destinationPAT = undefined;
             let taskSucceeded = true;
 
@@ -179,21 +150,14 @@ describe("GitMirrorTask", () => {
                 return ["1", "2", "3"];
             });
 
-            // act
             const task = new GitMirrorTask();
-
-            // assert
+            
             expect(taskSucceeded).to.be.false;
-
-            // cleanup
-            getVariablesStub.restore();
-            setResultStub.restore();
         });
     });
 
     describe("run", () => {
         it("should verify that the Git tool is installed on the build agent", () => {
-            // arrange
             let gitToolExists = false;
             let throwErrorIfGitDoesNotExist = false;
 
@@ -218,22 +182,13 @@ describe("GitMirrorTask", () => {
             const gitPushMirrorStub = sandbox.stub(task, "gitPushMirror");
             gitPushMirrorStub.returnsPromise().resolves(0);
 
-            // act
             task.run();
-
-            // assert
+            
             expect(gitToolExists).to.be.true;
             expect(throwErrorIfGitDoesNotExist).to.be.true;
-
-            // cleanup
-            getVariablesStub.restore();
-            whichStub.restore();
-            gitCloneMirrorStub.restore();
-            gitPushMirrorStub.restore();
         });
         
         it("should fail the task if the Git tool is not installed on the build agent", () => {
-            // arrange
             let taskSucceeded = true;
 
             const getVariablesStub = sandbox.stub(taskLib, "getVariables").callsFake(() => {
@@ -257,25 +212,15 @@ describe("GitMirrorTask", () => {
             
             const gitPushMirrorStub = sandbox.stub(task, "gitPushMirror");
             gitPushMirrorStub.returnsPromise().resolves(0);
-
-            // act
-            task.run();
-
-            // assert
-            expect(taskSucceeded).to.be.false;
             
-            // cleanup
-            getVariablesStub.restore();
-            whichStub.restore();
-            setResultStub.restore();
-            gitCloneMirrorStub.restore();
-            gitPushMirrorStub.restore();
+            task.run();
+            
+            expect(taskSucceeded).to.be.false;
         });
         
         it("should successfully perform a git clone and git push", () => {
             let taskSucceeded = true;
             
-            // arrange
             const getVariablesStub = sandbox.stub(taskLib, "getVariables").callsFake(() => {
                 return ["1", "2", "3"];
             });
@@ -295,27 +240,17 @@ describe("GitMirrorTask", () => {
             
             const gitPushMirrorStub = sandbox.stub(task, "gitPushMirror");
             gitPushMirrorStub.returnsPromise().resolves(0);
-
-            // act
+            
             task.run();
-
-            // assert
+            
             expect(taskSucceeded).to.be.true;
             expect(gitCloneMirrorStub.called).to.be.true;
             expect(gitPushMirrorStub.called).to.be.true;
-            
-            // cleanup
-            getVariablesStub.restore();
-            whichStub.restore();
-            setResultStub.restore();
-            gitCloneMirrorStub.restore();
-            gitPushMirrorStub.restore();
         });
         
         it("should fail the task if the 'git clone --mirror ...' command throws an error", () => {
             let taskSucceeded = true;
             
-            // arrange
             const getVariablesStub = sandbox.stub(taskLib, "getVariables").callsFake(() => {
                 return ["1", "2", "3"];
             });
@@ -336,26 +271,16 @@ describe("GitMirrorTask", () => {
             const gitPushMirrorStub = sandbox.stub(task, "gitPushMirror");
             gitPushMirrorStub.returnsPromise().resolves(0);
 
-            // act
             task.run();
-
-            // assert
+            
             expect(taskSucceeded).to.be.false;
             expect(gitCloneMirrorStub.called).to.be.true;
             expect(gitPushMirrorStub.called).to.be.false;
-            
-            // cleanup
-            getVariablesStub.restore();
-            whichStub.restore();
-            setResultStub.restore();
-            gitCloneMirrorStub.restore();
-            gitPushMirrorStub.restore();
         });
         
         it("should fail the task if an error occurs when trying to invoke git clone mirror", () => {
             let taskSucceeded = true;
             
-            // arrange
             const getVariablesStub = sandbox.stub(taskLib, "getVariables").callsFake(() => {
                 return ["1", "2", "3"];
             });
@@ -375,27 +300,17 @@ describe("GitMirrorTask", () => {
             
             const gitPushMirrorStub = sandbox.stub(task, "gitPushMirror");
             gitPushMirrorStub.returnsPromise().resolves(0);
-
-            // act
+            
             task.run();
-
-            // assert
+            
             expect(taskSucceeded).to.be.false;
             expect(gitCloneMirrorStub.called).to.be.true;
             expect(gitPushMirrorStub.called).to.be.false;
-            
-            // cleanup
-            getVariablesStub.restore();
-            whichStub.restore();
-            setResultStub.restore();
-            gitCloneMirrorStub.restore();
-            gitPushMirrorStub.restore();
         });
 
         it("should fail the task if the 'git push --mirror ...' command throws an error", () => {
             let taskSucceeded = true;
             
-            // arrange
             const getVariablesStub = sandbox.stub(taskLib, "getVariables").callsFake(() => {
                 return ["1", "2", "3"];
             });
@@ -415,27 +330,17 @@ describe("GitMirrorTask", () => {
             
             const gitPushMirrorStub = sandbox.stub(task, "gitPushMirror");
             gitPushMirrorStub.returnsPromise().resolves(1);
-
-            // act
+            
             task.run();
-
-            // assert
+            
             expect(taskSucceeded).to.be.false;
             expect(gitCloneMirrorStub.called).to.be.true;
             expect(gitPushMirrorStub.called).to.be.true;
-            
-            // cleanup
-            getVariablesStub.restore();
-            whichStub.restore();
-            setResultStub.restore();
-            gitCloneMirrorStub.restore();
-            gitPushMirrorStub.restore();
         });
         
         it("should fail the task if an error occurs when trying to invoke git push mirror", () => {
             let taskSucceeded = true;
             
-            // arrange
             const getVariablesStub = sandbox.stub(taskLib, "getVariables").callsFake(() => {
                 return ["1", "2", "3"];
             });
@@ -455,21 +360,12 @@ describe("GitMirrorTask", () => {
             
             const gitPushMirrorStub = sandbox.stub(task, "gitPushMirror");
             gitPushMirrorStub.returnsPromise().rejects();
-
-            // act
+            
             task.run();
-
-            // assert
+            
             expect(taskSucceeded).to.be.false;
             expect(gitCloneMirrorStub.called).to.be.true;
             expect(gitPushMirrorStub.called).to.be.true;
-            
-            // cleanup
-            getVariablesStub.restore();
-            whichStub.restore();
-            setResultStub.restore();
-            gitCloneMirrorStub.restore();
-            gitPushMirrorStub.restore();
         });
     });
 
@@ -484,7 +380,6 @@ describe("GitMirrorTask", () => {
             
             const task = new GitMirrorTask();
             
-            // arrange
             const getAuthenticatedGitUriStub = sandbox.stub(task, "getAuthenticatedGitUri").callsFake((uri: string, token: string) => {
                 return authenticatedUri;
             });
@@ -510,23 +405,15 @@ describe("GitMirrorTask", () => {
             });
 
             const execStub = sandbox.stub(ToolRunner.prototype, "exec");
-
-            // act
+            
             task.gitCloneMirror();
-
-            // assert
+            
             expect(getAuthenticatedGitUriStub.called).to.be.true;
             expect(usingGitTool).to.be.true;
             expect(isCloneUsed).to.be.true;
             expect(isMirrorOptionUsed).to.be.true;
             expect(isAuthenticatedUriUsed).to.be.true;
             expect(execStub.called).to.be.true;
-            
-            // cleanup
-            getAuthenticatedGitUriStub.restore();
-            toolStub.restore();
-            argStub.restore();
-            execStub.restore();
         });
     });
 
@@ -544,7 +431,6 @@ describe("GitMirrorTask", () => {
             
             const task = new GitMirrorTask();
             
-            // arrange
             const getSourceGitFolderStub = sandbox.stub(task, "getSourceGitFolder").callsFake((uri: string) => {
                 return sourceFolder;
             });
@@ -580,11 +466,9 @@ describe("GitMirrorTask", () => {
             });
 
             const execStub = sandbox.stub(ToolRunner.prototype, "exec");
-
-            // act
+            
             task.gitPushMirror();
-
-            // assert
+            
             expect(getSourceGitFolderStub.called).to.be.true;
             expect(getAuthenticatedGitUriStub.called).to.be.true;
             expect(usingGitTool).to.be.true;
@@ -594,69 +478,56 @@ describe("GitMirrorTask", () => {
             expect(isMirrorOptionUsed).to.be.true;
             expect(isAuthenticatedUriUsed).to.be.true;
             expect(execStub.called).to.be.true;
-            
-            // cleanup
-            getSourceGitFolderStub.restore();
-            getAuthenticatedGitUriStub.restore();
-            toolStub.restore();
-            argStub.restore();
-            execStub.restore();
         });
     });
 
     describe("getSourceGitFolder", () => {
         it("should fail if the given URI is undefined", () => {
-            // arrange
             const sourceGitUri = undefined;
             let isErrorThrown = false;
             
             const task = new GitMirrorTask();
             
-            // act
             try {
                 const folder = task.getSourceGitFolder(sourceGitUri);
             }
             catch (e) {
                 isErrorThrown = true;
             }
-            // assert
+            
             expect(isErrorThrown).to.be.true;
         });
 
         it("should fail if the given URI is not a valid URI", () => {
-            // arrange
             const sourceGitUri = "invalidUri";
             let isErrorThrown = false;
             
             const task = new GitMirrorTask();
             
-            // act
             try {
                 const folder = task.getSourceGitFolder(sourceGitUri);
             }
             catch (e) {
                 isErrorThrown = true;
             }
-            // assert
+            
             expect(isErrorThrown).to.be.true;
         });
 
         it("should extract a folder name from a given uri", () => {
-            // arrange
             const sourceGitUri = "https://github.com/swellaby/vsts-mirror-git-repository";
             let isErrorThrown = false;
             
             const task = new GitMirrorTask();
             let folder;
-
-            // act
+            
             try {
                 folder = task.getSourceGitFolder(sourceGitUri);
             }
             catch (e) {
                 isErrorThrown = true;
             }
-            // assert
+            
             expect(isErrorThrown).to.be.false;
             expect(folder).to.be.equal("vsts-mirror-git-repository.git");
         });
@@ -664,7 +535,6 @@ describe("GitMirrorTask", () => {
 
     describe("getAuthenticatedGitUri", () => {
         it("should fail if the given URI is undefined", () => {
-            // arrange
             const uri = undefined;
             const token = "token";
             let isErrorThrown = false;
@@ -672,19 +542,17 @@ describe("GitMirrorTask", () => {
             
             const task = new GitMirrorTask();
             
-            // act
             try {
                 authenticatedUri = task.getAuthenticatedGitUri(uri, token);
             }
             catch (e) {
                 isErrorThrown = true;
             }
-            // assert
+            
             expect(isErrorThrown).to.be.true;
         });
 
         it("should fail if the given URI is not a valid URI", () => {
-            // arrange
             const uri = "invalidUri";
             const token = "token";
             let isErrorThrown = false;
@@ -692,27 +560,24 @@ describe("GitMirrorTask", () => {
             
             const task = new GitMirrorTask();
             
-            // act
             try {
                 authenticatedUri = task.getAuthenticatedGitUri(uri, token);
             }
             catch (e) {
                 isErrorThrown = true;
             }
-            // assert
+            
             expect(isErrorThrown).to.be.true;
         });
 
         it("should return URI if no token is specified", () => {
-            // arrange
             const uri = "https://github.com/swellaby/vsts-mirror-git-repository";
             const token = undefined;
             let isErrorThrown = false;
             let authenticatedUri;
 
             const task = new GitMirrorTask();
-
-            // act
+            
             try {
                 authenticatedUri = task.getAuthenticatedGitUri(uri, token);
             }
@@ -720,21 +585,18 @@ describe("GitMirrorTask", () => {
                 isErrorThrown = true;
             }
             
-            // assert
             expect(isErrorThrown).to.be.false;
             expect(authenticatedUri).to.be.equal(uri);
         });
 
         it("should return a uri with the PAT token injected given the uri contains a http protocol", () => {
-            // arrange
             const uri = "http://github.com/swellaby/vsts-mirror-git-repository";
             const token = "token";
             let isErrorThrown = false;
             let authenticatedUri;
 
             const task = new GitMirrorTask();
-
-            // act
+            
             try {
                 authenticatedUri = task.getAuthenticatedGitUri(uri, token);
             }
@@ -742,21 +604,18 @@ describe("GitMirrorTask", () => {
                 isErrorThrown = true;
             }
             
-            // assert
             expect(isErrorThrown).to.be.false;
             expect(authenticatedUri).to.be.equal("http://" + token + "@" + "github.com/swellaby/vsts-mirror-git-repository");
         });
 
         it("should return a uri with the PAT token injected given the uri contains a https protocol", () => {
-            // arrange
             const uri = "https://github.com/swellaby/vsts-mirror-git-repository";
             const token = "token";
             let isErrorThrown = false;
             let authenticatedUri;
 
             const task = new GitMirrorTask();
-
-            // act
+            
             try {
                 authenticatedUri = task.getAuthenticatedGitUri(uri, token);
             }
@@ -764,7 +623,6 @@ describe("GitMirrorTask", () => {
                 isErrorThrown = true;
             }
             
-            // assert
             expect(isErrorThrown).to.be.false;
             expect(authenticatedUri).to.be.equal("https://" + token + "@" + "github.com/swellaby/vsts-mirror-git-repository");
         });
