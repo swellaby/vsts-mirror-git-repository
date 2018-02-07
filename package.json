@@ -1,6 +1,6 @@
 {
     "name": "vsts-mirror-git-repository",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "description": "A straightforward utility to mirror one Git repository to another location",
     "scripts": {
         "lint": "tslint -c tslint.json 'src/**/*.ts'",
@@ -15,12 +15,10 @@
         "email": "opensource@swellaby.com",
         "url": "http://swellaby.com"
     },
-    "contributors": [
-        {
-            "name": "Travis Kosarek",
-            "url": "https://github.com/traviskosarek"
-        }
-    ],
+    "contributors": [{
+        "name": "Travis Kosarek",
+        "url": "https://github.com/traviskosarek"
+    }],
     "license": "ISC",
     "private": true,
     "dependencies": {
