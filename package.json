@@ -15,10 +15,12 @@
         "email": "opensource@swellaby.com",
         "url": "http://swellaby.com"
     },
-    "contributors": [{
-        "name": "Travis Kosarek",
-        "url": "https://github.com/traviskosarek"
-    }],
+    "contributors": [
+        {
+            "name": "Travis Kosarek",
+            "url": "https://github.com/traviskosarek"
+        }
+    ],
     "license": "ISC",
     "private": true,
     "dependencies": {
