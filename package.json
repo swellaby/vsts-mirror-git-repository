@@ -54,17 +54,9 @@
     },
     "nyc": {
         "per-file": true,
-        "include": [
-            "src/**/*.js"
-        ],
-        "exclude": [
-            "src/**/*.spec.js"
-        ],
-        "reporter": [
-            "text",
-            "html",
-            "cobertura"
-        ],
+        "include": ["src/**/*.js"],
+        "exclude": ["src/**/*.spec.js"],
+        "reporter": ["text", "html", "cobertura"],
         "cache": true,
         "all": true,
         "report-dir": "./.coverage"

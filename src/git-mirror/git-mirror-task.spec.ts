@@ -531,6 +531,24 @@ describe("GitMirrorTask", () => {
             expect(isErrorThrown).to.be.false;
             expect(folder).to.be.equal("vsts-mirror-git-repository.git");
         });
+
+        it("should extract a folder name from a given uri with a .git extension", () => {
+            const sourceGitUri = "https://github.com/swellaby/vsts-mirror-git-repository.git";
+            let isErrorThrown = false;
+            
+            const task = new GitMirrorTask();
+            let folder;
+            
+            try {
+                folder = task.getSourceGitFolder(sourceGitUri);
+            }
+            catch (e) {
+                isErrorThrown = true;
+            }
+            
+            expect(isErrorThrown).to.be.false;
+            expect(folder).to.be.equal("vsts-mirror-git-repository.git");
+        });
     });
 
     describe("getAuthenticatedGitUri", () => {

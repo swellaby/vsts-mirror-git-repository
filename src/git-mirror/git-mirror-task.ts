@@ -78,6 +78,13 @@ export class GitMirrorTask {
         if (!validUrl.isUri(uri)) {
             throw new Error("Provided URI '" + uri + "' is not a valid URI");
         }
+
+        const gitIdentifier = ".git";
+
+        if (uri.substring(uri.length - gitIdentifier.length) === gitIdentifier) {
+            return uri.substring(uri.lastIndexOf("/") + 1);
+        }
+
         return uri.substring(uri.lastIndexOf("/") + 1) + ".git";
     }
 
