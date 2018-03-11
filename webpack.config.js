@@ -17,6 +17,8 @@ module.exports = {
 
     target: 'node',
 
+    mode: 'production',
+
     output: {
         path: root('.release'),
         filename: '[name].js'
