@@ -6,6 +6,8 @@
 [![Installs Badge][marketplace-installs-badge]][extension-marketplace-url]
 [![Rating Badge][marketplace-rating-badge]][extension-marketplace-url]
 
+[![Linux Build Badge][travis-ci-build-status-badge]][travis-ci-url]
+[![Coveralls Badge][coveralls-badge]][coveralls-url]
 [![License Badge][license-badge]][repo-url]
 
 ## Overview
@@ -123,7 +125,7 @@ The Git logo is the orginal property of [Jason Long][jason-long-twitter-url] and
 [license-badge]: https://img.shields.io/github/license/swellaby/vsts-mirror-git-repository.svg?style=flat-square
 [logo-image]: https://raw.githubusercontent.com/swellaby/vsts-mirror-git-repository/master/images/extension-icon.png
 [marketplace-version-badge]: https://img.shields.io/vscode-marketplace/v/swellaby.mirror-git-repository.svg?style=flat-square
-[marketplace-installs-badge]: https://img.shields.io/vscode-marketplace/d/swellaby.mirror-git-repository.svg?style=flat-square
+[marketplace-installs-badge]: https://vsmarketplacebadge.apphb.com/installs/swellaby.mirror-git-repository.svg?style=flat-square
 [marketplace-rating-badge]: https://img.shields.io/vscode-marketplace/r/swellaby.mirror-git-repository.svg?style=flat-square
 [mirror-instructions-url]: https://help.github.com/articles/duplicating-a-repository/#mirroring-a-repository-in-another-location
 [nodejs-url]: https://nodejs.org
@@ -133,3 +135,7 @@ The Git logo is the orginal property of [Jason Long][jason-long-twitter-url] and
 [vsts-pat-token-url]: https://docs.microsoft.com/en-us/vsts/accounts/use-personal-access-tokens-to-authenticate#create-personal-access-tokens-to-authenticate-access
 [vsts-secret-variables]: https://docs.microsoft.com/en-us/vsts/build-release/concepts/definitions/build/variables?tabs=batch#secret-variables
 [vsts-secret-variable-group]: https://docs.microsoft.com/en-us/vsts/build-release/concepts/library/variable-groups
+[travis-ci-build-status-badge]: https://img.shields.io/travis/swellaby/vsts-mirror-git-repository.svg?label=linux%20build&style=flat-square
+[travis-ci-url]: https://travis-ci.org/swellaby/vsts-mirror-git-repository
+[coveralls-badge]: https://img.shields.io/coveralls/github/swellaby/vsts-mirror-git-repository.svg?style=flat-square
+[coveralls-url]: https://coveralls.io/github/swellaby/vsts-mirror-git-repository
