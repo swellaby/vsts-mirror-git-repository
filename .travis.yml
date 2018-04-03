@@ -1,7 +1,10 @@
-dist: trusty
-sudo: false
-os:
-  - linux
+#dist: trusty
+#sudo: false
+#os:
+# - linux
+language: node_js
+node_js:
+  - "node"
 
 cache:
   directories:
@@ -11,14 +14,14 @@ before_script:
     - export PROJECT_VERSION=$(node -e "console.log(require('./package.json').version);")
 
 install:  
-    - nvm install node
+#    - nvm install node
     - npm install
     - npm install -g coveralls
 
 script:
-    - nvm use node
+#    - nvm use node
     - npm run lint
     - npm run test-dev  
 
 after_success:
-    - coveralls < .coverage/unit/lcov.info
+    - coveralls < .coverage/lcov.info
