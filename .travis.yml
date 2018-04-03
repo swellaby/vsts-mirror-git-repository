@@ -1,10 +1,7 @@
-#dist: trusty
-#sudo: false
-#os:
-# - linux
-language: node_js
-node_js:
-  - "node"
+dist: trusty
+sudo: false
+os:
+- linux
 
 cache:
   directories:
@@ -14,12 +11,12 @@ before_script:
     - export PROJECT_VERSION=$(node -e "console.log(require('./package.json').version);")
 
 install:  
-#    - nvm install node
+    - nvm install node
     - npm install
     - npm install -g coveralls sonarqube-scanner
 
 script:
-#    - nvm use node
+    - nvm use node
     - npm run lint
     - npm run test-dev  
     - sonar-scanner -Dsonar.projectVersion=$PROJECT_VERSION -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONARCLOUD_TOKEN
