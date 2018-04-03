@@ -21,7 +21,7 @@
             "url": "https://github.com/traviskosarek"
         }
     ],
-    "license": "ISC",
+    "license": "MIT",
     "private": true,
     "dependencies": {
         "valid-url": "^1.0.9",
