@@ -1,5 +1,5 @@
 # IDE
-.vscode
+#.vscode
 
 # vendor modules
 node_modules

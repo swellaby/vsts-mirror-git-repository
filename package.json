@@ -19,6 +19,10 @@
         {
             "name": "Travis Kosarek",
             "url": "https://github.com/traviskosarek"
+        },
+        {
+            "name": "Caleb Cartwright",
+            "url": "https://github.com/calebcartwright"
         }
     ],
     "license": "MIT",
@@ -28,6 +32,7 @@
         "vsts-task-lib": "^2.3.0"
     },
     "devDependencies": {
+        "@swellaby/nyc-config-complete-coverage": "0.0.4",
         "@types/chai": "^4.1.2",
         "@types/mocha": "^2.2.48",
         "@types/node": "^9.4.7",
@@ -56,20 +61,13 @@
         "url": "https://github.com/swellaby/vsts-mirror-git-repository"
     },
     "nyc": {
-        "per-file": true,
+        "extends": "@swellaby/nyc-config-complete-coverage",
         "include": [
             "src/**/*.js"
         ],
         "exclude": [
             "src/**/*.spec.js"
         ],
-        "reporter": [
-            "text",
-            "html",
-            "cobertura"
-        ],
-        "cache": true,
-        "all": true,
         "report-dir": "./.coverage"
     }
 }
