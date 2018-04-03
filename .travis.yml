@@ -16,12 +16,13 @@ before_script:
 install:  
 #    - nvm install node
     - npm install
-    - npm install -g coveralls
+    - npm install -g coveralls sonarqube-scanner
 
 script:
 #    - nvm use node
     - npm run lint
     - npm run test-dev  
+    - sonar-scanner -Dsonar.projectVersion=$PROJECT_VERSION -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONARCLOUD_TOKEN
 
 after_success:
     - coveralls < .coverage/lcov.info

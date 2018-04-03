@@ -44,6 +44,7 @@
         "mocha": "^5.0.4",
         "mocha-junit-reporter": "^1.17.0",
         "mocha-multi-reporters": "^1.1.7",
+        "mocha-sonarqube-reporter": "^1.0.1",
         "nyc": "^11.4.1",
         "require-dir": "^1.0.0",
         "run-sequence": "^2.2.1",
