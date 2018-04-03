@@ -5,7 +5,8 @@ os:
 
 cache:
   directories:
-    - '$HOME/.sonar/cache'
+    - '$HOME/.sonar'
+    - 'node_modules'
 
 before_script:
     - export PROJECT_VERSION=$(node -e "console.log(require('./package.json').version);")
