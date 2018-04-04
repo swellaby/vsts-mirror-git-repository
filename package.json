@@ -19,15 +19,20 @@
         {
             "name": "Travis Kosarek",
             "url": "https://github.com/traviskosarek"
+        },
+        {
+            "name": "Caleb Cartwright",
+            "url": "https://github.com/calebcartwright"
         }
     ],
-    "license": "ISC",
+    "license": "MIT",
     "private": true,
     "dependencies": {
         "valid-url": "^1.0.9",
         "vsts-task-lib": "^2.3.0"
     },
     "devDependencies": {
+        "@swellaby/nyc-config-complete-coverage": "0.0.4",
         "@types/chai": "^4.1.2",
         "@types/mocha": "^2.2.48",
         "@types/node": "^9.4.7",
@@ -39,6 +44,7 @@
         "mocha": "^5.0.4",
         "mocha-junit-reporter": "^1.17.0",
         "mocha-multi-reporters": "^1.1.7",
+        "mocha-sonarqube-reporter": "^1.0.1",
         "nyc": "^11.4.1",
         "require-dir": "^1.0.0",
         "run-sequence": "^2.2.1",
@@ -56,20 +62,13 @@
         "url": "https://github.com/swellaby/vsts-mirror-git-repository"
     },
     "nyc": {
-        "per-file": true,
+        "extends": "@swellaby/nyc-config-complete-coverage",
         "include": [
             "src/**/*.js"
         ],
         "exclude": [
             "src/**/*.spec.js"
         ],
-        "reporter": [
-            "text",
-            "html",
-            "cobertura"
-        ],
-        "cache": true,
-        "all": true,
         "report-dir": "./.coverage"
     }
 }
