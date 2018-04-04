@@ -8,6 +8,7 @@
 
 [![Linux Build Badge][travis-ci-build-status-badge]][travis-ci-url]
 [![Coveralls Badge][coveralls-badge]][coveralls-url]
+[![Sonar Quality Gate][sonar-quality-gate-badge]][sonar-url]
 [![License Badge][license-badge]][repo-url]
 
 ## Overview
@@ -139,3 +140,5 @@ The Git logo is the orginal property of [Jason Long][jason-long-twitter-url] and
 [travis-ci-url]: https://travis-ci.org/swellaby/vsts-mirror-git-repository
 [coveralls-badge]: https://img.shields.io/coveralls/github/swellaby/vsts-mirror-git-repository.svg?style=flat-square
 [coveralls-url]: https://coveralls.io/github/swellaby/vsts-mirror-git-repository
+[sonar-quality-gate-badge]: https://sonarcloud.io/api/project_badges/measure?project=swellaby%3Avsts-mirror-git-repository&metric=alert_status&style=flat-square
+[sonar-url]: https://sonarcloud.io/dashboard?id=swellaby%3Avsts-mirror-git-repository
