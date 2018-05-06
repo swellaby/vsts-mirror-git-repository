@@ -31,6 +31,9 @@ The HTTPS endpoint of the Git Repository you want to copy from. This field is **
 **Source Repository - Personal Access Token**
 A Personal Access Token (PAT) that grants read access to the repository in the `Source Git Repository` field. This field is **optional**. If the Git repository in the `Source Git Repository` field is public, this field does not need to be populated. Check out the **Best Practices** section below for more details on managing PAT Tokens securely.
 
+**Verify SSL Certificate**
+Verifiying SSL certificates is a default behavior of Git. Unchecking this option will turn off SSL certificate validation as a part of the Source Repository cloning process. _If you are using a Git server with a Self-Signing certificate, you will likely need to uncheck this option._
+
 **Destination Git Repository**
 The HTTPS endpoint of the Git Repository you want to copy to. This field is **required**.
 
