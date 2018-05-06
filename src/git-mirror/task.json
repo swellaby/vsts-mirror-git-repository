@@ -29,6 +29,14 @@
             "defaultValue": ""
         },
         {
+            "name": "verifySSLCertificate",
+            "type": "boolean",
+            "label": "Verify SSL Certificate",
+            "defaultValue": "true",
+            "required": false,
+            "helpMarkDown": "Check this option if you want Git to verify SSL certificates as a part of the cloning process.\n\nUncheck this option for self-signed certificates"
+        },
+        {
             "name": "destinationGitRepositoryUri",
             "type": "string",
             "label": "Destination Git Repository",
