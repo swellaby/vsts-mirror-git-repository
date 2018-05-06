@@ -34,7 +34,7 @@
             "label": "Verify SSL Certificate",
             "defaultValue": "true",
             "required": false,
-            "helpMarkDown": "Check this option if you want Git to verify SSL certificates as a part of the cloning process.\n\nUncheck this option for self-signed certificates"
+            "helpMarkDown": "Uncheck this option if you do not want Git to verify SSL certificates as a part of the cloning process"
         },
         {
             "name": "destinationGitRepositoryUri",
