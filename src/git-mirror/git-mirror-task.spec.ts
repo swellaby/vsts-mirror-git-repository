@@ -13,13 +13,17 @@ let sourceUri;
 let sourcePAT;
 let destinationUri;
 let destinationPAT;
+let verifySSLCertificate;
+
 let getInputStub;
+let getBoolInputStub;
 
 let sandbox;
 
 beforeEach(function() {
     sourceUri = "https://github.com/swellaby/vsts-mirror-git-repository";
     sourcePAT = "xxxxxxxxxx";
+    verifySSLCertificate = true;
     destinationUri = "https://github.com/swellaby/vsts-mirror-git-repository";
     destinationPAT = "xxxxxxxxxx";
 
@@ -47,6 +51,19 @@ beforeEach(function() {
                     throw new Error(name + " must be defined");
                 }
                 return destinationPAT;
+            default:
+                console.log(name + " is not stubbed out in test");
+                throw new Error(name + " is not stubbed out in test");
+        }
+    });
+
+    getBoolInputStub = sandbox.stub(taskLib, "getBoolInput").callsFake((name: string, required?: boolean) => {
+        switch (name) {
+            case "verifySSLCertificate":
+                if (required && verifySSLCertificate === undefined) {
+                    throw new Error(name + " must be defined");
+                }
+                return verifySSLCertificate;
             default:
                 console.log(name + " is not stubbed out in test");
                 throw new Error(name + " is not stubbed out in test");
@@ -372,13 +389,19 @@ describe("GitMirrorTask", () => {
     describe("gitCloneMirror", () => {
         it("should construct and execute a 'git clone --mirror ...' task", () => {
             const authenticatedUri = "authenticatedUri";
+            const shouldVerifySSLCertificate = true;
             
             let usingGitTool = false;
             let isCloneUsed = false;
             let isMirrorOptionUsed = false;
             let isAuthenticatedUriUsed = false;
+            let isUsingSSLVerfication = false;
             
             const task = new GitMirrorTask();
+
+            const getVerifySSLCertificateStub = sandbox.stub(task, "getVerifySSLCertificate").callsFake(() => {
+                return shouldVerifySSLCertificate;
+            });
             
             const getAuthenticatedGitUriStub = sandbox.stub(task, "getAuthenticatedGitUri").callsFake((uri: string, token: string) => {
                 return authenticatedUri;
@@ -404,6 +427,18 @@ describe("GitMirrorTask", () => {
                 return new ToolRunner(arg);
             });
 
+            const argIfStub = sandbox.stub(ToolRunner.prototype, "argIf").callsFake((conditionIsMet: boolean, arg: string) => {
+                if (conditionIsMet) {
+                    if (arg === "-c http.sslVerify=true") {
+                        isUsingSSLVerfication = true;
+                    }
+                    else if (arg === "-c http.sslVerify=false") {
+                        isUsingSSLVerfication = false;
+                    }
+                }    
+                return new ToolRunner(arg);
+            });
+
             const execStub = sandbox.stub(ToolRunner.prototype, "exec");
             
             task.gitCloneMirror();
@@ -413,6 +448,96 @@ describe("GitMirrorTask", () => {
             expect(isCloneUsed).to.be.true;
             expect(isMirrorOptionUsed).to.be.true;
             expect(isAuthenticatedUriUsed).to.be.true;
+            expect(execStub.called).to.be.true;
+        });
+
+        it("should enable SSL certificate verification", () => {
+            const authenticatedUri = "authenticatedUri";
+            const shouldVerifySSLCertificate = true;
+            
+            let isUsingSSLVerfication = false;
+            
+            const task = new GitMirrorTask();
+            
+            const getVerifySSLCertificateStub = sandbox.stub(task, "getVerifySSLCertificate").callsFake(() => {
+                return shouldVerifySSLCertificate;
+            });
+
+            const getAuthenticatedGitUriStub = sandbox.stub(task, "getAuthenticatedGitUri").callsFake((uri: string, token: string) => {
+                return authenticatedUri;
+            });
+            
+            const toolStub = sandbox.stub(taskLib, "tool").callsFake((tool: string) => {
+                return new ToolRunner(tool);
+            });
+
+            const argStub = sandbox.stub(ToolRunner.prototype, "arg").callsFake((arg: string) => {
+                return new ToolRunner(arg);
+            });
+
+            const argIfStub = sandbox.stub(ToolRunner.prototype, "argIf").callsFake((conditionIsMet: boolean, arg: string) => {
+                if (conditionIsMet) {
+                    if (arg === "-c http.sslVerify=true") {
+                        isUsingSSLVerfication = true;
+                    }
+                    else if (arg === "-c http.sslVerify=false") {
+                        isUsingSSLVerfication = false;
+                    }
+                }
+                return new ToolRunner(arg);
+            });
+
+            const execStub = sandbox.stub(ToolRunner.prototype, "exec");
+            
+            task.gitCloneMirror();
+            
+            expect(getAuthenticatedGitUriStub.called).to.be.true;
+            expect(isUsingSSLVerfication).to.be.true;
+            expect(execStub.called).to.be.true;
+        });
+
+        it("should disable SSL certificate verification", () => {
+            const authenticatedUri = "authenticatedUri";
+            const shouldVerifySSLCertificate = false;
+            
+            let isUsingSSLVerfication = false;
+            
+            const task = new GitMirrorTask();
+            
+            const getVerifySSLCertificateStub = sandbox.stub(task, "getVerifySSLCertificate").callsFake(() => {
+                return shouldVerifySSLCertificate;
+            });
+
+            const getAuthenticatedGitUriStub = sandbox.stub(task, "getAuthenticatedGitUri").callsFake((uri: string, token: string) => {
+                return authenticatedUri;
+            });
+            
+            const toolStub = sandbox.stub(taskLib, "tool").callsFake((tool: string) => {
+                return new ToolRunner(tool);
+            });
+
+            const argStub = sandbox.stub(ToolRunner.prototype, "arg").callsFake((arg: string) => {
+                return new ToolRunner(arg);
+            });
+
+            const argIfStub = sandbox.stub(ToolRunner.prototype, "argIf").callsFake((conditionIsMet: boolean, arg: string) => {
+                if (conditionIsMet) {
+                    if (arg === "-c http.sslVerify=true") {
+                        isUsingSSLVerfication = true;
+                    }
+                    else if (arg === "-c http.sslVerify=false") {
+                        isUsingSSLVerfication = false;
+                    }
+                }    
+                return new ToolRunner(arg);
+            });
+
+            const execStub = sandbox.stub(ToolRunner.prototype, "exec");
+            
+            task.gitCloneMirror();
+            
+            expect(getAuthenticatedGitUriStub.called).to.be.true;
+            expect(isUsingSSLVerfication).to.be.false;
             expect(execStub.called).to.be.true;
         });
     });
@@ -478,6 +603,14 @@ describe("GitMirrorTask", () => {
             expect(isMirrorOptionUsed).to.be.true;
             expect(isAuthenticatedUriUsed).to.be.true;
             expect(execStub.called).to.be.true;
+        });
+    });
+
+    describe("getVerifySSLCertificate", () => {
+        it("should return verify ssl certificate flag", () => {            
+            const task = new GitMirrorTask();
+            task.getVerifySSLCertificate();
+            expect(true).to.be.true;
         });
     });
 

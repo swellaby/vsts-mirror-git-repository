@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "mirror-git-repository",
     "name": "Mirror Git Repository",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "publisher": "Swellaby",
     "tags": ["git", "clone", "push", "mirror", "--mirror", "repo", "repository"],
     "targets": [{

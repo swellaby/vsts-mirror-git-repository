@@ -6,15 +6,17 @@ export class GitMirrorTask {
     private sourceGitRepositoryPersonalAccessToken: string;
     private destinationGitRepositoryUri: string;
     private destinationGitRepositoryPersonalAccessToken: string;
+    private verifySSLCertificate: boolean;
 
     public constructor() {
         try {
             if (this.taskIsRunnning()) {
                 this.sourceGitRepositoryUri = taskLib.getInput("sourceGitRepositoryUri", true);
                 this.sourceGitRepositoryPersonalAccessToken = taskLib.getInput("sourceGitRepositoryPersonalAccessToken", false);
+                this.verifySSLCertificate = taskLib.getBoolInput("verifySSLCertificate", false);
                 this.destinationGitRepositoryUri = taskLib.getInput("destinationGitRepositoryUri", true);
-                this.destinationGitRepositoryPersonalAccessToken = taskLib.getInput("destinationGitRepositoryPersonalAccessToken", true);                
-            } 
+                this.destinationGitRepositoryPersonalAccessToken = taskLib.getInput("destinationGitRepositoryPersonalAccessToken", true);
+            }
         } catch (e) {
             taskLib.setResult(taskLib.TaskResult.Failed, e);
         }
@@ -46,14 +48,17 @@ export class GitMirrorTask {
             } catch (e) {
                 taskLib.setResult(taskLib.TaskResult.Failed, e);
             }
-        }    
+        }
     }
 
     public gitCloneMirror() {
         const authenticatedSourceGitUrl = this.getAuthenticatedGitUri(this.sourceGitRepositoryUri, this.sourceGitRepositoryPersonalAccessToken);
+        const verifySSLCertificateFlag = this.getVerifySSLCertificate();
 
         return taskLib
             .tool("git")
+            .argIf(verifySSLCertificateFlag, "-c http.sslVerify=true")
+            .argIf(!verifySSLCertificateFlag, "-c http.sslVerify=false")
             .arg("clone")
             .arg("--mirror")
             .arg(authenticatedSourceGitUrl)
@@ -72,6 +77,10 @@ export class GitMirrorTask {
             .arg("--mirror")
             .arg(authenticatedDestinationGitUrl)
             .exec();
+    }
+
+    public getVerifySSLCertificate(): boolean {
+        return this.verifySSLCertificate;
     }
 
     public getSourceGitFolder(uri: string): string {
