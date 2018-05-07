@@ -4,18 +4,20 @@ import * as validUrl from "valid-url";
 export class GitMirrorTask {
     private sourceGitRepositoryUri: string;
     private sourceGitRepositoryPersonalAccessToken: string;
+    private sourceVerifySSLCertificate: boolean;
     private destinationGitRepositoryUri: string;
     private destinationGitRepositoryPersonalAccessToken: string;
-    private verifySSLCertificate: boolean;
+    private destinationVerifySSLCertificate: boolean;
 
     public constructor() {
         try {
             if (this.taskIsRunnning()) {
                 this.sourceGitRepositoryUri = taskLib.getInput("sourceGitRepositoryUri", true);
                 this.sourceGitRepositoryPersonalAccessToken = taskLib.getInput("sourceGitRepositoryPersonalAccessToken", false);
-                this.verifySSLCertificate = taskLib.getBoolInput("verifySSLCertificate", false);
+                this.sourceVerifySSLCertificate = taskLib.getBoolInput("sourceVerifySSLCertificate", false);
                 this.destinationGitRepositoryUri = taskLib.getInput("destinationGitRepositoryUri", true);
                 this.destinationGitRepositoryPersonalAccessToken = taskLib.getInput("destinationGitRepositoryPersonalAccessToken", true);
+                this.destinationVerifySSLCertificate = taskLib.getBoolInput("destinationVerifySSLCertificate", false);
             }
         } catch (e) {
             taskLib.setResult(taskLib.TaskResult.Failed, e);
@@ -53,12 +55,12 @@ export class GitMirrorTask {
 
     public gitCloneMirror() {
         const authenticatedSourceGitUrl = this.getAuthenticatedGitUri(this.sourceGitRepositoryUri, this.sourceGitRepositoryPersonalAccessToken);
-        const verifySSLCertificateFlag = this.getVerifySSLCertificate();
+        const verifySSLCertificateFlag = this.getSourceVerifySSLCertificate();
 
         return taskLib
             .tool("git")
-            .argIf(verifySSLCertificateFlag, "-c http.sslVerify=true")
-            .argIf(!verifySSLCertificateFlag, "-c http.sslVerify=false")
+            .argIf(verifySSLCertificateFlag, ["-c", "http.sslVerify=true"])
+            .argIf(!verifySSLCertificateFlag, ["-c", "http.sslVerify=false"])
             .arg("clone")
             .arg("--mirror")
             .arg(authenticatedSourceGitUrl)
@@ -68,9 +70,12 @@ export class GitMirrorTask {
     public gitPushMirror() {
         const sourceGitFolder = this.getSourceGitFolder(this.sourceGitRepositoryUri);
         const authenticatedDestinationGitUrl = this.getAuthenticatedGitUri(this.destinationGitRepositoryUri, this.destinationGitRepositoryPersonalAccessToken);
+        const verifySSLCertificateFlag = this.getDestinationVerifySSLCertificate();
 
         return taskLib
             .tool("git")
+            .argIf(verifySSLCertificateFlag, ["-c", "http.sslVerify=true"])
+            .argIf(!verifySSLCertificateFlag, ["-c", "http.sslVerify=false"])
             .arg("-C")
             .arg(sourceGitFolder)
             .arg("push")
@@ -79,8 +84,12 @@ export class GitMirrorTask {
             .exec();
     }
 
-    public getVerifySSLCertificate(): boolean {
-        return this.verifySSLCertificate;
+    public getSourceVerifySSLCertificate(): boolean {
+        return this.sourceVerifySSLCertificate;
+    }
+
+    public getDestinationVerifySSLCertificate(): boolean {
+        return this.destinationVerifySSLCertificate;
     }
 
     public getSourceGitFolder(uri: string): string {
