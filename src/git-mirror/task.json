@@ -29,14 +29,6 @@
             "defaultValue": ""
         },
         {
-            "name": "verifySSLCertificate",
-            "type": "boolean",
-            "label": "Verify SSL Certificate",
-            "defaultValue": "true",
-            "required": false,
-            "helpMarkDown": "Uncheck this option if you do not want Git to verify SSL certificates as a part of the cloning process"
-        },
-        {
             "name": "destinationGitRepositoryUri",
             "type": "string",
             "label": "Destination Git Repository",
@@ -51,6 +43,15 @@
             "required": true,
             "helpMarkDown": "A Personal Access Token that grants write access to the Git repository used as the Destination Git Repository",
             "defaultValue": ""
+        },
+        {
+            "name": "verifySSLCertificate",
+            "type": "boolean",
+            "label": "Verify SSL Certificate",
+            "defaultValue": "true",
+            "required": false,
+            "groupName": "Additional Options",
+            "helpMarkDown": "Uncheck this option if you do not want Git to verify SSL certificates as a part of the cloning process"
         }
     ],
     "execution": {

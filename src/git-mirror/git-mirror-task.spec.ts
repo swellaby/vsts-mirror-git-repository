@@ -428,14 +428,14 @@ describe("GitMirrorTask", () => {
             });
 
             const argIfStub = sandbox.stub(ToolRunner.prototype, "argIf").callsFake((conditionIsMet: boolean, arg: string) => {
-                if (conditionIsMet) {
-                    if (arg === "-c http.sslVerify=true") {
+                if (conditionIsMet && arg[0] !== undefined && arg[1] !== undefined) {
+                    if (arg[0] === "-c" && arg[1] === "http.sslVerify=true") {
                         isUsingSSLVerfication = true;
                     }
-                    else if (arg === "-c http.sslVerify=false") {
+                    else if (arg[0] === "-c" && arg[1] === "http.sslVerify=false") {
                         isUsingSSLVerfication = false;
                     }
-                }    
+                }
                 return new ToolRunner(arg);
             });
 
@@ -476,14 +476,14 @@ describe("GitMirrorTask", () => {
             });
 
             const argIfStub = sandbox.stub(ToolRunner.prototype, "argIf").callsFake((conditionIsMet: boolean, arg: string) => {
-                if (conditionIsMet) {
-                    if (arg === "-c http.sslVerify=true") {
+                if (conditionIsMet && arg[0] !== undefined && arg[1] !== undefined) {
+                    if (arg[0] === "-c" && arg[1] === "http.sslVerify=true") {
                         isUsingSSLVerfication = true;
                     }
-                    else if (arg === "-c http.sslVerify=false") {
+                    else if (arg[0] === "-c" && arg[1] === "http.sslVerify=false") {
                         isUsingSSLVerfication = false;
                     }
-                }
+                }    
                 return new ToolRunner(arg);
             });
 
@@ -521,11 +521,11 @@ describe("GitMirrorTask", () => {
             });
 
             const argIfStub = sandbox.stub(ToolRunner.prototype, "argIf").callsFake((conditionIsMet: boolean, arg: string) => {
-                if (conditionIsMet) {
-                    if (arg === "-c http.sslVerify=true") {
+                if (conditionIsMet && arg[0] !== undefined && arg[1] !== undefined) {
+                    if (arg[0] === "-c" && arg[1] === "http.sslVerify=true") {
                         isUsingSSLVerfication = true;
                     }
-                    else if (arg === "-c http.sslVerify=false") {
+                    else if (arg[0] === "-c" && arg[1] === "http.sslVerify=false") {
                         isUsingSSLVerfication = false;
                     }
                 }    

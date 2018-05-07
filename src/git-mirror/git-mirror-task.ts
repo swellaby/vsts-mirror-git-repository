@@ -57,8 +57,8 @@ export class GitMirrorTask {
 
         return taskLib
             .tool("git")
-            .argIf(verifySSLCertificateFlag, "-c http.sslVerify=true")
-            .argIf(!verifySSLCertificateFlag, "-c http.sslVerify=false")
+            .argIf(verifySSLCertificateFlag, ["-c", "http.sslVerify=true"])
+            .argIf(!verifySSLCertificateFlag, ["-c", "http.sslVerify=false"])
             .arg("clone")
             .arg("--mirror")
             .arg(authenticatedSourceGitUrl)
