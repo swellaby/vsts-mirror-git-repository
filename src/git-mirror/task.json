@@ -29,6 +29,14 @@
             "defaultValue": ""
         },
         {
+            "name": "sourceVerifySSLCertificate",
+            "type": "boolean",
+            "label": "Verify SSL Certificate on Source Repository",
+            "defaultValue": "true",
+            "required": false,
+            "helpMarkDown": "Uncheck this option if you do not want Git to verify SSL certificates as a part of the cloning process"
+        },
+        {
             "name": "destinationGitRepositoryUri",
             "type": "string",
             "label": "Destination Git Repository",
@@ -45,13 +53,12 @@
             "defaultValue": ""
         },
         {
-            "name": "verifySSLCertificate",
+            "name": "destinationVerifySSLCertificate",
             "type": "boolean",
-            "label": "Verify SSL Certificate",
+            "label": "Verify SSL Certificate on Destination Repository",
             "defaultValue": "true",
             "required": false,
-            "groupName": "Additional Options",
-            "helpMarkDown": "Uncheck this option if you do not want Git to verify SSL certificates as a part of the cloning process"
+            "helpMarkDown": "Uncheck this option if you do not want Git to verify SSL certificates as a part of the push process"
         }
     ],
     "execution": {
