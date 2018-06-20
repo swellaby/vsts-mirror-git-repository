@@ -8,6 +8,7 @@
 
 [![Linux Build Badge][travis-ci-build-status-badge]][travis-ci-url]
 [![AppVeyor Build Status][appveyor-build-status-badge]][appveyor-url]
+[![Test Results Badge][tests-badge]][appveyor-url]
 [![Coveralls Badge][coveralls-badge]][coveralls-url]
 [![Sonar Quality Gate][sonar-quality-gate-badge]][sonar-url]
 [![License Badge][license-badge]][repo-url]
@@ -146,6 +147,7 @@ The Git logo is the orginal property of [Jason Long][jason-long-twitter-url] and
 [travis-ci-build-status-badge]: https://img.shields.io/travis/swellaby/vsts-mirror-git-repository.svg?label=linux%20build&style=flat-square
 [travis-ci-url]: https://travis-ci.org/swellaby/vsts-mirror-git-repository
 [appveyor-build-status-badge]: https://img.shields.io/appveyor/ci/swellaby/vsts-mirror-git-repository.svg?label=windows%20build&style=flat-square
+[tests-badge]: https://img.shields.io/appveyor/tests/swellaby/vsts-mirror-git-repository.svg
 [appveyor-url]: https://ci.appveyor.com/project/swellaby/vsts-mirror-git-repository
 [coveralls-badge]: https://img.shields.io/coveralls/github/swellaby/vsts-mirror-git-repository.svg?style=flat-square
 [coveralls-url]: https://coveralls.io/github/swellaby/vsts-mirror-git-repository

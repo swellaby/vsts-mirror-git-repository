@@ -24,28 +24,22 @@ export class GitMirrorTask {
         }
     }
 
-    public run() {
+    public async run() {
         if (this.taskIsRunnning()) {
 
             try {
                 // check if git exists as a tool
                 taskLib.which("git", true);
-
-                this.gitCloneMirror().then((code) => {
-                    if (code !== 0) {
-                        taskLib.setResult(taskLib.TaskResult.Failed, "An error occurred when attempting to clone the source repository. Please check output for more details.");
-                        return;
-                    }
-                    this.gitPushMirror().then((code) => {
-                        if (code !== 0) {
-                            taskLib.setResult(taskLib.TaskResult.Failed, "An error occurred when attempting to push to the destination repository. Please check output for more details.");
-                        }
-                    }).catch((err) => {
-                        taskLib.setResult(taskLib.TaskResult.Failed, err);
-                    });
-                }).catch((err) => {
-                    taskLib.setResult(taskLib.TaskResult.Failed, err);
-                });
+                const cloneMirrorResponseCode = await this.gitCloneMirror();
+                if (cloneMirrorResponseCode !== 0) {
+                    taskLib.setResult(taskLib.TaskResult.Failed, "An error occurred when attempting to clone the source repository. Please check output for more details.");
+                    return;
+                }
+                
+                const pushMirrorResponseCode = await this.gitPushMirror();
+                if (pushMirrorResponseCode !== 0) {
+                    taskLib.setResult(taskLib.TaskResult.Failed, "An error occurred when attempting to push to the destination repository. Please check output for more details.");
+                }
 
             } catch (e) {
                 taskLib.setResult(taskLib.TaskResult.Failed, e);
