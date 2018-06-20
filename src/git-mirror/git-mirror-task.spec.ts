@@ -1,8 +1,6 @@
-import "mocha";
+// import "mocha";
 import { expect } from "chai";
 import * as sinon from "sinon";
-const sinonStubPromise = require("sinon-stub-promise");
-sinonStubPromise(sinon);
 
 import * as taskLib from "vsts-task-lib";
 import { ToolRunner } from "vsts-task-lib/mock-toolrunner";
@@ -19,8 +17,6 @@ let destinationVerifySSLCertificate;
 let getInputStub;
 let getBoolInputStub;
 
-let sandbox;
-
 beforeEach(function() {
     sourceUri = "https://github.com/swellaby/vsts-mirror-git-repository";
     sourcePAT = "xxxxxxxxxx";
@@ -29,9 +25,7 @@ beforeEach(function() {
     destinationPAT = "xxxxxxxxxx";
     destinationVerifySSLCertificate = true;
 
-    sandbox = sinon.sandbox.create();
-
-    getInputStub = sandbox.stub(taskLib, "getInput").callsFake((name: string, required?: boolean) => {
+    getInputStub = sinon.stub(taskLib, "getInput").callsFake((name: string, required?: boolean) => {
         switch (name) {
             case "sourceGitRepositoryUri":
                 if (required && sourceUri === undefined) {
@@ -59,7 +53,7 @@ beforeEach(function() {
         }
     });
 
-    getBoolInputStub = sandbox.stub(taskLib, "getBoolInput").callsFake((name: string, required?: boolean) => {
+    getBoolInputStub = sinon.stub(taskLib, "getBoolInput").callsFake((name: string, required?: boolean) => {
         switch (name) {
             case "sourceVerifySSLCertificate":
                 if (required && sourceVerifySSLCertificate === undefined) {
@@ -79,8 +73,8 @@ beforeEach(function() {
 });
 
 afterEach(function() {
-    getInputStub.restore();
-    sandbox.restore();
+    // getInputStub.restore();
+    sinon.restore();
 });
 
 describe("GitMirrorTask", () => {
@@ -88,11 +82,11 @@ describe("GitMirrorTask", () => {
         it("should allow defined values for all input fields", () => {
             let taskSucceeded = true;
 
-            const getVariablesStub = sandbox.stub(taskLib, "getVariables").callsFake(() => {
+            const getVariablesStub = sinon.stub(taskLib, "getVariables").callsFake(() => {
                 return ["1", "2", "3"];
             });
 
-            const setResultStub = sandbox.stub(taskLib, "setResult").callsFake((result: taskLib.TaskResult, message: string) => {
+            const setResultStub = sinon.stub(taskLib, "setResult").callsFake((result: taskLib.TaskResult, message: string) => {
                 if (result === taskLib.TaskResult.Failed) {
                     taskSucceeded = false;
                 }
@@ -107,11 +101,11 @@ describe("GitMirrorTask", () => {
             sourceUri = undefined;
             let taskSucceeded = true;
 
-            const getVariablesStub = sandbox.stub(taskLib, "getVariables").callsFake(() => {
+            const getVariablesStub = sinon.stub(taskLib, "getVariables").callsFake(() => {
                 return ["1", "2", "3"];
             });
 
-            const setResultStub = sandbox.stub(taskLib, "setResult").callsFake((result: taskLib.TaskResult, message: string) => {
+            const setResultStub = sinon.stub(taskLib, "setResult").callsFake((result: taskLib.TaskResult, message: string) => {
                 if (result === taskLib.TaskResult.Failed) {
                     taskSucceeded = false;
                 }
@@ -126,11 +120,11 @@ describe("GitMirrorTask", () => {
             sourcePAT = undefined;
             let taskSucceeded = true;
 
-            const getVariablesStub = sandbox.stub(taskLib, "getVariables").callsFake(() => {
+            const getVariablesStub = sinon.stub(taskLib, "getVariables").callsFake(() => {
                 return ["1", "2", "3"];
             });
 
-            const setResultStub = sandbox.stub(taskLib, "setResult").callsFake((result: taskLib.TaskResult, message: string) => {
+            const setResultStub = sinon.stub(taskLib, "setResult").callsFake((result: taskLib.TaskResult, message: string) => {
                 if (result === taskLib.TaskResult.Failed) {
                     taskSucceeded = false;
                 }
@@ -145,11 +139,11 @@ describe("GitMirrorTask", () => {
             destinationUri = undefined;
             let taskSucceeded = true;
 
-            const getVariablesStub = sandbox.stub(taskLib, "getVariables").callsFake(() => {
+            const getVariablesStub = sinon.stub(taskLib, "getVariables").callsFake(() => {
                 return ["1", "2", "3"];
             });
 
-            const setResultStub = sandbox.stub(taskLib, "setResult").callsFake((result: taskLib.TaskResult, message: string) => {
+            const setResultStub = sinon.stub(taskLib, "setResult").callsFake((result: taskLib.TaskResult, message: string) => {
                 if (result === taskLib.TaskResult.Failed) {
                     taskSucceeded = false;
                 }
@@ -164,13 +158,13 @@ describe("GitMirrorTask", () => {
             destinationPAT = undefined;
             let taskSucceeded = true;
 
-            const setResultStub = sandbox.stub(taskLib, "setResult").callsFake((result: taskLib.TaskResult, message: string) => {
+            const setResultStub = sinon.stub(taskLib, "setResult").callsFake((result: taskLib.TaskResult, message: string) => {
                 if (result === taskLib.TaskResult.Failed) {
                     taskSucceeded = false;
                 }
             });
 
-            const getVariablesStub = sandbox.stub(taskLib, "getVariables").callsFake(() => {
+            const getVariablesStub = sinon.stub(taskLib, "getVariables").callsFake(() => {
                 return ["1", "2", "3"];
             });
 
@@ -185,11 +179,11 @@ describe("GitMirrorTask", () => {
             let gitToolExists = false;
             let throwErrorIfGitDoesNotExist = false;
 
-            const getVariablesStub = sandbox.stub(taskLib, "getVariables").callsFake(() => {
+            const getVariablesStub = sinon.stub(taskLib, "getVariables").callsFake(() => {
                 return ["1", "2", "3"];
             });
 
-            const whichStub = sandbox.stub(taskLib, "which").callsFake((tool: string, check?: boolean) => {
+            const whichStub = sinon.stub(taskLib, "which").callsFake((tool: string, check?: boolean) => {
                 if (tool === "git") {
                     gitToolExists = true;
                 }
@@ -200,11 +194,11 @@ describe("GitMirrorTask", () => {
 
             const task = new GitMirrorTask();
 
-            const gitCloneMirrorStub = sandbox.stub(task, "gitCloneMirror");
-            gitCloneMirrorStub.returnsPromise().resolves(0);
+            const gitCloneMirrorStub = sinon.stub(task, "gitCloneMirror");
+            gitCloneMirrorStub.resolves(0);
 
-            const gitPushMirrorStub = sandbox.stub(task, "gitPushMirror");
-            gitPushMirrorStub.returnsPromise().resolves(0);
+            const gitPushMirrorStub = sinon.stub(task, "gitPushMirror");
+            gitPushMirrorStub.resolves(0);
 
             task.run();
 
@@ -215,15 +209,15 @@ describe("GitMirrorTask", () => {
         it("should fail the task if the Git tool is not installed on the build agent", () => {
             let taskSucceeded = true;
 
-            const getVariablesStub = sandbox.stub(taskLib, "getVariables").callsFake(() => {
+            const getVariablesStub = sinon.stub(taskLib, "getVariables").callsFake(() => {
                 return ["1", "2", "3"];
             });
 
-            const whichStub = sandbox.stub(taskLib, "which").callsFake((tool: string, check?: boolean) => {
+            const whichStub = sinon.stub(taskLib, "which").callsFake((tool: string, check?: boolean) => {
                 throw new Error("git tool does not exist");
             });
 
-            const setResultStub = sandbox.stub(taskLib, "setResult").callsFake((result: taskLib.TaskResult, message: string) => {
+            const setResultStub = sinon.stub(taskLib, "setResult").callsFake((result: taskLib.TaskResult, message: string) => {
                 if (result === taskLib.TaskResult.Failed) {
                     taskSucceeded = false;
                 }
@@ -231,11 +225,11 @@ describe("GitMirrorTask", () => {
 
             const task = new GitMirrorTask();
 
-            const gitCloneMirrorStub = sandbox.stub(task, "gitCloneMirror");
-            gitCloneMirrorStub.returnsPromise().resolves(0);
+            const gitCloneMirrorStub = sinon.stub(task, "gitCloneMirror");
+            gitCloneMirrorStub.resolves(0);
 
-            const gitPushMirrorStub = sandbox.stub(task, "gitPushMirror");
-            gitPushMirrorStub.returnsPromise().resolves(0);
+            const gitPushMirrorStub = sinon.stub(task, "gitPushMirror");
+            gitPushMirrorStub.resolves(0);
 
             task.run();
 
@@ -245,13 +239,13 @@ describe("GitMirrorTask", () => {
         it("should successfully perform a git clone and git push", () => {
             let taskSucceeded = true;
 
-            const getVariablesStub = sandbox.stub(taskLib, "getVariables").callsFake(() => {
+            const getVariablesStub = sinon.stub(taskLib, "getVariables").callsFake(() => {
                 return ["1", "2", "3"];
             });
 
-            const whichStub = sandbox.stub(taskLib, "which");
+            const whichStub = sinon.stub(taskLib, "which");
 
-            const setResultStub = sandbox.stub(taskLib, "setResult").callsFake((result: taskLib.TaskResult, message: string) => {
+            const setResultStub = sinon.stub(taskLib, "setResult").callsFake((result: taskLib.TaskResult, message: string) => {
                 if (result === taskLib.TaskResult.Failed) {
                     taskSucceeded = false;
                 }
@@ -259,29 +253,30 @@ describe("GitMirrorTask", () => {
 
             const task = new GitMirrorTask();
 
-            const gitCloneMirrorStub = sandbox.stub(task, "gitCloneMirror");
-            gitCloneMirrorStub.returnsPromise().resolves(0);
+            const gitCloneMirrorStub = sinon.stub(task, "gitCloneMirror");
+            gitCloneMirrorStub.resolves(0);
 
-            const gitPushMirrorStub = sandbox.stub(task, "gitPushMirror");
-            gitPushMirrorStub.returnsPromise().resolves(0);
+            const gitPushMirrorStub = sinon.stub(task, "gitPushMirror");
+            gitPushMirrorStub.resolves(0);
 
             task.run();
 
             expect(taskSucceeded).to.be.true;
             expect(gitCloneMirrorStub.called).to.be.true;
+            
             expect(gitPushMirrorStub.called).to.be.true;
         });
 
         it("should fail the task if the 'git clone --mirror ...' command throws an error", () => {
             let taskSucceeded = true;
 
-            const getVariablesStub = sandbox.stub(taskLib, "getVariables").callsFake(() => {
+            const getVariablesStub = sinon.stub(taskLib, "getVariables").callsFake(() => {
                 return ["1", "2", "3"];
             });
 
-            const whichStub = sandbox.stub(taskLib, "which");
+            const whichStub = sinon.stub(taskLib, "which");
 
-            const setResultStub = sandbox.stub(taskLib, "setResult").callsFake((result: taskLib.TaskResult, message: string) => {
+            const setResultStub = sinon.stub(taskLib, "setResult").callsFake((result: taskLib.TaskResult, message: string) => {
                 if (result === taskLib.TaskResult.Failed) {
                     taskSucceeded = false;
                 }
@@ -289,11 +284,11 @@ describe("GitMirrorTask", () => {
 
             const task = new GitMirrorTask();
 
-            const gitCloneMirrorStub = sandbox.stub(task, "gitCloneMirror");
-            gitCloneMirrorStub.returnsPromise().resolves(1);
+            const gitCloneMirrorStub = sinon.stub(task, "gitCloneMirror");
+            gitCloneMirrorStub.resolves(1);
 
-            const gitPushMirrorStub = sandbox.stub(task, "gitPushMirror");
-            gitPushMirrorStub.returnsPromise().resolves(0);
+            const gitPushMirrorStub = sinon.stub(task, "gitPushMirror");
+            gitPushMirrorStub.resolves(0);
 
             task.run();
 
@@ -305,13 +300,13 @@ describe("GitMirrorTask", () => {
         it("should fail the task if an error occurs when trying to invoke git clone mirror", () => {
             let taskSucceeded = true;
 
-            const getVariablesStub = sandbox.stub(taskLib, "getVariables").callsFake(() => {
+            const getVariablesStub = sinon.stub(taskLib, "getVariables").callsFake(() => {
                 return ["1", "2", "3"];
             });
 
-            const whichStub = sandbox.stub(taskLib, "which");
+            const whichStub = sinon.stub(taskLib, "which");
 
-            const setResultStub = sandbox.stub(taskLib, "setResult").callsFake((result: taskLib.TaskResult, message: string) => {
+            const setResultStub = sinon.stub(taskLib, "setResult").callsFake((result: taskLib.TaskResult, message: string) => {
                 if (result === taskLib.TaskResult.Failed) {
                     taskSucceeded = false;
                 }
@@ -319,11 +314,11 @@ describe("GitMirrorTask", () => {
 
             const task = new GitMirrorTask();
 
-            const gitCloneMirrorStub = sandbox.stub(task, "gitCloneMirror");
-            gitCloneMirrorStub.returnsPromise().rejects();
+            const gitCloneMirrorStub = sinon.stub(task, "gitCloneMirror");
+            gitCloneMirrorStub.rejects();
 
-            const gitPushMirrorStub = sandbox.stub(task, "gitPushMirror");
-            gitPushMirrorStub.returnsPromise().resolves(0);
+            const gitPushMirrorStub = sinon.stub(task, "gitPushMirror");
+            gitPushMirrorStub.resolves(0);
 
             task.run();
 
@@ -335,13 +330,13 @@ describe("GitMirrorTask", () => {
         it("should fail the task if the 'git push --mirror ...' command throws an error", () => {
             let taskSucceeded = true;
 
-            const getVariablesStub = sandbox.stub(taskLib, "getVariables").callsFake(() => {
+            const getVariablesStub = sinon.stub(taskLib, "getVariables").callsFake(() => {
                 return ["1", "2", "3"];
             });
 
-            const whichStub = sandbox.stub(taskLib, "which");
+            const whichStub = sinon.stub(taskLib, "which");
 
-            const setResultStub = sandbox.stub(taskLib, "setResult").callsFake((result: taskLib.TaskResult, message: string) => {
+            const setResultStub = sinon.stub(taskLib, "setResult").callsFake((result: taskLib.TaskResult, message: string) => {
                 if (result === taskLib.TaskResult.Failed) {
                     taskSucceeded = false;
                 }
@@ -349,11 +344,11 @@ describe("GitMirrorTask", () => {
 
             const task = new GitMirrorTask();
 
-            const gitCloneMirrorStub = sandbox.stub(task, "gitCloneMirror");
-            gitCloneMirrorStub.returnsPromise().resolves(0);
+            const gitCloneMirrorStub = sinon.stub(task, "gitCloneMirror");
+            gitCloneMirrorStub.resolves(0);
 
-            const gitPushMirrorStub = sandbox.stub(task, "gitPushMirror");
-            gitPushMirrorStub.returnsPromise().resolves(1);
+            const gitPushMirrorStub = sinon.stub(task, "gitPushMirror");
+            gitPushMirrorStub.resolves(1);
 
             task.run();
 
@@ -365,13 +360,13 @@ describe("GitMirrorTask", () => {
         it("should fail the task if an error occurs when trying to invoke git push mirror", () => {
             let taskSucceeded = true;
 
-            const getVariablesStub = sandbox.stub(taskLib, "getVariables").callsFake(() => {
+            const getVariablesStub = sinon.stub(taskLib, "getVariables").callsFake(() => {
                 return ["1", "2", "3"];
             });
 
-            const whichStub = sandbox.stub(taskLib, "which");
+            const whichStub = sinon.stub(taskLib, "which");
 
-            const setResultStub = sandbox.stub(taskLib, "setResult").callsFake((result: taskLib.TaskResult, message: string) => {
+            const setResultStub = sinon.stub(taskLib, "setResult").callsFake((result: taskLib.TaskResult, message: string) => {
                 if (result === taskLib.TaskResult.Failed) {
                     taskSucceeded = false;
                 }
@@ -379,11 +374,11 @@ describe("GitMirrorTask", () => {
 
             const task = new GitMirrorTask();
 
-            const gitCloneMirrorStub = sandbox.stub(task, "gitCloneMirror");
-            gitCloneMirrorStub.returnsPromise().resolves(0);
+            const gitCloneMirrorStub = sinon.stub(task, "gitCloneMirror");
+            gitCloneMirrorStub.resolves(0);
 
-            const gitPushMirrorStub = sandbox.stub(task, "gitPushMirror");
-            gitPushMirrorStub.returnsPromise().rejects();
+            const gitPushMirrorStub = sinon.stub(task, "gitPushMirror");
+            gitPushMirrorStub.rejects();
 
             task.run();
 
@@ -406,22 +401,22 @@ describe("GitMirrorTask", () => {
 
             const task = new GitMirrorTask();
 
-            const getSourceVerifySSLCertificateStub = sandbox.stub(task, "getSourceVerifySSLCertificate").callsFake(() => {
+            const getSourceVerifySSLCertificateStub = sinon.stub(task, "getSourceVerifySSLCertificate").callsFake(() => {
                 return shouldVerifySSLCertificate;
             });
 
-            const getAuthenticatedGitUriStub = sandbox.stub(task, "getAuthenticatedGitUri").callsFake((uri: string, token: string) => {
+            const getAuthenticatedGitUriStub = sinon.stub(task, "getAuthenticatedGitUri").callsFake((uri: string, token: string) => {
                 return authenticatedUri;
             });
 
-            const toolStub = sandbox.stub(taskLib, "tool").callsFake((tool: string) => {
+            const toolStub = sinon.stub(taskLib, "tool").callsFake((tool: string) => {
                 if (tool === "git") {
                     usingGitTool = true;
                 }
                 return new ToolRunner(tool);
             });
 
-            const argStub = sandbox.stub(ToolRunner.prototype, "arg").callsFake((arg: string) => {
+            const argStub = sinon.stub(ToolRunner.prototype, "arg").callsFake((arg: string) => {
                 if (arg === "clone") {
                     isCloneUsed = true;
                 }
@@ -434,7 +429,7 @@ describe("GitMirrorTask", () => {
                 return new ToolRunner(arg);
             });
 
-            const argIfStub = sandbox.stub(ToolRunner.prototype, "argIf").callsFake((conditionIsMet: boolean, arg: string) => {
+            const argIfStub = sinon.stub(ToolRunner.prototype, "argIf").callsFake((conditionIsMet: boolean, arg: string) => {
                 if (conditionIsMet && arg[0] !== undefined && arg[1] !== undefined) {
                     if (arg[0] === "-c" && arg[1] === "http.sslVerify=true") {
                         isUsingSSLVerfication = true;
@@ -446,7 +441,7 @@ describe("GitMirrorTask", () => {
                 return new ToolRunner(arg);
             });
 
-            const execStub = sandbox.stub(ToolRunner.prototype, "exec");
+            const execStub = sinon.stub(ToolRunner.prototype, "exec");
 
             task.gitCloneMirror();
 
@@ -466,23 +461,23 @@ describe("GitMirrorTask", () => {
 
             const task = new GitMirrorTask();
 
-            const getSourceVerifySSLCertificateStub = sandbox.stub(task, "getSourceVerifySSLCertificate").callsFake(() => {
+            const getSourceVerifySSLCertificateStub = sinon.stub(task, "getSourceVerifySSLCertificate").callsFake(() => {
                 return shouldVerifySSLCertificate;
             });
 
-            const getAuthenticatedGitUriStub = sandbox.stub(task, "getAuthenticatedGitUri").callsFake((uri: string, token: string) => {
+            const getAuthenticatedGitUriStub = sinon.stub(task, "getAuthenticatedGitUri").callsFake((uri: string, token: string) => {
                 return authenticatedUri;
             });
 
-            const toolStub = sandbox.stub(taskLib, "tool").callsFake((tool: string) => {
+            const toolStub = sinon.stub(taskLib, "tool").callsFake((tool: string) => {
                 return new ToolRunner(tool);
             });
 
-            const argStub = sandbox.stub(ToolRunner.prototype, "arg").callsFake((arg: string) => {
+            const argStub = sinon.stub(ToolRunner.prototype, "arg").callsFake((arg: string) => {
                 return new ToolRunner(arg);
             });
 
-            const argIfStub = sandbox.stub(ToolRunner.prototype, "argIf").callsFake((conditionIsMet: boolean, arg: string) => {
+            const argIfStub = sinon.stub(ToolRunner.prototype, "argIf").callsFake((conditionIsMet: boolean, arg: string) => {
                 if (conditionIsMet && arg[0] !== undefined && arg[1] !== undefined) {
                     if (arg[0] === "-c" && arg[1] === "http.sslVerify=true") {
                         isUsingSSLVerfication = true;
@@ -494,7 +489,7 @@ describe("GitMirrorTask", () => {
                 return new ToolRunner(arg);
             });
 
-            const execStub = sandbox.stub(ToolRunner.prototype, "exec");
+            const execStub = sinon.stub(ToolRunner.prototype, "exec");
 
             task.gitCloneMirror();
 
@@ -511,23 +506,23 @@ describe("GitMirrorTask", () => {
 
             const task = new GitMirrorTask();
 
-            const getSourceVerifySSLCertificateStub = sandbox.stub(task, "getSourceVerifySSLCertificate").callsFake(() => {
+            const getSourceVerifySSLCertificateStub = sinon.stub(task, "getSourceVerifySSLCertificate").callsFake(() => {
                 return shouldVerifySSLCertificate;
             });
 
-            const getAuthenticatedGitUriStub = sandbox.stub(task, "getAuthenticatedGitUri").callsFake((uri: string, token: string) => {
+            const getAuthenticatedGitUriStub = sinon.stub(task, "getAuthenticatedGitUri").callsFake((uri: string, token: string) => {
                 return authenticatedUri;
             });
 
-            const toolStub = sandbox.stub(taskLib, "tool").callsFake((tool: string) => {
+            const toolStub = sinon.stub(taskLib, "tool").callsFake((tool: string) => {
                 return new ToolRunner(tool);
             });
 
-            const argStub = sandbox.stub(ToolRunner.prototype, "arg").callsFake((arg: string) => {
+            const argStub = sinon.stub(ToolRunner.prototype, "arg").callsFake((arg: string) => {
                 return new ToolRunner(arg);
             });
 
-            const argIfStub = sandbox.stub(ToolRunner.prototype, "argIf").callsFake((conditionIsMet: boolean, arg: string) => {
+            const argIfStub = sinon.stub(ToolRunner.prototype, "argIf").callsFake((conditionIsMet: boolean, arg: string) => {
                 if (conditionIsMet && arg[0] !== undefined && arg[1] !== undefined) {
                     if (arg[0] === "-c" && arg[1] === "http.sslVerify=true") {
                         isUsingSSLVerfication = true;
@@ -539,7 +534,7 @@ describe("GitMirrorTask", () => {
                 return new ToolRunner(arg);
             });
 
-            const execStub = sandbox.stub(ToolRunner.prototype, "exec");
+            const execStub = sinon.stub(ToolRunner.prototype, "exec");
 
             task.gitCloneMirror();
 
@@ -565,26 +560,26 @@ describe("GitMirrorTask", () => {
 
             const task = new GitMirrorTask();
 
-            const getDestinationVerifySSLCertificateStub = sandbox.stub(task, "getDestinationVerifySSLCertificate").callsFake(() => {
+            const getDestinationVerifySSLCertificateStub = sinon.stub(task, "getDestinationVerifySSLCertificate").callsFake(() => {
                 return shouldVerifySSLCertificate;
             });
 
-            const getSourceGitFolderStub = sandbox.stub(task, "getSourceGitFolder").callsFake((uri: string) => {
+            const getSourceGitFolderStub = sinon.stub(task, "getSourceGitFolder").callsFake((uri: string) => {
                 return sourceFolder;
             });
 
-            const getAuthenticatedGitUriStub = sandbox.stub(task, "getAuthenticatedGitUri").callsFake((uri: string, token: string) => {
+            const getAuthenticatedGitUriStub = sinon.stub(task, "getAuthenticatedGitUri").callsFake((uri: string, token: string) => {
                 return authenticatedUri;
             });
 
-            const toolStub = sandbox.stub(taskLib, "tool").callsFake((tool: string) => {
+            const toolStub = sinon.stub(taskLib, "tool").callsFake((tool: string) => {
                 if (tool === "git") {
                     usingGitTool = true;
                 }
                 return new ToolRunner(tool);
             });
 
-            const argStub = sandbox.stub(ToolRunner.prototype, "arg").callsFake((arg: string) => {
+            const argStub = sinon.stub(ToolRunner.prototype, "arg").callsFake((arg: string) => {
                 if (arg === "-C") {
                     isCOptionUsed = true;
                 }
@@ -603,7 +598,7 @@ describe("GitMirrorTask", () => {
                 return new ToolRunner(arg);
             });
 
-            const argIfStub = sandbox.stub(ToolRunner.prototype, "argIf").callsFake((conditionIsMet: boolean, arg: string) => {
+            const argIfStub = sinon.stub(ToolRunner.prototype, "argIf").callsFake((conditionIsMet: boolean, arg: string) => {
                 if (conditionIsMet && arg[0] !== undefined && arg[1] !== undefined) {
                     if (arg[0] === "-c" && arg[1] === "http.sslVerify=true") {
                         isUsingSSLVerfication = true;
@@ -615,7 +610,7 @@ describe("GitMirrorTask", () => {
                 return new ToolRunner(arg);
             });
 
-            const execStub = sandbox.stub(ToolRunner.prototype, "exec");
+            const execStub = sinon.stub(ToolRunner.prototype, "exec");
 
             task.gitPushMirror();
 
@@ -640,27 +635,27 @@ describe("GitMirrorTask", () => {
 
             const task = new GitMirrorTask();
 
-            const getDestinationVerifySSLCertificateStub = sandbox.stub(task, "getDestinationVerifySSLCertificate").callsFake(() => {
+            const getDestinationVerifySSLCertificateStub = sinon.stub(task, "getDestinationVerifySSLCertificate").callsFake(() => {
                 return shouldVerifySSLCertificate;
             });
 
-            const getSourceGitFolderStub = sandbox.stub(task, "getSourceGitFolder").callsFake((uri: string) => {
+            const getSourceGitFolderStub = sinon.stub(task, "getSourceGitFolder").callsFake((uri: string) => {
                 return sourceFolder;
             });
 
-            const getAuthenticatedGitUriStub = sandbox.stub(task, "getAuthenticatedGitUri").callsFake((uri: string, token: string) => {
+            const getAuthenticatedGitUriStub = sinon.stub(task, "getAuthenticatedGitUri").callsFake((uri: string, token: string) => {
                 return authenticatedUri;
             });
 
-            const toolStub = sandbox.stub(taskLib, "tool").callsFake((tool: string) => {
+            const toolStub = sinon.stub(taskLib, "tool").callsFake((tool: string) => {
                 return new ToolRunner(tool);
             });
 
-            const argStub = sandbox.stub(ToolRunner.prototype, "arg").callsFake((arg: string) => {
+            const argStub = sinon.stub(ToolRunner.prototype, "arg").callsFake((arg: string) => {
                 return new ToolRunner(arg);
             });
 
-            const argIfStub = sandbox.stub(ToolRunner.prototype, "argIf").callsFake((conditionIsMet: boolean, arg: string) => {
+            const argIfStub = sinon.stub(ToolRunner.prototype, "argIf").callsFake((conditionIsMet: boolean, arg: string) => {
                 if (conditionIsMet && arg[0] !== undefined && arg[1] !== undefined) {
                     if (arg[0] === "-c" && arg[1] === "http.sslVerify=true") {
                         isUsingSSLVerfication = true;
@@ -672,7 +667,7 @@ describe("GitMirrorTask", () => {
                 return new ToolRunner(arg);
             });
 
-            const execStub = sandbox.stub(ToolRunner.prototype, "exec");
+            const execStub = sinon.stub(ToolRunner.prototype, "exec");
 
             task.gitPushMirror();
 
@@ -698,26 +693,26 @@ describe("GitMirrorTask", () => {
 
             const task = new GitMirrorTask();
 
-            const getDestinationVerifySSLCertificateStub = sandbox.stub(task, "getDestinationVerifySSLCertificate").callsFake(() => {
+            const getDestinationVerifySSLCertificateStub = sinon.stub(task, "getDestinationVerifySSLCertificate").callsFake(() => {
                 return shouldVerifySSLCertificate;
             });
 
-            const getSourceGitFolderStub = sandbox.stub(task, "getSourceGitFolder").callsFake((uri: string) => {
+            const getSourceGitFolderStub = sinon.stub(task, "getSourceGitFolder").callsFake((uri: string) => {
                 return sourceFolder;
             });
 
-            const getAuthenticatedGitUriStub = sandbox.stub(task, "getAuthenticatedGitUri").callsFake((uri: string, token: string) => {
+            const getAuthenticatedGitUriStub = sinon.stub(task, "getAuthenticatedGitUri").callsFake((uri: string, token: string) => {
                 return authenticatedUri;
             });
 
-            const toolStub = sandbox.stub(taskLib, "tool").callsFake((tool: string) => {
+            const toolStub = sinon.stub(taskLib, "tool").callsFake((tool: string) => {
                 if (tool === "git") {
                     usingGitTool = true;
                 }
                 return new ToolRunner(tool);
             });
 
-            const argStub = sandbox.stub(ToolRunner.prototype, "arg").callsFake((arg: string) => {
+            const argStub = sinon.stub(ToolRunner.prototype, "arg").callsFake((arg: string) => {
                 if (arg === "-C") {
                     isCOptionUsed = true;
                 }
@@ -736,7 +731,7 @@ describe("GitMirrorTask", () => {
                 return new ToolRunner(arg);
             });
 
-            const argIfStub = sandbox.stub(ToolRunner.prototype, "argIf").callsFake((conditionIsMet: boolean, arg: string) => {
+            const argIfStub = sinon.stub(ToolRunner.prototype, "argIf").callsFake((conditionIsMet: boolean, arg: string) => {
                 if (conditionIsMet && arg[0] !== undefined && arg[1] !== undefined) {
                     if (arg[0] === "-c" && arg[1] === "http.sslVerify=true") {
                         isUsingSSLVerfication = true;
@@ -748,7 +743,7 @@ describe("GitMirrorTask", () => {
                 return new ToolRunner(arg);
             });
 
-            const execStub = sandbox.stub(ToolRunner.prototype, "exec");
+            const execStub = sinon.stub(ToolRunner.prototype, "exec");
 
             task.gitPushMirror();
 
