@@ -236,7 +236,7 @@ describe("GitMirrorTask", () => {
             expect(taskSucceeded).to.be.false;
         });
 
-        it("should successfully perform a git clone and git push", () => {
+        it("should successfully perform a git clone and git push", async () => {
             let taskSucceeded = true;
 
             const getVariablesStub = sinon.stub(taskLib, "getVariables").callsFake(() => {
@@ -259,7 +259,7 @@ describe("GitMirrorTask", () => {
             const gitPushMirrorStub = sinon.stub(task, "gitPushMirror");
             gitPushMirrorStub.resolves(0);
 
-            task.run();
+            await task.run();
 
             expect(taskSucceeded).to.be.true;
             expect(gitCloneMirrorStub.called).to.be.true;
@@ -267,7 +267,7 @@ describe("GitMirrorTask", () => {
             expect(gitPushMirrorStub.called).to.be.true;
         });
 
-        it("should fail the task if the 'git clone --mirror ...' command throws an error", () => {
+        it("should fail the task if the 'git clone --mirror ...' command throws an error", async () => {
             let taskSucceeded = true;
 
             const getVariablesStub = sinon.stub(taskLib, "getVariables").callsFake(() => {
@@ -290,14 +290,14 @@ describe("GitMirrorTask", () => {
             const gitPushMirrorStub = sinon.stub(task, "gitPushMirror");
             gitPushMirrorStub.resolves(0);
 
-            task.run();
+            await task.run();
 
             expect(taskSucceeded).to.be.false;
             expect(gitCloneMirrorStub.called).to.be.true;
             expect(gitPushMirrorStub.called).to.be.false;
         });
 
-        it("should fail the task if an error occurs when trying to invoke git clone mirror", () => {
+        it("should fail the task if an error occurs when trying to invoke git clone mirror", async () => {
             let taskSucceeded = true;
 
             const getVariablesStub = sinon.stub(taskLib, "getVariables").callsFake(() => {
@@ -320,14 +320,14 @@ describe("GitMirrorTask", () => {
             const gitPushMirrorStub = sinon.stub(task, "gitPushMirror");
             gitPushMirrorStub.resolves(0);
 
-            task.run();
+            await task.run();
 
             expect(taskSucceeded).to.be.false;
             expect(gitCloneMirrorStub.called).to.be.true;
             expect(gitPushMirrorStub.called).to.be.false;
         });
 
-        it("should fail the task if the 'git push --mirror ...' command throws an error", () => {
+        it("should fail the task if the 'git push --mirror ...' command throws an error", async () => {
             let taskSucceeded = true;
 
             const getVariablesStub = sinon.stub(taskLib, "getVariables").callsFake(() => {
@@ -350,14 +350,14 @@ describe("GitMirrorTask", () => {
             const gitPushMirrorStub = sinon.stub(task, "gitPushMirror");
             gitPushMirrorStub.resolves(1);
 
-            task.run();
+            await task.run();
 
             expect(taskSucceeded).to.be.false;
             expect(gitCloneMirrorStub.called).to.be.true;
             expect(gitPushMirrorStub.called).to.be.true;
         });
 
-        it("should fail the task if an error occurs when trying to invoke git push mirror", () => {
+        it("should fail the task if an error occurs when trying to invoke git push mirror", async () => {
             let taskSucceeded = true;
 
             const getVariablesStub = sinon.stub(taskLib, "getVariables").callsFake(() => {
@@ -380,7 +380,7 @@ describe("GitMirrorTask", () => {
             const gitPushMirrorStub = sinon.stub(task, "gitPushMirror");
             gitPushMirrorStub.rejects();
 
-            task.run();
+            await task.run();
 
             expect(taskSucceeded).to.be.false;
             expect(gitCloneMirrorStub.called).to.be.true;
