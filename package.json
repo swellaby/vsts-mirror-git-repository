@@ -6,7 +6,7 @@
         "lint": "tslint -c tslint.json 'src/**/*.ts'",
         "build": "npm run clean && tsc && webpack",
         "test": "nyc mocha --reporter mocha-multi-reporters --reporter-options configFile=mocha-config.json src/**/*.js",
-        "posttest": "replace-in-file .js .ts .test-results/sonar.xml",
+        "posttest": "replace-in-file --isRegex true \"/(.js)/g\" .ts .test-results/sonar.xml",
         "test-dev": "npm run build && npm run test",
         "clean": "del-cli ./src/**/*.js ./src/**/*.js.map ./index.js ./index.js.map ./.nyc_output ./.coverage ./.test-results ./.release *.vsix .taskkey",
         "package": "tfx extension create --manifest-globs vss-extension.json"
