@@ -109,11 +109,18 @@ Some things to check if you are experiencing this issue:
 
 ### I have other questions and/or need to report an issue
 
-Please report any issues to our [Github Issues page][repo-issues-url].
+Please report any issues to our [Github Issues page][repo-issues-url], quick links below for reference:
+
+- [Report a bug][create-bug-url]
+- [Request an enhancement or feature][create-enhancement-url]
+- [Ask a question][create-question-url]
 
 Feel free to leave a question or a comment on our [Github repo][repo-url] or on the [VSTS Task in the Marketplace][extension-marketplace-url].
 
 <br/>
+
+## Contributing
+Contributions are welcomed and encouraged! More details can be found in the [Contribution Guidelines][contribution-guidelines].  
 
 ## Generator
 
@@ -153,3 +160,8 @@ The Git logo is the orginal property of [Jason Long][jason-long-twitter-url] and
 [coveralls-url]: https://coveralls.io/github/swellaby/vsts-mirror-git-repository
 [sonar-quality-gate-badge]: https://sonarcloud.io/api/project_badges/measure?project=swellaby%3Avsts-mirror-git-repository&metric=alert_status&style=flat-square
 [sonar-url]: https://sonarcloud.io/dashboard?id=swellaby%3Avsts-mirror-git-repository
+[create-bug-url]: https://github.com/swellaby/vsts-mirror-git-repository/issues/new?template=BUG_TEMPLATE.md&labels=bug,unreviewed&title=Bug:%20
+[create-question-url]: https://github.com/swellaby/vsts-mirror-git-repository/issues/new?template=QUESTION_TEMPLATE.md&labels=question,unreviewed&title=Q:%20
+[create-enhancement-url]: https://github.com/swellaby/vsts-mirror-git-repository/issues/new?template=ENHANCEMENT_TEMPLATE.md&labels=enhancement,unreviewed
+[contribution-guidelines]: ./.github/CONTRIBUTING.md
+[top]: #mirror-git-repository
