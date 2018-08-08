@@ -1,0 +1,55 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:8
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v0-dependencies-{{ checksum "package.json" }}
+          - v0-dependencies-
+      - restore_cache:
+          keys:
+          - sonar-cache
+
+      - run: npm i
+      - run: sudo npm i -g sonarqube-scanner
+      - run:
+          name: Set Environment Variables
+          command: |
+            echo "export PROJECT_VERSION=$(node -e "console.log(require('./package.json').version);")" >> $BASH_ENV
+            source $BASH_ENV
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v0-dependencies-{{ checksum "package.json" }}
+        
+      - run: 
+          name: lint
+          command: npm run lint
+      - run: 
+          name: test
+          command: npm run test-dev
+
+      - store_artifacts:
+          path: .coverage
+          prefix: coverage
+      - store_test_results:
+          path: .test-results
+      - run:
+          name: Push coverage to Codecov
+          command: bash <(curl -s https://codecov.io/bash) || true
+
+      - run:
+          name: sonar
+          command: sonar-scanner -Dsonar.projectVersion=$PROJECT_VERSION -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONARCLOUD_TOKEN
+
+      - save_cache:
+          paths:
+            - ~/.sonar
+          key: sonar-cache
