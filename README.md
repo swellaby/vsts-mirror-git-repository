@@ -6,10 +6,11 @@
 [![Installs Badge][marketplace-installs-badge]][extension-marketplace-url]
 [![Rating Badge][marketplace-rating-badge]][extension-marketplace-url]
 
-[![Linux Build Badge][travis-ci-build-status-badge]][travis-ci-url]
+[![Linux Build Badge][circleci-badge]][circleci-url]
 [![AppVeyor Build Status][appveyor-build-status-badge]][appveyor-url]
 [![Test Results Badge][tests-badge]][appveyor-url]
-[![Coveralls Badge][coveralls-badge]][coveralls-url]
+[![Code Coverage Badge][codecov-badge]][codecov-url]
+
 [![Sonar Quality Gate][sonar-quality-gate-badge]][sonar-url]
 [![License Badge][license-badge]][repo-url]
 
@@ -153,11 +154,13 @@ The Git logo is the orginal property of [Jason Long][jason-long-twitter-url] and
 [vsts-secret-variable-group]: https://docs.microsoft.com/en-us/vsts/build-release/concepts/library/variable-groups
 [travis-ci-build-status-badge]: https://img.shields.io/travis/swellaby/vsts-mirror-git-repository.svg?label=linux%20build&style=flat-square
 [travis-ci-url]: https://travis-ci.org/swellaby/vsts-mirror-git-repository
+[circleci-url]: https://circleci.com/gh/swellaby/vsts-mirror-git-repository
+[circleci-badge]: https://img.shields.io/circleci/project/github/swellaby/vsts-mirror-git-repository.svg?label=linux%20build&style=flat-square
 [appveyor-build-status-badge]: https://img.shields.io/appveyor/ci/swellaby/vsts-mirror-git-repository.svg?label=windows%20build&style=flat-square
-[tests-badge]: https://img.shields.io/appveyor/tests/swellaby/vsts-mirror-git-repository.svg
+[tests-badge]: https://img.shields.io/appveyor/tests/swellaby/vsts-mirror-git-repository.svg?label=unit%20tests&style=flat-square
 [appveyor-url]: https://ci.appveyor.com/project/swellaby/vsts-mirror-git-repository
-[coveralls-badge]: https://img.shields.io/coveralls/github/swellaby/vsts-mirror-git-repository.svg?style=flat-square
-[coveralls-url]: https://coveralls.io/github/swellaby/vsts-mirror-git-repository
+[codecov-badge]: https://img.shields.io/codecov/c/github/swellaby/vsts-mirror-git-repository.svg?style=flat-square
+[codecov-url]: https://codecov.io/gh/swellaby/vsts-mirror-git-repository
 [sonar-quality-gate-badge]: https://sonarcloud.io/api/project_badges/measure?project=swellaby%3Avsts-mirror-git-repository&metric=alert_status&style=flat-square
 [sonar-url]: https://sonarcloud.io/dashboard?id=swellaby%3Avsts-mirror-git-repository
 [create-bug-url]: https://github.com/swellaby/vsts-mirror-git-repository/issues/new?template=BUG_TEMPLATE.md&labels=bug,unreviewed&title=Bug:%20

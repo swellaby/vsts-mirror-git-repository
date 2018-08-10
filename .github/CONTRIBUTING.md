@@ -19,7 +19,7 @@ Clone the repo, change into the directory where you cloned the directory, and th
 git clone https://github.com/swellaby/vsts-mirror-git-repository.git
 cd vsts-mirror-git-repository 
 npm i
-npm run dev-test
+npm run test-dev
 ```
 
 ### Submitting changes
@@ -32,13 +32,13 @@ We use [Mocha][mocha-url] and [Sinon][sinon-url] to test and validate, and the t
 
 There are suites of unit tests that validate individual functions in complete isolation. Unit tests reside in the `src` directory hierarchy in `*.spec` files alongside the application code files that they test.
 
-The tests can be run via the npm `test` and `dev-test` scripts. The test results will be displayed in the console.
+The tests can be run via the npm `test` and `test-dev` scripts. The test results will be displayed in the console.
 
 Run the unit tests:
 ```sh
 npm test
 or
-npm run dev-test
+npm run test-dev
 ``` 
 
 You must write corresponding unit tests for any code you add or modify, and all tests must pass before those changes can be merged back to the master branch.
