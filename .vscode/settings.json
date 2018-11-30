@@ -9,5 +9,27 @@
         ".nyc_output": true,
         ".taskkey": true,
         ".release": true
-    }
+    },
+    "cSpell.enabled": true,
+    "cSpell.enabledLanguageIds": [
+        "asciidoc",
+        "javascript",
+        "json",
+        "markdown",
+        "plaintext",
+        "restructuredtext",
+        "text",
+        "typescript",
+        "yaml",
+        "yml"
+    ],
+    "cSpell.dictionaries": [
+      "companies",
+      "en_us",
+      "filetypes",
+      "misc",
+      "node",
+      "npm",
+      "softwareTerms"
+    ]
 }
