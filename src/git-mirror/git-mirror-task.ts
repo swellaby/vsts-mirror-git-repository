@@ -1,4 +1,4 @@
-import * as taskLib from "vsts-task-lib";
+import * as taskLib from "azure-pipelines-task-lib";
 import * as validUrl from "valid-url";
 
 export class GitMirrorTask {
@@ -11,7 +11,7 @@ export class GitMirrorTask {
 
     public constructor() {
         try {
-            if (this.taskIsRunnning()) {
+            if (this.taskIsRunning()) {
                 this.sourceGitRepositoryUri = taskLib.getInput("sourceGitRepositoryUri", true);
                 this.sourceGitRepositoryPersonalAccessToken = taskLib.getInput("sourceGitRepositoryPersonalAccessToken", false);
                 this.sourceVerifySSLCertificate = taskLib.getBoolInput("sourceVerifySSLCertificate", false);
@@ -25,7 +25,7 @@ export class GitMirrorTask {
     }
 
     public async run() {
-        if (this.taskIsRunnning()) {
+        if (this.taskIsRunning()) {
 
             try {
                 // check if git exists as a tool
@@ -88,7 +88,7 @@ export class GitMirrorTask {
 
     public getSourceGitFolder(uri: string): string {
         if (!validUrl.isUri(uri)) {
-            throw new Error("Provided URI '" + uri + "' is not a valid URI");
+            throw new Error(`Provided URI '${uri}' is not a valid URI`);
         }
 
         const gitIdentifier = ".git";
@@ -115,7 +115,7 @@ export class GitMirrorTask {
         }    
     }
 
-    private taskIsRunnning(): number {
+    private taskIsRunning(): number {
         return taskLib.getVariables().length;
     }
 }
