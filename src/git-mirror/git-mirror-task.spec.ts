@@ -1,5 +1,7 @@
 import { expect } from "chai";
 import * as sinon from "sinon";
+import * as fs from "fs";
+import * as path from "path";
 
 import * as taskLib from "azure-pipelines-task-lib";
 import { ToolRunner } from "azure-pipelines-task-lib/toolrunner";
@@ -102,10 +104,12 @@ describe("GitMirrorTask", () => {
         let whichStub: sinon.SinonStub;
         let gitCloneMirrorStub: sinon.SinonStub;
         let gitPushMirrorStub: sinon.SinonStub;
+        let removePullRequestRefsStub: sinon.SinonStub;
 
         beforeEach(function() {         
             whichStub = sinon.stub(taskLib, "which");
             gitCloneMirrorStub = sinon.stub(task, "gitCloneMirror").resolves(0);
+            removePullRequestRefsStub = sinon.stub(task, "removePullRequestRefs").resolves();
             gitPushMirrorStub = sinon.stub(task, "gitPushMirror").resolves(0);
         });
 
@@ -125,7 +129,8 @@ describe("GitMirrorTask", () => {
             await task.run();
 
             expect(setResultStub.calledWith(taskLib.TaskResult.Failed)).to.be.false;
-            expect(gitCloneMirrorStub.called).to.be.true;           
+            expect(gitCloneMirrorStub.called).to.be.true;
+            expect(removePullRequestRefsStub.called).to.be.true;       
             expect(gitPushMirrorStub.called).to.be.true;
         });
 
@@ -137,6 +142,7 @@ describe("GitMirrorTask", () => {
 
             expect(setResultStub.calledWithExactly(taskLib.TaskResult.Failed, cloneErrMsg)).to.be.true;
             expect(gitCloneMirrorStub.called).to.be.true;
+            expect(removePullRequestRefsStub.called).to.be.false; 
             expect(gitPushMirrorStub.called).to.be.false;
         });
 
@@ -147,6 +153,18 @@ describe("GitMirrorTask", () => {
 
             expect(setResultStub.calledWithExactly(taskLib.TaskResult.Failed, err)).to.be.true;
             expect(gitCloneMirrorStub.called).to.be.true;
+            expect(removePullRequestRefsStub.called).to.be.false; 
+            expect(gitPushMirrorStub.called).to.be.false;
+        });
+
+        it("should fail the task if an error occurs while removing PR refs", async () => {
+            const err = new Error("PR refs removal crash");
+            removePullRequestRefsStub.rejects(err);
+            await task.run();
+
+            expect(setResultStub.calledWithExactly(taskLib.TaskResult.Failed, err)).to.be.true;
+            expect(gitCloneMirrorStub.called).to.be.true;
+            expect(removePullRequestRefsStub.called).to.be.true; 
             expect(gitPushMirrorStub.called).to.be.false;
         });
 
@@ -158,6 +176,7 @@ describe("GitMirrorTask", () => {
 
             expect(setResultStub.calledWithExactly(taskLib.TaskResult.Failed, pushErrMsg)).to.be.true;
             expect(gitCloneMirrorStub.called).to.be.true;
+            expect(removePullRequestRefsStub.called).to.be.true;
             expect(gitPushMirrorStub.called).to.be.true;
         });
 
@@ -169,6 +188,7 @@ describe("GitMirrorTask", () => {
 
             expect(setResultStub.calledWithExactly(taskLib.TaskResult.Failed, err)).to.be.true;
             expect(gitCloneMirrorStub.called).to.be.true;
+            expect(removePullRequestRefsStub.called).to.be.true;
             expect(gitPushMirrorStub.called).to.be.true;
         });
     });
@@ -227,6 +247,76 @@ describe("GitMirrorTask", () => {
                 expect(argIfStub.calledWithExactly(false, [ "-c", "http.sslVerify=true" ])).to.be.true;
                 expect(argIfStub.calledWithExactly(true, [ "-c", "http.sslVerify=false" ])).to.be.true;
                 expect(execStub.called).to.be.true;
+            });
+        });
+
+        describe("removePullRequestRefs", () => {
+            const sourceRepoDirectory = "my-awesome-repo.git";
+            const expPackedRefsFile = `${sourceRepoDirectory}/packed-refs`;
+            const expPackedRefsFullFilePath = `/usr/foo/repo/${expPackedRefsFile}`;
+            let pathResolveStub: sinon.SinonStub;
+            let pathJoinStub: sinon.SinonStub;
+            let fsReadFileStub: sinon.SinonStub;
+            let fsWriteFileSyncStub: sinon.SinonStub;
+
+            const branchRef1 = "6c0dae8d67774f521f4a8a10233f76c908f344ca refs/heads/master";
+            const branchRef2 = "0cb21ae97c56d17a69525d46578f79544f6ddd2e refs/heads/develop";
+            const tagRef1 = "50b2e2c3093ef7fbef802fddff6bf75f78c6b10b refs/tags/v0.0.12";
+            const tagRef2 = "366ba8247ffda31a4ab8ee75cf636c46405a26fc refs/tags/v1.0.1";
+            const pullRef1 = "66e5b2e17de107f5aa9ef0b64be8a0eeeb7511cf refs/pull/12/head";
+            const pullRef2 = "9eb061c8e73b4c0a08613710daa3f5a93d47061d refs/pull/13/head";
+
+            const updatedPackedRefsFileContents = "data: # pack-refs with: peeled fully-peeled sorted \\n" +
+            `${branchRef1}\\n${branchRef2}\\n${tagRef1}\\n${tagRef2}\\n`;
+    
+            const originalPackedRefsFileContents = updatedPackedRefsFileContents +
+                `${pullRef1}\\n${pullRef2}\\n`;
+                
+            beforeEach(() => {
+                task.getSourceGitFolder = () => sourceRepoDirectory;
+                pathResolveStub = sinon.stub(path, "resolve").callsFake(() => expPackedRefsFullFilePath);
+                pathJoinStub = sinon.stub(path, "join").callsFake(() => expPackedRefsFile);
+                fsReadFileStub = sinon.stub(fs, "readFile").yields(null, originalPackedRefsFileContents);
+                fsWriteFileSyncStub = sinon.stub(fs, "writeFileSync");
+            });
+
+            it("should reject when an error occurs", async () => {
+                const expErr = new Error("oops!");
+                task.getSourceGitFolder = () => { throw expErr; };
+                try {
+                    await task.removePullRequestRefs();
+                    expect(false).to.be.true;
+                } catch (err) {
+                    expect(err).to.equal(expErr);
+                }
+            });
+
+            it("should reject when an error occurs while reading packed-refs file", async () => {
+                const expErr = new Error("cannot read");
+                fsReadFileStub.yields(expErr, undefined);
+
+                try {
+                    await task.removePullRequestRefs();
+                    expect(false).to.be.true;
+                } catch (err) {
+                    expect(err).to.equal(expErr);
+                }
+            });
+
+            it("should use correct file path to packed-refs file", async () => {
+                await task.removePullRequestRefs();
+                expect(pathJoinStub.calledWithExactly(".", expPackedRefsFile));
+                expect(pathResolveStub.calledWithExactly(expPackedRefsFile)).to.be.true;
+            });
+
+            it("should use correct file encoding for read", async () => {
+                await task.removePullRequestRefs();
+                expect(fsReadFileStub.calledWith(expPackedRefsFullFilePath, "utf8"));
+            });
+
+            it("should update packed-refs file with no pull request refs", async () => {
+                await task.removePullRequestRefs();
+                expect(fsWriteFileSyncStub.calledWithExactly(expPackedRefsFullFilePath, updatedPackedRefsFileContents));
             });
         });
     
