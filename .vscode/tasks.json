@@ -1,0 +1,57 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "setup",
+            "command": "npm run dev-setup",
+            "type": "shell"
+        },
+        {
+            "label": "install",
+            "command": "npm i",
+            "type": "shell"
+        },
+        {
+            "label": "clean",
+            "command": "npm run clean",
+            "type": "shell"
+        },
+        {
+            "label": "lint",
+            "command": "npm run lint",
+            "type": "shell"
+        },
+        {
+            "label": "build",
+            "command": "npm run build",
+            "type": "shell",
+            "problemMatcher": "$tsc",
+            "group": {
+            "kind": "build",
+            "isDefault": true
+            }
+        },
+        {
+            "label": "test",
+            "command": "npm test",
+            "type": "shell",
+            "problemMatcher": "$tsc",
+            "group": {
+            "kind": "test",
+            "isDefault": true
+            }
+        },
+        {
+            "label": "coverage:open",
+            "command": "npm run cov-open",
+            "type": "shell",
+            "group": "test"
+        },
+        {
+            "label": "pack",
+            "command": "npm pack",
+            "type": "shell"
+        }
+    ]
+  }
+  
