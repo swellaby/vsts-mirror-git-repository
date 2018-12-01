@@ -68,12 +68,14 @@ export class GitMirrorTask {
             try {
                 const sourceGitFolder = this.getSourceGitFolder(this.sourceGitRepositoryUri);
                 const packedRefsFileName = resolvePath(joinPath(".", `${sourceGitFolder}/packed-refs`));
+
                 readFile(packedRefsFileName, "utf8", (err, data) => {
                     if (err) {
                         reject(err);
                     }
-                    const nonPullRefLines = data.split("\\n").filter((line) => !line.includes("refs/pull"));
-                    writeFileSync(packedRefsFileName, nonPullRefLines.join("\\n"));
+
+                    const nonPullRefLines = data.split("\n").filter((line) => !line.includes("refs/pull"));
+                    writeFileSync(packedRefsFileName, nonPullRefLines.join("\n"));
                     resolve();
                 });
             } catch (err) {
