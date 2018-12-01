@@ -8,7 +8,8 @@
         ".test-results": true,
         ".nyc_output": true,
         ".taskkey": true,
-        ".release": true
+        ".release": true,
+        "**/*.vsix": true
     },
     "cSpell.enabled": true,
     "cSpell.enabledLanguageIds": [
