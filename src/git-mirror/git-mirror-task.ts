@@ -1,5 +1,7 @@
-import * as taskLib from "vsts-task-lib";
+import * as taskLib from "azure-pipelines-task-lib";
 import * as validUrl from "valid-url";
+import { readFile, writeFileSync } from "fs";
+import { resolve as resolvePath, join as joinPath } from "path";
 
 export class GitMirrorTask {
     private sourceGitRepositoryUri: string;
@@ -11,7 +13,7 @@ export class GitMirrorTask {
 
     public constructor() {
         try {
-            if (this.taskIsRunnning()) {
+            if (this.taskIsRunning()) {
                 this.sourceGitRepositoryUri = taskLib.getInput("sourceGitRepositoryUri", true);
                 this.sourceGitRepositoryPersonalAccessToken = taskLib.getInput("sourceGitRepositoryPersonalAccessToken", false);
                 this.sourceVerifySSLCertificate = taskLib.getBoolInput("sourceVerifySSLCertificate", false);
@@ -25,8 +27,7 @@ export class GitMirrorTask {
     }
 
     public async run() {
-        if (this.taskIsRunnning()) {
-
+        if (this.taskIsRunning()) {
             try {
                 // check if git exists as a tool
                 taskLib.which("git", true);
@@ -35,6 +36,8 @@ export class GitMirrorTask {
                     taskLib.setResult(taskLib.TaskResult.Failed, "An error occurred when attempting to clone the source repository. Please check output for more details.");
                     return;
                 }
+
+                await this.removePullRequestRefs();
                 
                 const pushMirrorResponseCode = await this.gitPushMirror();
                 if (pushMirrorResponseCode !== 0) {
@@ -50,7 +53,6 @@ export class GitMirrorTask {
     public gitCloneMirror() {
         const authenticatedSourceGitUrl = this.getAuthenticatedGitUri(this.sourceGitRepositoryUri, this.sourceGitRepositoryPersonalAccessToken);
         const verifySSLCertificateFlag = this.getSourceVerifySSLCertificate();
-
         return taskLib
             .tool("git")
             .argIf(verifySSLCertificateFlag, ["-c", "http.sslVerify=true"])
@@ -59,6 +61,27 @@ export class GitMirrorTask {
             .arg("--mirror")
             .arg(authenticatedSourceGitUrl)
             .exec();
+    }
+
+    public async removePullRequestRefs(): Promise<void> {
+        return new Promise<void>((resolve, reject) => {
+            try {
+                const sourceGitFolder = this.getSourceGitFolder(this.sourceGitRepositoryUri);
+                const packedRefsFileName = resolvePath(joinPath(".", `${sourceGitFolder}/packed-refs`));
+
+                readFile(packedRefsFileName, "utf8", (err, data) => {
+                    if (err) {
+                        reject(err);
+                    }
+
+                    const nonPullRefLines = data.split("\n").filter((line) => !line.includes("refs/pull"));
+                    writeFileSync(packedRefsFileName, nonPullRefLines.join("\n"));
+                    resolve();
+                });
+            } catch (err) {
+                reject(err);
+            }
+        });
     }
 
     public gitPushMirror() {
@@ -88,7 +111,7 @@ export class GitMirrorTask {
 
     public getSourceGitFolder(uri: string): string {
         if (!validUrl.isUri(uri)) {
-            throw new Error("Provided URI '" + uri + "' is not a valid URI");
+            throw new Error(`Provided URI '${uri}' is not a valid URI`);
         }
 
         const gitIdentifier = ".git";
@@ -97,7 +120,7 @@ export class GitMirrorTask {
             return uri.substring(uri.lastIndexOf("/") + 1);
         }
 
-        return uri.substring(uri.lastIndexOf("/") + 1) + ".git";
+        return uri.substring(uri.lastIndexOf("/") + 1) + gitIdentifier;
     }
 
     public getAuthenticatedGitUri(uri: string, token: string): string {
@@ -115,7 +138,7 @@ export class GitMirrorTask {
         }    
     }
 
-    private taskIsRunnning(): number {
+    private taskIsRunning(): number {
         return taskLib.getVariables().length;
     }
 }

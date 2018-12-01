@@ -156,8 +156,8 @@ The Git logo is the orginal property of [Jason Long][jason-long-twitter-url] and
 [travis-ci-url]: https://travis-ci.org/swellaby/vsts-mirror-git-repository
 [circleci-url]: https://circleci.com/gh/swellaby/vsts-mirror-git-repository
 [circleci-badge]: https://img.shields.io/circleci/project/github/swellaby/vsts-mirror-git-repository.svg?label=linux%20build&style=flat-square
-[appveyor-build-status-badge]: https://img.shields.io/appveyor/ci/swellaby/vsts-mirror-git-repository.svg?label=windows%20build&style=flat-square
-[tests-badge]: https://img.shields.io/appveyor/tests/swellaby/vsts-mirror-git-repository.svg?label=unit%20tests&style=flat-square
+[appveyor-build-status-badge]: https://img.shields.io/appveyor/ci/swellaby/vsts-mirror-git-repository/master.svg?label=windows%20build&style=flat-square
+[tests-badge]: https://img.shields.io/appveyor/tests/swellaby/vsts-mirror-git-repository/master.svg?label=unit%20tests&style=flat-square
 [appveyor-url]: https://ci.appveyor.com/project/swellaby/vsts-mirror-git-repository
 [codecov-badge]: https://img.shields.io/codecov/c/github/swellaby/vsts-mirror-git-repository.svg?style=flat-square
 [codecov-url]: https://codecov.io/gh/swellaby/vsts-mirror-git-repository

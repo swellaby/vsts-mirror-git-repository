@@ -2,5 +2,13 @@
     "recommendations": [
         "GuardRex.status-bar-tasks",
         "eg2.tslint",
+        "christian-kohler.path-intellisense",
+        "christian-kohler.npm-intellisense",
+        "eamodio.gitlens",
+        "pflannery.vscode-versionlens",
+        "EditorConfig.EditorConfig",
+        "streetsidesoftware.code-spell-checker",
+        "hbenl.vscode-test-explorer",
+        "hbenl.vscode-mocha-test-adapter"
     ]
 }

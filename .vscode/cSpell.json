@@ -1,0 +1,33 @@
+{
+    "version": "0.1",
+    "language": "en",
+    "words": [
+      "appdata",
+      "calebcartwright",
+      "circleci",
+      "codecov",
+      "dsonar",
+      "getstarted",
+      "istanbuljs",
+      "junit",
+      "kosarek",
+      "lcov",
+      "opensource",
+      "posttest",
+      "repo",
+      "sinonjs",
+      "sonarcloud",
+      "sonarqube",
+      "swellaby",
+      "taskkey",
+      "testresults",
+      "toolrunner",
+      "traviskosarek",
+      "uncheck",
+      "vsix",
+      "vsts"
+    ],
+    "flagWords": [
+
+    ]
+}
