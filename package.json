@@ -14,6 +14,7 @@
         "clean": "rimraf ./src/**/{*.js,*.map} .coverage .test-results .release *.vsix .taskkey",
         "package": "tfx extension create --manifest-globs vss-extension.json",
         "task-upload": "tfx build tasks upload --task-path .release/git-mirror/",
+        "task-delete": "tfx build tasks delete --task-id 4e842f83-9438-4acb-994c-c8c31137dea9",
         "dev-setup": "npm i && npm run test-dev",
         "dev-reset": "npm run clean && node -e \"require('rimraf').sync('node_modules');\" && npm run dev-setup"
     },

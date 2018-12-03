@@ -9,7 +9,7 @@
         "id": "Microsoft.VisualStudio.Services"
     }],
     "description": "A straightforward utility to mirror one Git repository to another location",
-    "categories": ["Build and release"],
+    "categories": ["Azure Pipelines"],
     "icons": { "default": "images/extension-icon.png" },
     "files": [{
         "path": ".release"
