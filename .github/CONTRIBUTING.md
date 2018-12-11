@@ -2,11 +2,7 @@
 All contributions are welcomed!
 
 ## Opening Issues
-Click the below quick links to create a new issue:
-
-- [Report a bug][create-bug-url]
-- [Request an enhancement][create-enhancement-url]
-- [Ask a question][create-question-url]
+[Create an issue][create-issue-url] to report a bug, ask a question, request a new feature, etc.
 
 ## Developing
 All that is needed to work with this repo is [Node.js][nodejs-url] and your favorite editor or IDE, although we recommend [VS Code][vscode-url].
@@ -59,6 +55,7 @@ npm run lint
 
  [Back to Top][top]
 
+[create-issue-url]: https://github.com/swellaby/vsts-mirror-git-repository/issues/new
 [create-bug-url]: https://github.com/swellaby/vsts-mirror-git-repository/issues/new?template=BUG_TEMPLATE.md&labels=bug,unreviewed&title=Bug:%20
 [create-question-url]: https://github.com/swellaby/vsts-mirror-git-repository/issues/new?template=QUESTION_TEMPLATE.md&labels=question,unreviewed&title=Q:%20
 [create-enhancement-url]: https://github.com/swellaby/vsts-mirror-git-repository/issues/new?template=ENHANCEMENT_TEMPLATE.md&labels=enhancement,unreviewed
