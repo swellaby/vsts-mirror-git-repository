@@ -14,12 +14,18 @@ export class GitMirrorTask {
     public constructor() {
         try {
             if (this.taskIsRunning()) {
-                this.sourceGitRepositoryUri = taskLib.getInput("sourceGitRepositoryUri", true);
-                this.sourceGitRepositoryPersonalAccessToken = taskLib.getInput("sourceGitRepositoryPersonalAccessToken", false);
-                this.sourceVerifySSLCertificate = taskLib.getBoolInput("sourceVerifySSLCertificate", false);
-                this.destinationGitRepositoryUri = taskLib.getInput("destinationGitRepositoryUri", true);
-                this.destinationGitRepositoryPersonalAccessToken = taskLib.getInput("destinationGitRepositoryPersonalAccessToken", true);
-                this.destinationVerifySSLCertificate = taskLib.getBoolInput("destinationVerifySSLCertificate", false);
+                // this.sourceGitRepositoryUri = taskLib.getInput("sourceGitRepositoryUri", true);
+                // this.sourceGitRepositoryPersonalAccessToken = taskLib.getInput("sourceGitRepositoryPersonalAccessToken", false);
+                // this.sourceVerifySSLCertificate = taskLib.getBoolInput("sourceVerifySSLCertificate", false);
+                // this.destinationGitRepositoryUri = taskLib.getInput("destinationGitRepositoryUri", true);
+                // this.destinationGitRepositoryPersonalAccessToken = taskLib.getInput("destinationGitRepositoryPersonalAccessToken", true);
+                // this.destinationVerifySSLCertificate = taskLib.getBoolInput("destinationVerifySSLCertificate", false);
+                this.sourceGitRepositoryUri = "https://github.com/Jamesits/some-private-repo";
+                this.sourceGitRepositoryPersonalAccessToken = null;
+                this.sourceVerifySSLCertificate = false;
+                this.destinationGitRepositoryUri = "somewhere";
+                this.destinationGitRepositoryPersonalAccessToken = null;
+                this.destinationVerifySSLCertificate = false;
             }
         } catch (e) {
             taskLib.setResult(taskLib.TaskResult.Failed, e);
@@ -28,10 +34,13 @@ export class GitMirrorTask {
 
     public async run() {
         if (this.taskIsRunning()) {
+            console.log("****************");
+            console.log("inside run check");
             try {
                 // check if git exists as a tool
                 taskLib.which("git", true);
                 const cloneMirrorResponseCode = await this.gitCloneMirror();
+                console.log(`mirror response code: ${cloneMirrorResponseCode}`);
                 if (cloneMirrorResponseCode !== 0) {
                     taskLib.setResult(taskLib.TaskResult.Failed, "An error occurred when attempting to clone the source repository. Please check output for more details.");
                     return;
@@ -45,13 +54,16 @@ export class GitMirrorTask {
                 }
 
             } catch (e) {
+                console.log(`down inside run catch block. error: ${e}`);
                 taskLib.setResult(taskLib.TaskResult.Failed, e);
             }
         }
     }
 
     public gitCloneMirror() {
+        console.log("about to get source uri");
         const authenticatedSourceGitUrl = this.getAuthenticatedGitUri(this.sourceGitRepositoryUri, this.sourceGitRepositoryPersonalAccessToken);
+        console.log(`got source uri: ${authenticatedSourceGitUrl}`);
         const verifySSLCertificateFlag = this.getSourceVerifySSLCertificate();
         return taskLib
             .tool("git")
@@ -66,9 +78,9 @@ export class GitMirrorTask {
     public async removePullRequestRefs(): Promise<void> {
         return new Promise<void>((resolve, reject) => {
             try {
+                console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
                 const sourceGitFolder = this.getSourceGitFolder(this.sourceGitRepositoryUri);
                 const packedRefsFileName = resolvePath(joinPath(".", `${sourceGitFolder}/packed-refs`));
-
                 readFile(packedRefsFileName, "utf8", (err, data) => {
                     if (err) {
                         reject(err);
@@ -139,9 +151,11 @@ export class GitMirrorTask {
     }
 
     private taskIsRunning(): number {
-        return taskLib.getVariables().length;
+        return 1;
+        // return taskLib.getVariables().length;
     }
 }
 
 const gitMirrorTask = new GitMirrorTask();
+console.log("about to run");
 gitMirrorTask.run();
