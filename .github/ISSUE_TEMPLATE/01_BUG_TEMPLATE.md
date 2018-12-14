@@ -4,7 +4,6 @@ about: Report errors and problems
 
 ---
 
-
 ## Environment Details
 <!-- Fill in the below form so that we have the relevant details about the environment where the bug/error is occurring. -->
 * **Pipeline**
@@ -25,7 +24,40 @@ about: Report errors and problems
   * **Node.js Version**: 
   * **npm version**:
   * **git version**:
-  * **Mirror Git Repo Task version**: 
+
+<!-- Fill out the below information based on how you are configuring/using the Git Mirror Task. -->
+* **Mirror Task Configuration**
+  * **Mirror Git Repo Task version**:
+  * **Mirror Source Repo System**
+    * [ ] GitHub
+    * [ ] GitHub Enterprise
+    * [ ] Azure DevOps (formerly VSTS)
+    * [ ] Azure DevOps Server (formerly TFS)
+    * [ ] Bitbucket Cloud
+    * [ ] Bitbucket Server
+    * [ ] Gitlab.com
+    * [ ] Gitlab Self-Hosted
+    * [ ] AWS CodeCommit
+    * [ ] GCP Cloud Source Repositories
+    * [ ] Other (please specify):  
+  * [ ] Using PAT for Mirror Source Repo
+  * [ ] Mirror Source Repo is Public
+  * [ ] Using SSL Verification on Mirror Source Repo
+  * **Mirror Destination Repo System**
+    * [ ] GitHub
+    * [ ] GitHub Enterprise
+    * [ ] Azure DevOps (formerly VSTS)
+    * [ ] Azure DevOps Server (formerly TFS)
+    * [ ] Bitbucket Cloud
+    * [ ] Bitbucket Server
+    * [ ] Gitlab.com
+    * [ ] Gitlab Self-Hosted
+    * [ ] AWS CodeCommit
+    * [ ] GCP Cloud Source Repositories
+    * [ ] Other (please specify):  
+  * [ ] Using PAT for Mirror Destination Repo
+  * [ ] Mirror Destination Repo is Public
+  * [ ] Using SSL Verification on Mirror Destination Repo
   
 
 ## Description
