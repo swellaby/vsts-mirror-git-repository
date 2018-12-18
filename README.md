@@ -45,6 +45,30 @@ A Personal Access Token (PAT) that grants write access to the repository in the 
 **Verify SSL Certificate on Destination Repository**
 Verifiying SSL certificates is a default behavior of Git. Unchecking this option will turn off SSL certificate validation as a part of the Destination Repository push process. _If you are using a Git server with a Self-Signing certificate, you will likely need to uncheck this option._
 
+### YAML Pipeline
+When using the Mirror Git Repository task in a YAML-based pipeline, the task configuration uses the following input names:
+
+* `sourceGitRepositoryUri`
+* `sourceGitRepositoryPersonalAccessToken` 
+* `sourceVerifySSLCertificate` (defaults to `true`)
+* `destinationGitRepositoryUri`
+* `destinationGitRepositoryPersonalAccessToken`
+* `destinationVerifySSLCertificate` (defaults to `true`)
+
+You may omit the access token inputs (`sourceGitRepositoryPersonalAccessToken` and `destinationGitRepositoryPersonalAccessToken`) if you do not need to provide a token for the respective source/destination repo. You may also omit the SSL verification inputs (`sourceVerifySSLCertificate` and `destinationVerifySSLCertificate`) if you want to include SSL verification (the only time you _have_ to provide those inputs is if you need to set the value to false)
+
+Here's an example snippet of what a YAML configuration would like like for the Mirror Git Repository Task (using a secure variable for the destination token)
+
+```yml
+- task: swellaby.mirror-git-repository.mirror-git-repository-vsts-task.mirror-git-repository-vsts-task@1
+  displayName: 'Mirror Git Repository'
+  inputs:
+    sourceGitRepositoryUri: 'https://github.com/swellaby/vsts-mirror-git-repository.git'
+    sourceVerifySSLCertificate: false
+    destinationGitRepositoryUri: 'https://dev.azure.com/swellaby/OpenSource/_git/mirror2'
+    destinationGitRepositoryPersonalAccessToken: '$(destVar)'
+```
+
 <br/>
 
 ## Best Practices
