@@ -4,7 +4,7 @@
     "description": "A straightforward utility to mirror one Git repository to another location",
     "scripts": {
         "lint": "tslint -c tslint.json 'src/**/*.ts'",
-        "build:webpack": "npm run clean && tsc && webpack",
+        "build": "npm test && npm run lint",
         "transpile": "npm run clean && tsc",
         "mocha": "mocha --opts mocha.opts",
         "test": "nyc npm run mocha",
@@ -21,7 +21,7 @@
         "tfx-login": "tfx login",
         "task-upload": "tfx build tasks upload --task-path .release/git-mirror/",
         "task-delete": "tfx build tasks delete --task-id 4e842f83-9438-4acb-994c-c8c31137dea9",
-        "dev-setup": "npm i && npm run test-dev",
+        "dev-setup": "npm i && npm run build",
         "dev-reset": "npm run clean && node -e \"require('rimraf').sync('node_modules');\" && npm run dev-setup"
     },
     "author": {
