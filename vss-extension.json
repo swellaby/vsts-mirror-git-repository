@@ -27,20 +27,11 @@
         "theme": "light"
     },
     "links": {
-        "home": {
-            "uri": "http://swellaby.com"
-        },
         "getstarted": {
-            "uri": "https://github.com/swellaby/vsts-mirror-git-repository/blob/master/README.md"
-        },
-        "support": {
-            "uri": "https://github.com/swellaby/vsts-mirror-git-repository/issues"
-        },
-        "repository": {
             "uri": "https://github.com/swellaby/vsts-mirror-git-repository"
         },
-        "issues": {
-            "uri": "https://github.com/swellaby/vsts-mirror-git-repository/issues"
+        "support": {
+            "uri": "https://github.com/swellaby/vsts-mirror-git-repository/issues/new/choose"
         },
         "license": {
             "uri": "https://github.com/swellaby/vsts-mirror-git-repository/blob/master/LICENSE"
