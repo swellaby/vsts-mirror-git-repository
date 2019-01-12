@@ -7,6 +7,7 @@
         "build": "npm test && npm run lint",
         "transpile": "npm run clean && tsc",
         "mocha": "mocha --opts mocha.opts",
+        "pretest": "tsc",
         "test": "nyc npm run mocha",
         "posttest": "replace-in-file --isRegex true \"/(.js)/g\" .ts .test-results/sonar.xml",
         "test-dev": "npm run transpile && npm test",
