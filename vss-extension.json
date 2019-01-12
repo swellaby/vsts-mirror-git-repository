@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "mirror-git-repository",
     "name": "Mirror Git Repository",
-    "version": "1.1.7",
+    "version": "1.1.8",
     "publisher": "Swellaby",
     "tags": ["git", "clone", "push", "mirror", "--mirror", "repo", "repository"],
     "targets": [{
@@ -27,20 +27,11 @@
         "theme": "light"
     },
     "links": {
-        "home": {
-            "uri": "http://swellaby.com"
-        },
         "getstarted": {
-            "uri": "https://github.com/swellaby/vsts-mirror-git-repository/blob/master/README.md"
-        },
-        "support": {
-            "uri": "https://github.com/swellaby/vsts-mirror-git-repository/issues"
-        },
-        "repository": {
             "uri": "https://github.com/swellaby/vsts-mirror-git-repository"
         },
-        "issues": {
-            "uri": "https://github.com/swellaby/vsts-mirror-git-repository/issues"
+        "support": {
+            "uri": "https://github.com/swellaby/vsts-mirror-git-repository/issues/new/choose"
         },
         "license": {
             "uri": "https://github.com/swellaby/vsts-mirror-git-repository/blob/master/LICENSE"

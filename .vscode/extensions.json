@@ -1,6 +1,5 @@
 {
     "recommendations": [
-        "GuardRex.status-bar-tasks",
         "eg2.tslint",
         "christian-kohler.path-intellisense",
         "christian-kohler.npm-intellisense",
