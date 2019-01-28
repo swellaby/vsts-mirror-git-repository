@@ -166,7 +166,7 @@ The Git logo is the orginal property of [Jason Long][jason-long-twitter-url] and
 [license-badge]: https://img.shields.io/github/license/swellaby/vsts-mirror-git-repository.svg?style=flat-square
 [logo-image]: https://raw.githubusercontent.com/swellaby/vsts-mirror-git-repository/master/images/extension-icon.png
 [marketplace-version-badge]: https://img.shields.io/vscode-marketplace/v/swellaby.mirror-git-repository.svg?style=flat-square
-[marketplace-installs-badge]: https://vsmarketplacebadge.apphb.com/installs/swellaby.mirror-git-repository.svg?style=flat-square
+[marketplace-installs-badge]: https://img.shields.io/visual-studio-marketplace/azure-devops/installs/total/swellaby.mirror-git-repository.svg?style=flat-square
 [marketplace-rating-badge]: https://img.shields.io/vscode-marketplace/r/swellaby.mirror-git-repository.svg?style=flat-square
 [mirror-instructions-url]: https://help.github.com/articles/duplicating-a-repository/#mirroring-a-repository-in-another-location
 [nodejs-url]: https://nodejs.org
