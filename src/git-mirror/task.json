@@ -1,69 +1,70 @@
 {
-    "id": "4e842f83-9438-4acb-994c-c8c31137dea9",
-    "name": "mirror-git-repository-vsts-task",
-    "friendlyName": "Mirror Git Repository",
-    "description": "A straightforward utility to mirror one Git repository to another location",
-    "category": "Utility",
-    "author": "Swellaby",
-    "helpMarkDown": "[More Information](https://github.com/swellaby/vsts-mirror-git-repository)",
-    "version": {
-        "Major": 1,
-        "Minor": 1,
-        "Patch": 9
+  "id": "4e842f83-9438-4acb-994c-c8c31137dea9",
+  "name": "mirror-git-repository-vsts-task",
+  "friendlyName": "Mirror Git Repository",
+  "description": "A straightforward utility to mirror one Git repository to another location",
+  "category": "Utility",
+  "author": "Swellaby",
+  "helpMarkDown": "[More Information](https://github.com/swellaby/vsts-mirror-git-repository)",
+  "version": {
+    "Major": 1,
+    "Minor": 1,
+    "Patch": 9
+  },
+  "instanceNameFormat": "Mirror Git Repository to $(destinationGitRepositoryUri)",
+  "inputs": [
+    {
+      "name": "sourceGitRepositoryUri",
+      "type": "string",
+      "label": "Source Git Repository",
+      "defaultValue": "$(Build.Repository.Uri)",
+      "required": true,
+      "helpMarkDown": "The URL of a Git repository to be used as the mirror's source. The default value of '$(Build.Repository.Uri)' will use the VSTS repository connected to this build.\n\nExample: https://github.com/swellaby/vsts-mirror-git-repository"
     },
-    "instanceNameFormat": "Mirror Git Repository to $(destinationGitRepositoryUri)",
-    "inputs": [{
-            "name": "sourceGitRepositoryUri",
-            "type": "string",
-            "label": "Source Git Repository",
-            "defaultValue": "$(Build.Repository.Uri)",
-            "required": true,
-            "helpMarkDown": "The URL of a Git repository to be used as the mirror's source. The default value of '$(Build.Repository.Uri)' will use the VSTS repository connected to this build.\n\nExample: https://github.com/swellaby/vsts-mirror-git-repository"
-        },
-        {
-            "name": "sourceGitRepositoryPersonalAccessToken",
-            "type": "string",
-            "label": "Source Repository - Personal Access Token",
-            "required": false,
-            "helpMarkDown": "A Personal Access Token that grants read access to the Git repository used as the Source Git Repository",
-            "defaultValue": ""
-        },
-        {
-            "name": "sourceVerifySSLCertificate",
-            "type": "boolean",
-            "label": "Verify SSL Certificate on Source Repository",
-            "defaultValue": "true",
-            "required": false,
-            "helpMarkDown": "Uncheck this option if you do not want Git to verify SSL certificates as a part of the cloning process"
-        },
-        {
-            "name": "destinationGitRepositoryUri",
-            "type": "string",
-            "label": "Destination Git Repository",
-            "defaultValue": "",
-            "required": true,
-            "helpMarkDown": "The URL of a Git repository to be used as the mirror's destination.\n\nExample: https://github.com/swellaby/vsts-mirror-git-repository"
-        },
-        {
-            "name": "destinationGitRepositoryPersonalAccessToken",
-            "type": "string",
-            "label": "Destination Repository - Personal Access Token",
-            "required": true,
-            "helpMarkDown": "A Personal Access Token that grants write access to the Git repository used as the Destination Git Repository",
-            "defaultValue": ""
-        },
-        {
-            "name": "destinationVerifySSLCertificate",
-            "type": "boolean",
-            "label": "Verify SSL Certificate on Destination Repository",
-            "defaultValue": "true",
-            "required": false,
-            "helpMarkDown": "Uncheck this option if you do not want Git to verify SSL certificates as a part of the push process"
-        }
-    ],
-    "execution": {
-        "Node": {
-            "target": "git-mirror-task.js"
-        }
+    {
+      "name": "sourceGitRepositoryPersonalAccessToken",
+      "type": "string",
+      "label": "Source Repository - Personal Access Token",
+      "required": false,
+      "helpMarkDown": "A Personal Access Token that grants read access to the Git repository used as the Source Git Repository",
+      "defaultValue": ""
+    },
+    {
+      "name": "sourceVerifySSLCertificate",
+      "type": "boolean",
+      "label": "Verify SSL Certificate on Source Repository",
+      "defaultValue": "true",
+      "required": false,
+      "helpMarkDown": "Uncheck this option if you do not want Git to verify SSL certificates as a part of the cloning process"
+    },
+    {
+      "name": "destinationGitRepositoryUri",
+      "type": "string",
+      "label": "Destination Git Repository",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "The URL of a Git repository to be used as the mirror's destination.\n\nExample: https://github.com/swellaby/vsts-mirror-git-repository"
+    },
+    {
+      "name": "destinationGitRepositoryPersonalAccessToken",
+      "type": "string",
+      "label": "Destination Repository - Personal Access Token",
+      "required": true,
+      "helpMarkDown": "A Personal Access Token that grants write access to the Git repository used as the Destination Git Repository",
+      "defaultValue": ""
+    },
+    {
+      "name": "destinationVerifySSLCertificate",
+      "type": "boolean",
+      "label": "Verify SSL Certificate on Destination Repository",
+      "defaultValue": "true",
+      "required": false,
+      "helpMarkDown": "Uncheck this option if you do not want Git to verify SSL certificates as a part of the push process"
+  }
+  ],
+  "execution": {
+    "Node": {
+      "target": "git-mirror-task.js"
     }
+  }
 }

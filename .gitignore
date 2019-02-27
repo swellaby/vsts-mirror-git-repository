@@ -1,7 +1,3 @@
-# IDE
-#.vscode
-
-# vendor modules
 node_modules
 
 # generated

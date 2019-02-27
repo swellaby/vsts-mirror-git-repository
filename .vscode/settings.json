@@ -1,36 +1,34 @@
 {
-    "files.exclude": {
-        "**/*.js": { "when": "$(basename).ts" },
-        "**/*.map": { "when": "$(basename).map" },
-        "npm-debug.log": true,
-        "node_modules": true,
-        ".coverage": true,
-        ".test-results": true,
-        ".nyc_output": true,
-        ".taskkey": true,
-        ".release": true,
-        "**/*.vsix": true
-    },
-    "cSpell.enabled": true,
-    "cSpell.enabledLanguageIds": [
-        "asciidoc",
-        "javascript",
-        "json",
-        "markdown",
-        "plaintext",
-        "restructuredtext",
-        "text",
-        "typescript",
-        "yaml",
-        "yml"
-    ],
-    "cSpell.dictionaries": [
-      "companies",
-      "en_us",
-      "filetypes",
-      "misc",
-      "node",
-      "npm",
-      "softwareTerms"
-    ]
+  "files.exclude": {
+    "**/*.js": { "when": "$(basename).ts" },
+    "**/*.map": { "when": "$(basename).map" },
+    "npm-debug.log": true,
+    "node_modules": true,
+    ".coverage": true,
+    ".test-results": true,
+    ".nyc_output": true,
+    ".taskkey": true,
+    ".release": true,
+    "**/*.vsix": true
+  },
+  "cSpell.enabled": true,
+  "cSpell.enabledLanguageIds": [
+    "javascript",
+    "json",
+    "markdown",
+    "plaintext",
+    "restructuredtext",
+    "text",
+    "typescript",
+    "yaml"
+  ],
+  "cSpell.dictionaries": [
+    "companies",
+    "en_us",
+    "filetypes",
+    "misc",
+    "node",
+    "npm",
+    "softwareTerms"
+  ]
 }
