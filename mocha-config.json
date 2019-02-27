@@ -1,9 +1,9 @@
 {
-    "reporterEnabled": "mocha-junit-reporter, spec, mocha-sonarqube-reporter",
-    "mochaJunitReporterReporterOptions": {
-        "mochaFile": "./.test-results/test-results.xml"
-    },
-    "mochaSonarqubeReporterReporterOptions": {
-        "output": ".test-results/sonar.xml"
-    }
+  "reporterEnabled": "mocha-junit-reporter, spec, mocha-sonarqube-reporter",
+  "mochaJunitReporterReporterOptions": {
+    "mochaFile": "./.test-results/test-results.xml"
+  },
+  "mochaSonarqubeReporterReporterOptions": {
+    "output": ".test-results/sonar.xml"
+  }
 }

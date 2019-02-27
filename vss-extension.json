@@ -1,53 +1,53 @@
 {
-    "manifestVersion": 1,
-    "id": "mirror-git-repository",
-    "name": "Mirror Git Repository",
-    "version": "1.1.9",
-    "publisher": "Swellaby",
-    "tags": ["git", "clone", "push", "mirror", "--mirror", "repo", "repository"],
-    "targets": [{
-        "id": "Microsoft.VisualStudio.Services"
-    }],
+  "manifestVersion": 1,
+  "id": "mirror-git-repository",
+  "name": "Mirror Git Repository",
+  "version": "1.1.9",
+  "publisher": "Swellaby",
+  "tags": ["git", "clone", "push", "mirror", "--mirror", "repo", "repository"],
+  "targets": [{
+    "id": "Microsoft.VisualStudio.Services"
+  }],
+  "description": "A straightforward utility to mirror one Git repository to another location",
+  "categories": ["Azure Pipelines"],
+  "icons": { "default": "images/extension-icon.png" },
+  "files": [{
+    "path": ".release"
+  }],
+  "content": {
+    "details": {
+      "path": "README.md"
+    },
+    "license": {
+      "path": "LICENSE"
+    }
+  },
+  "branding": {
+    "color": "rgb(255, 255, 255)",
+    "theme": "light"
+  },
+  "links": {
+    "getstarted": {
+      "uri": "https://github.com/swellaby/vsts-mirror-git-repository"
+    },
+    "support": {
+      "uri": "https://github.com/swellaby/vsts-mirror-git-repository/issues/new/choose"
+    },
+    "license": {
+      "uri": "https://github.com/swellaby/vsts-mirror-git-repository/blob/master/LICENSE"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "uri": "https://github.com/swellaby/vsts-mirror-git-repository"
+  },
+  "contributions": [{
+    "id": "mirror-git-repository-vsts-task",
     "description": "A straightforward utility to mirror one Git repository to another location",
-    "categories": ["Azure Pipelines"],
-    "icons": { "default": "images/extension-icon.png" },
-    "files": [{
-        "path": ".release"
-    }],
-    "content": {
-        "details": {
-            "path": "README.md"
-        },
-        "license": {
-            "path": "LICENSE"
-        }
-    },
-    "branding": {
-        "color": "rgb(255, 255, 255)",
-        "theme": "light"
-    },
-    "links": {
-        "getstarted": {
-            "uri": "https://github.com/swellaby/vsts-mirror-git-repository"
-        },
-        "support": {
-            "uri": "https://github.com/swellaby/vsts-mirror-git-repository/issues/new/choose"
-        },
-        "license": {
-            "uri": "https://github.com/swellaby/vsts-mirror-git-repository/blob/master/LICENSE"
-        }
-    },
-    "repository": {
-        "type": "git",
-        "uri": "https://github.com/swellaby/vsts-mirror-git-repository"
-    },
-    "contributions": [{
-        "id": "mirror-git-repository-vsts-task",
-        "description": "A straightforward utility to mirror one Git repository to another location",
-        "type": "ms.vss-distributed-task.task",
-        "targets": ["ms.vss-distributed-task.tasks"],
-        "properties": {
-            "name": ".release/git-mirror"
-        }
-    }]
+    "type": "ms.vss-distributed-task.task",
+    "targets": ["ms.vss-distributed-task.tasks"],
+    "properties": {
+      "name": ".release/git-mirror"
+    }
+  }]
 }
