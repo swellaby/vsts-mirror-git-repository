@@ -68,7 +68,7 @@
     "rimraf": "^2.6.3",
     "run-sequence": "^2.2.1",
     "sinon": "^7.3.2",
-    "tfx-cli": "^0.6.4",
+    "tfx-cli": "^0.7.0",
     "tslint": "^5.16.0",
     "tslint-no-unused-expression-chai": "^0.1.4",
     "typescript": "^3.4.4"
