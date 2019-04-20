@@ -176,14 +176,14 @@ The Git logo is the orginal property of [Jason Long][jason-long-twitter-url] and
 [vsts-pat-token-url]: https://docs.microsoft.com/en-us/vsts/accounts/use-personal-access-tokens-to-authenticate#create-personal-access-tokens-to-authenticate-access
 [vsts-secret-variables]: https://docs.microsoft.com/en-us/vsts/build-release/concepts/definitions/build/variables?tabs=batch#secret-variables
 [vsts-secret-variable-group]: https://docs.microsoft.com/en-us/vsts/build-release/concepts/library/variable-groups
-[travis-ci-build-status-badge]: https://img.shields.io/travis/swellaby/vsts-mirror-git-repository.svg?label=linux%20build&style=flat-square
+[travis-ci-build-status-badge]: https://img.shields.io/travis/swellaby/vsts-mirror-git-repository/master.svg?label=linux%20build&style=flat-square
 [travis-ci-url]: https://travis-ci.org/swellaby/vsts-mirror-git-repository
 [circleci-url]: https://circleci.com/gh/swellaby/vsts-mirror-git-repository
-[circleci-badge]: https://img.shields.io/circleci/project/github/swellaby/vsts-mirror-git-repository.svg?label=linux%20build&style=flat-square
+[circleci-badge]: https://img.shields.io/circleci/project/github/swellaby/vsts-mirror-git-repository/master.svg?label=linux%20build&style=flat-square
 [appveyor-build-status-badge]: https://img.shields.io/appveyor/ci/swellaby/vsts-mirror-git-repository/master.svg?label=windows%20build&style=flat-square
 [tests-badge]: https://img.shields.io/appveyor/tests/swellaby/vsts-mirror-git-repository/master.svg?label=unit%20tests&style=flat-square
 [appveyor-url]: https://ci.appveyor.com/project/swellaby/vsts-mirror-git-repository
-[codecov-badge]: https://img.shields.io/codecov/c/github/swellaby/vsts-mirror-git-repository.svg?style=flat-square
+[codecov-badge]: https://img.shields.io/codecov/c/github/swellaby/vsts-mirror-git-repository/master.svg?style=flat-square
 [codecov-url]: https://codecov.io/gh/swellaby/vsts-mirror-git-repository
 [sonar-quality-gate-badge]: https://img.shields.io/sonar/https/sonarcloud.io/swellaby:vsts-mirror-git-repository/quality_gate.svg?style=flat-square
 [sonar-url]: https://sonarcloud.io/dashboard?id=swellaby%3Avsts-mirror-git-repository
