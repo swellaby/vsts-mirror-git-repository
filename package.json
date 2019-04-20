@@ -43,35 +43,35 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "azure-pipelines-task-lib": "^2.7.7",
+    "azure-pipelines-task-lib": "^2.8.0",
     "valid-url": "^1.0.9"
   },
   "devDependencies": {
     "@swellaby/nyc-config": "^1.1.1",
     "@types/chai": "^4.1.7",
     "@types/mocha": "^5.2.6",
-    "@types/node": "^11.9.5",
-    "@types/sinon": "^7.0.7",
+    "@types/node": "^11.13.6",
+    "@types/sinon": "^7.0.11",
     "@types/valid-url": "^1.0.2",
     "chai": "^4.2.0",
     "copy-node-modules": "^1.1.1",
     "mkdirp": "^0.5.1",
-    "mocha": "^6.0.2",
-    "mocha-junit-reporter": "^1.18.0",
+    "mocha": "^6.1.4",
+    "mocha-junit-reporter": "^1.22.0",
     "mocha-multi-reporters": "^1.1.7",
     "mocha-sonarqube-reporter": "^1.0.1",
     "ncp": "^2.0.0",
-    "nyc": "^13.3.0",
-    "opn-cli": "^4.0.0",
-    "replace-in-file": "^3.4.3",
+    "nyc": "^14.0.0",
+    "opn-cli": "^4.1.0",
+    "replace-in-file": "^3.4.4",
     "require-dir": "^1.2.0",
     "rimraf": "^2.6.3",
     "run-sequence": "^2.2.1",
-    "sinon": "^7.2.4",
+    "sinon": "^7.3.2",
     "tfx-cli": "^0.6.4",
-    "tslint": "^5.13.0",
+    "tslint": "^5.16.0",
     "tslint-no-unused-expression-chai": "^0.1.4",
-    "typescript": "^3.3.3"
+    "typescript": "^3.4.4"
   },
   "repository": {
     "type": "git",
@@ -80,7 +80,13 @@
   "nyc": {
     "extends": "@swellaby/nyc-config",
     "exclude": [
-      "src/**/*.spec.js"
+      "src/**/*.spec*"
+    ],
+    "include": [
+      "src/**/*"
+    ],
+    "extension": [
+      ".ts"
     ]
   }
 }
