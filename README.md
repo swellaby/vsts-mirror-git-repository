@@ -163,7 +163,7 @@ The Git logo is the orginal property of [Jason Long][jason-long-twitter-url] and
 [github-pat-token-url]: https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/#creating-a-token
 [git-url]: https://git-scm.com/
 [jason-long-twitter-url]: https://twitter.com/jasonlong
-[license-badge]: https://img.shields.io/github/license/swellaby/vsts-mirror-git-repository.svg?style=flat-square
+[license-badge]: https://img.shields.io/github/license/swellaby/vsts-mirror-git-repository.svg?style=flat-square&color=informational
 [logo-image]: https://raw.githubusercontent.com/swellaby/vsts-mirror-git-repository/master/images/extension-icon.png
 [marketplace-version-badge]: https://img.shields.io/vscode-marketplace/v/swellaby.mirror-git-repository.svg?style=flat-square
 [marketplace-installs-badge]: https://img.shields.io/visual-studio-marketplace/azure-devops/installs/total/swellaby.mirror-git-repository.svg?style=flat-square
@@ -185,7 +185,7 @@ The Git logo is the orginal property of [Jason Long][jason-long-twitter-url] and
 [appveyor-url]: https://ci.appveyor.com/project/swellaby/vsts-mirror-git-repository
 [codecov-badge]: https://img.shields.io/codecov/c/github/swellaby/vsts-mirror-git-repository.svg?style=flat-square
 [codecov-url]: https://codecov.io/gh/swellaby/vsts-mirror-git-repository
-[sonar-quality-gate-badge]: https://sonarcloud.io/api/project_badges/measure?project=swellaby%3Avsts-mirror-git-repository&metric=alert_status&style=flat-square
+[sonar-quality-gate-badge]: https://img.shields.io/sonar/https/sonarcloud.io/swellaby:vsts-mirror-git-repository/quality_gate.svg?style=flat-square
 [sonar-url]: https://sonarcloud.io/dashboard?id=swellaby%3Avsts-mirror-git-repository
 [create-bug-url]: https://github.com/swellaby/vsts-mirror-git-repository/issues/new?template=BUG_TEMPLATE.md&labels=bug,unreviewed&title=Bug:%20
 [create-question-url]: https://github.com/swellaby/vsts-mirror-git-repository/issues/new?template=QUESTION_TEMPLATE.md&labels=question,unreviewed&title=Q:%20
