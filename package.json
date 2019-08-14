@@ -65,7 +65,7 @@
     "opn-cli": "^4.1.0",
     "replace-in-file": "^4.0.0",
     "require-dir": "^1.2.0",
-    "rimraf": "^2.6.3",
+    "rimraf": "^3.0.0",
     "run-sequence": "^2.2.1",
     "sinon": "^7.3.2",
     "tfx-cli": "^0.7.0",
