@@ -30,5 +30,8 @@
     "node",
     "npm",
     "softwareTerms"
-  ]
+  ],
+  "files.associations": {
+    "**/.azure-pipelines/**": "azure-pipelines"
+  },
 }
