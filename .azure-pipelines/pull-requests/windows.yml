@@ -1,10 +1,11 @@
-trigger: none
+trigger:
+- master
 
 pr:
 - master
 
 pool:
-  vmImage: 'Ubuntu-18.04'
+  vmImage: 'vs2017-win2016'
 
 resources:
   repositories:
@@ -16,8 +17,5 @@ resources:
 steps:
 - template: '../steps/run-tests.yml'
   parameters:
-    envName: 'Linux'
+    envName: 'Windows'
 
-- script: |
-    bash <(curl -s https://codecov.io/bash) -t $(codecovToken)
-  displayName: 'Publish coverage to Codecov'

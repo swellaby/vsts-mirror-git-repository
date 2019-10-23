@@ -1,3 +1,7 @@
+# This repo uses a lot of different values for task/script names, report
+# directories, report file names, etc. than what our default values typically
+# are in other repos. Encapsulating all those overrides in this step template
+# instead of duplicating them in every pipeline.
 parameters:
   envName: ''
 
