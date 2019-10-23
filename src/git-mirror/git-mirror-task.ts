@@ -6,6 +6,7 @@ import { resolve as resolvePath, join as joinPath } from "path";
 export class GitMirrorTask {
     private sourceGitRepositoryUri: string;
     private sourceGitRepositoryPersonalAccessToken: string;
+    private sourceGitRepositoryCloneDirectory: string;
     private sourceVerifySSLCertificate: boolean;
     private destinationGitRepositoryUri: string;
     private destinationGitRepositoryPersonalAccessToken: string;
@@ -16,6 +17,9 @@ export class GitMirrorTask {
             if (this.taskIsRunning()) {
                 this.sourceGitRepositoryUri = taskLib.getInput("sourceGitRepositoryUri", true);
                 this.sourceGitRepositoryPersonalAccessToken = taskLib.getInput("sourceGitRepositoryPersonalAccessToken", false);
+                const sourceGitRepositoryCloneDirectoryName = taskLib.getInput("sourceGitRepositoryCloneDirectoryName", false);
+                this.sourceGitRepositoryCloneDirectory =
+                    sourceGitRepositoryCloneDirectoryName || this.getDefaultGitCloneDirectory(this.sourceGitRepositoryUri);
                 this.sourceVerifySSLCertificate = taskLib.getBoolInput("sourceVerifySSLCertificate", false);
                 this.destinationGitRepositoryUri = taskLib.getInput("destinationGitRepositoryUri", true);
                 this.destinationGitRepositoryPersonalAccessToken = taskLib.getInput("destinationGitRepositoryPersonalAccessToken", true);
@@ -38,7 +42,7 @@ export class GitMirrorTask {
                 }
 
                 await this.removePullRequestRefs();
-                
+
                 const pushMirrorResponseCode = await this.gitPushMirror();
                 if (pushMirrorResponseCode !== 0) {
                     taskLib.setResult(taskLib.TaskResult.Failed, "An error occurred when attempting to push to the destination repository. Please check output for more details.");
@@ -60,14 +64,14 @@ export class GitMirrorTask {
             .arg("clone")
             .arg("--mirror")
             .arg(authenticatedSourceGitUrl)
+            .arg(this.sourceGitRepositoryCloneDirectory)
             .exec();
     }
 
     public async removePullRequestRefs(): Promise<void> {
         return new Promise<void>((resolve, reject) => {
             try {
-                const sourceGitFolder = this.getSourceGitFolder(this.sourceGitRepositoryUri);
-                const packedRefsFileName = resolvePath(joinPath(".", `${sourceGitFolder}/packed-refs`));
+                const packedRefsFileName = resolvePath(joinPath(".", `${this.sourceGitRepositoryCloneDirectory}/packed-refs`));
 
                 readFile(packedRefsFileName, "utf8", (err, data) => {
                     if (err) {
@@ -85,7 +89,6 @@ export class GitMirrorTask {
     }
 
     public gitPushMirror() {
-        const sourceGitFolder = this.getSourceGitFolder(this.sourceGitRepositoryUri);
         const authenticatedDestinationGitUrl = this.getAuthenticatedGitUri(this.destinationGitRepositoryUri, this.destinationGitRepositoryPersonalAccessToken);
         const verifySSLCertificateFlag = this.getDestinationVerifySSLCertificate();
 
@@ -94,7 +97,7 @@ export class GitMirrorTask {
             .argIf(verifySSLCertificateFlag, ["-c", "http.sslVerify=true"])
             .argIf(!verifySSLCertificateFlag, ["-c", "http.sslVerify=false"])
             .arg("-C")
-            .arg(sourceGitFolder)
+            .arg(this.sourceGitRepositoryCloneDirectory)
             .arg("push")
             .arg("--mirror")
             .arg(authenticatedDestinationGitUrl)
@@ -109,18 +112,17 @@ export class GitMirrorTask {
         return this.destinationVerifySSLCertificate;
     }
 
-    public getSourceGitFolder(uri: string): string {
+    public getDefaultGitCloneDirectory(uri: string): string {
         if (!validUrl.isUri(uri)) {
             throw new Error(`Provided URI '${uri}' is not a valid URI`);
         }
 
         const gitIdentifier = ".git";
-
-        if (uri.substring(uri.length - gitIdentifier.length) === gitIdentifier) {
-            return uri.substring(uri.lastIndexOf("/") + 1);
+        const repoNameStartIndex = uri.lastIndexOf("/") + 1;
+        if (uri.endsWith(gitIdentifier)) {
+            return uri.substring(repoNameStartIndex);
         }
-
-        return uri.substring(uri.lastIndexOf("/") + 1) + gitIdentifier;
+        return `${uri.substring(repoNameStartIndex)}${gitIdentifier}`;
     }
 
     public getAuthenticatedGitUri(uri: string, token: string): string {
@@ -135,7 +137,7 @@ export class GitMirrorTask {
             const protocol = uri.substring(0, uri.indexOf(colonSlashSlash));
             const address = uri.substring(uri.indexOf(colonSlashSlash) + colonSlashSlash.length);
             return protocol + colonSlashSlash + token + "@" + address;
-        }    
+        }
     }
 
     private taskIsRunning(): number {

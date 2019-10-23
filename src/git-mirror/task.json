@@ -30,6 +30,14 @@
       "defaultValue": ""
     },
     {
+      "name": "sourceGitRepositoryCloneDirectoryName",
+      "type": "string",
+      "label": "Source Repository - Clone Directory Name",
+      "required": false,
+      "helpMarkDown": "(Optional) The name of a directory to clone the source repo into",
+      "defaultValue": ""
+    },
+    {
       "name": "sourceVerifySSLCertificate",
       "type": "boolean",
       "label": "Verify SSL Certificate on Source Repository",
