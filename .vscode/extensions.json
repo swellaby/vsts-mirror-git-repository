@@ -2,11 +2,9 @@
   "recommendations": [
     "swellaby.common-pack",
     "ms-vscode.vscode-typescript-tslint-plugin",
-    "dbaeumer.vscode-eslint",
-    "christian-kohler.path-intellisense",
-    "christian-kohler.npm-intellisense",
-    "pflannery.vscode-versionlens",
+    "swellaby.node-pack",
     "hbenl.vscode-test-explorer",
-    "hbenl.vscode-mocha-test-adapter"
+    "hbenl.vscode-mocha-test-adapter",
+    "ms-azure-devops.azure-pipelines"
   ]
 }

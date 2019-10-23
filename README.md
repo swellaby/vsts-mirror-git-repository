@@ -2,17 +2,18 @@
 
 ![Mirror Git Repository Logo][logo-image]
 
-[![Version Badge][marketplace-version-badge]][extension-marketplace-url]
-[![Installs Badge][marketplace-installs-badge]][extension-marketplace-url]
-[![Rating Badge][marketplace-rating-badge]][extension-marketplace-url]
+[![Version Badge][version-badge]][ext-url]
+[![Installs Badge][installs-badge]][ext-url]
+[![Rating Badge][rating-badge]][ext-url]
+[![License Badge][license-badge]][license-url]  
 
-[![Linux Build Badge][circleci-badge]][circleci-url]
-[![AppVeyor Build Status][appveyor-build-status-badge]][appveyor-url]
-[![Test Results Badge][tests-badge]][appveyor-url]
-[![Code Coverage Badge][codecov-badge]][codecov-url]
+[![Linux CI Badge][linux-ci-badge]][linux-ci-url]
+[![Mac CI Badge][mac-ci-badge]][mac-ci-url]
+[![Windows CI Badge][windows-ci-badge]][windows-ci-url]  
 
-[![Sonar Quality Gate][sonar-quality-gate-badge]][sonar-url]
-[![License Badge][license-badge]][repo-url]
+[![Test Results Badge][tests-badge]][tests-url]
+[![Coverage Badge][coverage-badge]][coverage-url]
+[![Sonar Quality GateBadge][quality-gate-badge]][sonar-project-url] 
 
 ## Overview
 
@@ -161,17 +162,19 @@ Want to make your own Azure Pipelines Extension or Task? This task was initially
 
 The Git logo is the orginal property of [Jason Long][jason-long-twitter-url] and is used/modified under the [Creative Commons Attribution 3.0 Unported License][cc3-license-url]. Thank you Jason for allowing us to modify your logo!
 
+<br />
+
+[Back to top][top]
+
 [cc3-license-url]: https://creativecommons.org/licenses/by/3.0/
 [docker-vsts-agent-url]: https://hub.docker.com/r/microsoft/vsts-agent/
 [extension-marketplace-url]: https://marketplace.visualstudio.com/items?itemName=swellaby.mirror-git-repository
 [github-pat-token-url]: https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/#creating-a-token
 [git-url]: https://git-scm.com/
 [jason-long-twitter-url]: https://twitter.com/jasonlong
-[license-badge]: https://img.shields.io/github/license/swellaby/vsts-mirror-git-repository.svg?style=flat-square&color=informational
 [logo-image]: https://raw.githubusercontent.com/swellaby/vsts-mirror-git-repository/master/images/extension-icon.png
-[marketplace-version-badge]: https://img.shields.io/vscode-marketplace/v/swellaby.mirror-git-repository.svg?style=flat-square
-[marketplace-installs-badge]: https://img.shields.io/visual-studio-marketplace/azure-devops/installs/total/swellaby.mirror-git-repository.svg?style=flat-square
-[marketplace-rating-badge]: https://img.shields.io/vscode-marketplace/r/swellaby.mirror-git-repository.svg?style=flat-square
+
+
 [mirror-instructions-url]: https://help.github.com/articles/duplicating-a-repository/#mirroring-a-repository-in-another-location
 [nodejs-url]: https://nodejs.org
 [parent-generator-url]: https://github.com/swellaby/generator-swell
@@ -180,17 +183,25 @@ The Git logo is the orginal property of [Jason Long][jason-long-twitter-url] and
 [vsts-pat-token-url]: https://docs.microsoft.com/en-us/vsts/accounts/use-personal-access-tokens-to-authenticate#create-personal-access-tokens-to-authenticate-access
 [vsts-secret-variables]: https://docs.microsoft.com/en-us/vsts/build-release/concepts/definitions/build/variables?tabs=batch#secret-variables
 [vsts-secret-variable-group]: https://docs.microsoft.com/en-us/vsts/build-release/concepts/library/variable-groups
-[travis-ci-build-status-badge]: https://img.shields.io/travis/swellaby/vsts-mirror-git-repository/master.svg?label=linux%20build&style=flat-square
-[travis-ci-url]: https://travis-ci.org/swellaby/vsts-mirror-git-repository
-[circleci-url]: https://circleci.com/gh/swellaby/vsts-mirror-git-repository
-[circleci-badge]: https://img.shields.io/circleci/project/github/swellaby/vsts-mirror-git-repository/master.svg?label=linux%20build&style=flat-square
-[appveyor-build-status-badge]: https://img.shields.io/appveyor/ci/swellaby/vsts-mirror-git-repository/master.svg?label=windows%20build&style=flat-square
-[tests-badge]: https://img.shields.io/appveyor/tests/swellaby/vsts-mirror-git-repository/master.svg?label=unit%20tests&style=flat-square
-[appveyor-url]: https://ci.appveyor.com/project/swellaby/vsts-mirror-git-repository
-[codecov-badge]: https://img.shields.io/codecov/c/github/swellaby/vsts-mirror-git-repository/master.svg?style=flat-square
-[codecov-url]: https://codecov.io/gh/swellaby/vsts-mirror-git-repository
-[sonar-quality-gate-badge]: https://img.shields.io/sonar/https/sonarcloud.io/swellaby:vsts-mirror-git-repository/quality_gate.svg?style=flat-square
-[sonar-url]: https://sonarcloud.io/dashboard?id=swellaby%3Avsts-mirror-git-repository
+[installs-badge]: https://img.shields.io/vscode-marketplace/i/swellaby.mirror-git-repository?style=flat-square
+[version-badge]: https://img.shields.io/vscode-marketplace/v/swellaby.mirror-git-repository?style=flat-square&label=marketplace
+[rating-badge]: https://img.shields.io/vscode-marketplace/r/swellaby.mirror-git-repository?style=flat-square
+[ext-url]: https://marketplace.visualstudio.com/items?itemName=swellaby.mirror-git-repository
+[license-url]: https://github.com/swellaby/vsts-mirror-git-repository/blob/master/LICENSE
+[license-badge]: https://img.shields.io/github/license/swellaby/vsts-mirror-git-repository?style=flat-square&color=informational
+[linux-ci-badge]: https://img.shields.io/azure-devops/build/swellaby/opensource/7/master?label=linux%20build&style=flat-square
+[linux-ci-url]: https://dev.azure.com/swellaby/OpenSource/_build/latest?definitionId=7
+[mac-ci-badge]: https://img.shields.io/azure-devops/build/swellaby/opensource/144/master?label=mac%20build&style=flat-square
+[mac-ci-url]: https://dev.azure.com/swellaby/OpenSource/_build/latest?definitionId=144
+[windows-ci-badge]: https://img.shields.io/azure-devops/build/swellaby/opensource/145/master?label=windows%20build&style=flat-square
+[windows-ci-url]: https://dev.azure.com/swellaby/OpenSource/_build/latest?definitionId=145
+[coverage-badge]: https://img.shields.io/azure-devops/coverage/swellaby/opensource/7/master?style=flat-square
+[coverage-url]: https://codecov.io/gh/swellaby/vsts-mirror-git-repository
+[tests-badge]: https://img.shields.io/azure-devops/tests/swellaby/opensource/7/master?label=unit%20tests&style=flat-square
+[tests-url]: https://dev.azure.com/swellaby/OpenSource/_build/latest?definitionId=7&view=ms.vss-test-web.build-test-results-tab
+[quality-gate-badge]: https://img.shields.io/sonar/quality_gate/swellaby:vsts-mirror-git-repository?server=https%3A%2F%2Fsonarcloud.io&style=flat-square
+[sonar-project-url]: https://sonarcloud.io/dashboard?id=swellaby%3Avsts-mirror-git-repository
+
 [create-bug-url]: https://github.com/swellaby/vsts-mirror-git-repository/issues/new?template=BUG_TEMPLATE.md&labels=bug,unreviewed&title=Bug:%20
 [create-question-url]: https://github.com/swellaby/vsts-mirror-git-repository/issues/new?template=QUESTION_TEMPLATE.md&labels=question,unreviewed&title=Q:%20
 [create-enhancement-url]: https://github.com/swellaby/vsts-mirror-git-repository/issues/new?template=ENHANCEMENT_TEMPLATE.md&labels=enhancement,unreviewed
