@@ -33,8 +33,11 @@ The HTTPS endpoint of the Git Repository you want to copy from. This field is **
 **Source Repository - Personal Access Token**
 A Personal Access Token (PAT) that grants read access to the repository in the `Source Git Repository` field. This field is **optional**. If the Git repository in the `Source Git Repository` field is public, this field does not need to be populated. Check out the **Best Practices** section below for more details on managing PAT Tokens securely.
 
+**Source Repository - Clone Directory Name**
+The name of the directory to clone the Source Repository into. This field is **optional**. This is the same [<directory> argument][git-clone-doc-url] used by `git clone` with the same default behavior.
+
 **Verify SSL Certificate on Source Repository**
-Verifiying SSL certificates is a default behavior of Git. Unchecking this option will turn off SSL certificate validation as a part of the Source Repository cloning process. _If you are using a Git server with a Self-Signing certificate, you may need to uncheck this option._
+Verifying SSL certificates is a default behavior of Git. Disabling this option will turn off SSL certificate validation as a part of the Source Repository cloning process. _If you are using a Git server with a Self-Signing certificate, you may need to uncheck this option._
 
 **Destination Git Repository**
 The HTTPS endpoint of the Git Repository you want to copy to. This field is **required**.
@@ -50,12 +53,13 @@ When using the Mirror Git Repository task in a YAML-based pipeline, the task con
 
 * `sourceGitRepositoryUri`
 * `sourceGitRepositoryPersonalAccessToken` 
+* `sourceGitRepositoryCloneDirectoryName`
 * `sourceVerifySSLCertificate` (defaults to `true`)
 * `destinationGitRepositoryUri`
 * `destinationGitRepositoryPersonalAccessToken`
 * `destinationVerifySSLCertificate` (defaults to `true`)
 
-You may omit the access token inputs (`sourceGitRepositoryPersonalAccessToken` and `destinationGitRepositoryPersonalAccessToken`) if you do not need to provide a token for the respective source/destination repo. You may also omit the SSL verification inputs (`sourceVerifySSLCertificate` and `destinationVerifySSLCertificate`) if you want to include SSL verification (the only time you _have_ to provide those inputs is if you need to set the value to false)
+You may omit the access token inputs (`sourceGitRepositoryPersonalAccessToken` and `destinationGitRepositoryPersonalAccessToken`) if you do not need to provide a token for the respective source/destination repo. You may omit the source repository clone directory name (`sourceGitRepositoryCloneDirectoryName`) if you do not need to override the default behavior of `git clone`. You may also omit the SSL verification inputs (`sourceVerifySSLCertificate` and `destinationVerifySSLCertificate`) if you want to include SSL verification (the only time you _have_ to provide those inputs is if you need to set the value to false)
 
 Here's an example snippet of what a YAML configuration would like like for the Mirror Git Repository Task (using a secure variable for the destination token)
 
@@ -78,11 +82,11 @@ Here's an example snippet of what a YAML configuration would like like for the M
 In order to use this task, you will need to create Personal Access Tokens to the appropriate repositories. Below are some links on how to achieve this:
 
 - [How to create a Personal Access Token on Github][github-pat-token-url]
-- [How to create a Personal Access Token on VSTS][vsts-pat-token-url]
+- [How to create a Personal Access Token on Azure DevOps][vsts-pat-token-url]
 
 ### Securing Personal Access Tokens during the build
 
-While you have the ability to enter the PAT tokens into the task in plain-text, it is best practice to mask these tokens so that your repositories remain secure. VSTS supports the ability to manage and inject secure variables at build time. There are currently two ways to achieve this in VSTS:
+While you have the ability to enter the PAT tokens into the task in plain-text, it is best practice to mask these tokens so that your repositories remain secure. Azure Pipelines supports the ability to manage and inject secure variables at build time. There are currently two ways to achieve this in Azure Pipelines:
 
 1. [Use a Secret Process Variable directly on the build definition][vsts-secret-variables]
 2. [Use a Secret variable from a Variable Group linked to the build definition][vsts-secret-variable-group]
@@ -101,7 +105,7 @@ This task is built solely on top of [Git][git-url] commands. As long as the buil
 
 ### Why should I choose this task over one of the other Git mirroring tasks available on the marketplace?
 
-&nbsp;&nbsp;&nbsp;&nbsp;_**tl;dr** It is the only mirroring task that currently works without needing to modify the VSTS Build Agent Docker Image to include Powershell_
+&nbsp;&nbsp;&nbsp;&nbsp;_**tl;dr** It is the only mirroring task that currently works without needing to modify the Azure Pipelines Build Agent Docker Image to include Powershell_
 
 As of this task being published, the other tasks on the Marketplace that perform similar actions are written with Powershell scripts and do not work out-of-the-box with the [VSTS Build Agent Docker Image][docker-vsts-agent-url]. To fill this gap, we decided to develop our own task that is written in [NodeJS][nodejs-url]. *Note that this task does require the build agent to have [NodeJS][nodejs-url] installed.*
 
@@ -130,7 +134,7 @@ Some things to check if you are experiencing this issue:
 1. Check that both of the Git Repository URLs you provided are correct.
 2. You may need to include a Personal Access Token to give the build agent access to the Git Repository.
 
-&nbsp;&nbsp;&nbsp;&nbsp;_Note: The task does not give the build agent read or write access to your VSTS repositories by default._
+&nbsp;&nbsp;&nbsp;&nbsp;_Note: The task does not give the build agent read or write access to your Azure DevOps repositories by default._
 
 ### I have other questions and/or need to report an issue
 
@@ -140,7 +144,7 @@ Please report any issues to our [Github Issues page][repo-issues-url], quick lin
 - [Request an enhancement or feature][create-enhancement-url]
 - [Ask a question][create-question-url]
 
-Feel free to leave a question or a comment on our [Github repo][repo-url] or on the [VSTS Task in the Marketplace][extension-marketplace-url].
+Feel free to leave a question or a comment on our [Github repo][repo-url] or on the [Extension in the Marketplace][extension-marketplace-url].
 
 <br/>
 
@@ -149,7 +153,7 @@ Contributions are welcomed and encouraged! More details can be found in the [Con
 
 ## Generator
 
-Want to make your own VSTS Task? This task was initially created by this [swell generator][parent-generator-url]!
+Want to make your own Azure Pipelines Extension or Task? This task was initially created by this [swell generator][parent-generator-url]!
 
 <br/>
 
@@ -191,4 +195,5 @@ The Git logo is the orginal property of [Jason Long][jason-long-twitter-url] and
 [create-question-url]: https://github.com/swellaby/vsts-mirror-git-repository/issues/new?template=QUESTION_TEMPLATE.md&labels=question,unreviewed&title=Q:%20
 [create-enhancement-url]: https://github.com/swellaby/vsts-mirror-git-repository/issues/new?template=ENHANCEMENT_TEMPLATE.md&labels=enhancement,unreviewed
 [contribution-guidelines]: ./.github/CONTRIBUTING.md
+[git-clone-doc-url]: https://git-scm.com/docs/git-clone#Documentation/git-clone.txt-ltdirectorygt
 [top]: #mirror-git-repository
