@@ -9,7 +9,7 @@
   "version": {
     "Major": 1,
     "Minor": 1,
-    "Patch": 9
+    "Patch": 10
   },
   "instanceNameFormat": "Mirror Git Repository to $(destinationGitRepositoryUri)",
   "inputs": [
@@ -27,6 +27,14 @@
       "label": "Source Repository - Personal Access Token",
       "required": false,
       "helpMarkDown": "A Personal Access Token that grants read access to the Git repository used as the Source Git Repository",
+      "defaultValue": ""
+    },
+    {
+      "name": "sourceGitRepositoryCloneDirectoryName",
+      "type": "string",
+      "label": "Source Repository - Clone Directory Name",
+      "required": false,
+      "helpMarkDown": "(Optional) The name of a directory to clone the source repo into",
       "defaultValue": ""
     },
     {

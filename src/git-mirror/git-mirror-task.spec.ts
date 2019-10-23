@@ -12,6 +12,7 @@ describe("GitMirrorTask", () => {
     const sourceUri = "https://github.com/swellaby/vsts-mirror-git-repository";
     const sourceUriInputKey = "sourceGitRepositoryUri";
     const sourcePAT = "xxxxxxxxxx";
+    const sourceRepoCloneDirInputKey = "sourceGitRepositoryCloneDirectoryName";
     const sourceTokenInputKey = "sourceGitRepositoryPersonalAccessToken";
     const sourceVerifySSLCertificate = true;
     const sourceSSLInputKey = "sourceVerifySSLCertificate";
@@ -66,7 +67,7 @@ describe("GitMirrorTask", () => {
         sinon.restore();
         task = null;
     });
-    
+
     describe("inputs", () => {
         it("should use correct config for source git repository", () => {
             expect(getInputStub.calledWith(sourceUriInputKey, true)).to.be.true;
@@ -106,7 +107,7 @@ describe("GitMirrorTask", () => {
         let gitPushMirrorStub: sinon.SinonStub;
         let removePullRequestRefsStub: sinon.SinonStub;
 
-        beforeEach(function() {         
+        beforeEach(function() {
             whichStub = sinon.stub(taskLib, "which");
             gitCloneMirrorStub = sinon.stub(task, "gitCloneMirror").resolves(0);
             removePullRequestRefsStub = sinon.stub(task, "removePullRequestRefs").resolves();
@@ -130,7 +131,7 @@ describe("GitMirrorTask", () => {
 
             expect(setResultStub.calledWith(taskLib.TaskResult.Failed)).to.be.false;
             expect(gitCloneMirrorStub.called).to.be.true;
-            expect(removePullRequestRefsStub.called).to.be.true;       
+            expect(removePullRequestRefsStub.called).to.be.true;
             expect(gitPushMirrorStub.called).to.be.true;
         });
 
@@ -142,7 +143,7 @@ describe("GitMirrorTask", () => {
 
             expect(setResultStub.calledWithExactly(taskLib.TaskResult.Failed, cloneErrMsg)).to.be.true;
             expect(gitCloneMirrorStub.called).to.be.true;
-            expect(removePullRequestRefsStub.called).to.be.false; 
+            expect(removePullRequestRefsStub.called).to.be.false;
             expect(gitPushMirrorStub.called).to.be.false;
         });
 
@@ -153,7 +154,7 @@ describe("GitMirrorTask", () => {
 
             expect(setResultStub.calledWithExactly(taskLib.TaskResult.Failed, err)).to.be.true;
             expect(gitCloneMirrorStub.called).to.be.true;
-            expect(removePullRequestRefsStub.called).to.be.false; 
+            expect(removePullRequestRefsStub.called).to.be.false;
             expect(gitPushMirrorStub.called).to.be.false;
         });
 
@@ -164,7 +165,7 @@ describe("GitMirrorTask", () => {
 
             expect(setResultStub.calledWithExactly(taskLib.TaskResult.Failed, err)).to.be.true;
             expect(gitCloneMirrorStub.called).to.be.true;
-            expect(removePullRequestRefsStub.called).to.be.true; 
+            expect(removePullRequestRefsStub.called).to.be.true;
             expect(gitPushMirrorStub.called).to.be.false;
         });
 
@@ -194,10 +195,10 @@ describe("GitMirrorTask", () => {
     });
 
     describe("mirror", () => {
-        const toolRunnerStub: ToolRunner = { 
-            arg: (val) => null,
-            argIf: (condition, val) => null,
-            exec: (options) => null
+        const toolRunnerStub: ToolRunner = {
+            arg: (_val) => null,
+            argIf: (_condition, _val) => null,
+            exec: (_options) => null
         } as ToolRunner;
         const authenticatedUri = "authenticatedUri";
         const shouldVerifySSLCertificate = true;
@@ -217,32 +218,49 @@ describe("GitMirrorTask", () => {
         });
 
         describe("gitCloneMirror", () => {
-            it("should construct and execute a 'git clone --mirror ...' task", () => {
+            it("should construct and execute a 'git clone --mirror ...' task with default clone directory", () => {
                 task.gitCloneMirror();
-    
+
                 expect(getAuthenticatedGitUriStub.called).to.be.true;
                 expect(toolStub.calledWith("git")).to.be.true;
                 expect(argStub.firstCall.calledWith("clone")).to.be.true;
                 expect(argStub.secondCall.calledWith("--mirror")).to.be.true;
                 expect(argStub.thirdCall.calledWith(authenticatedUri)).to.be.true;
+                expect(argStub.getCall(3).calledWith("vsts-mirror-git-repository.git")).to.be.true;
                 expect(execStub.called).to.be.true;
             });
-    
+
+            it("should construct and execute a 'git clone --mirror ...' task with custom clone directory", () => {
+                const expectedCloneDir = "foo";
+                getInputStub.withArgs(sourceRepoCloneDirInputKey, false).callsFake(() => expectedCloneDir);
+                const task = new GitMirrorTask();
+                getAuthenticatedGitUriStub = sinon.stub(task, "getAuthenticatedGitUri").callsFake(() => authenticatedUri);
+                task.gitCloneMirror();
+
+                expect(getAuthenticatedGitUriStub.called).to.be.true;
+                expect(toolStub.calledWith("git")).to.be.true;
+                expect(argStub.firstCall.calledWith("clone")).to.be.true;
+                expect(argStub.secondCall.calledWith("--mirror")).to.be.true;
+                expect(argStub.thirdCall.calledWith(authenticatedUri)).to.be.true;
+                expect(argStub.getCall(3).calledWith(expectedCloneDir)).to.be.true;
+                expect(execStub.called).to.be.true;
+            });
+
             it("should enable SSL certificate verification", () => {
                 task.getSourceVerifySSLCertificate = () => true;
                 getBoolInputStub.withArgs("sourceVerifySSLCertificate", false).callsFake(() => true);
                 task.gitCloneMirror();
-    
+
                 expect(getAuthenticatedGitUriStub.called).to.be.true;
                 expect(argIfStub.calledWithExactly(true, [ "-c", "http.sslVerify=true" ])).to.be.true;
                 expect(argIfStub.calledWithExactly(false, [ "-c", "http.sslVerify=false" ])).to.be.true;
                 expect(execStub.called).to.be.true;
             });
-    
+
             it("should disable SSL certificate verification", () => {
                 task.getSourceVerifySSLCertificate = () => false;
                 task.gitCloneMirror();
-    
+
                 expect(getAuthenticatedGitUriStub.called).to.be.true;
                 expect(argIfStub.calledWithExactly(false, [ "-c", "http.sslVerify=true" ])).to.be.true;
                 expect(argIfStub.calledWithExactly(true, [ "-c", "http.sslVerify=false" ])).to.be.true;
@@ -251,8 +269,8 @@ describe("GitMirrorTask", () => {
         });
 
         describe("removePullRequestRefs", () => {
-            const sourceRepoDirectory = "my-awesome-repo.git";
-            const expPackedRefsFile = `${sourceRepoDirectory}/packed-refs`;
+            const sourceRepoDirectory = "my-awesome-repo";
+            const expPackedRefsFile = `${sourceRepoDirectory}.git/packed-refs`;
             const expPackedRefsFullFilePath = `/usr/foo/repo/${expPackedRefsFile}`;
             let pathResolveStub: sinon.SinonStub;
             let pathJoinStub: sinon.SinonStub;
@@ -268,12 +286,12 @@ describe("GitMirrorTask", () => {
 
             const updatedPackedRefsFileContents = "data: # pack-refs with: peeled fully-peeled sorted \\n" +
             `${branchRef1}\\n${branchRef2}\\n${tagRef1}\\n${tagRef2}\\n`;
-    
+
             const originalPackedRefsFileContents = updatedPackedRefsFileContents +
                 `${pullRef1}\\n${pullRef2}\\n`;
-                
+
             beforeEach(() => {
-                task.getSourceGitFolder = () => sourceRepoDirectory;
+                task.getDefaultGitCloneDirectory = () => sourceRepoDirectory;
                 pathResolveStub = sinon.stub(path, "resolve").callsFake(() => expPackedRefsFullFilePath);
                 pathJoinStub = sinon.stub(path, "join").callsFake(() => expPackedRefsFile);
                 fsReadFileStub = sinon.stub(fs, "readFile").yields(null, originalPackedRefsFileContents);
@@ -282,7 +300,7 @@ describe("GitMirrorTask", () => {
 
             it("should reject when an error occurs", async () => {
                 const expErr = new Error("oops!");
-                task.getSourceGitFolder = () => { throw expErr; };
+                pathJoinStub.throws(expErr);
                 try {
                     await task.removePullRequestRefs();
                     expect(false).to.be.true;
@@ -303,9 +321,18 @@ describe("GitMirrorTask", () => {
                 }
             });
 
-            it("should use correct file path to packed-refs file", async () => {
+            it("should use correct file path to packed-refs file with default source clone directory", async () => {
                 await task.removePullRequestRefs();
                 expect(pathJoinStub.calledWithExactly(".", expPackedRefsFile));
+                expect(pathResolveStub.calledWithExactly(expPackedRefsFile)).to.be.true;
+            });
+
+            it("should use correct file path to packed-refs file with custom source clone directory", async () => {
+                const expectedCloneDir = "bar";
+                getInputStub.withArgs(sourceRepoCloneDirInputKey, false).callsFake(() => expectedCloneDir);
+                await new GitMirrorTask().removePullRequestRefs();
+
+                expect(pathJoinStub.calledWithExactly(".", `${expectedCloneDir}/packed-refs`));
                 expect(pathResolveStub.calledWithExactly(expPackedRefsFile)).to.be.true;
             });
 
@@ -319,40 +346,55 @@ describe("GitMirrorTask", () => {
                 expect(fsWriteFileSyncStub.calledWithExactly(expPackedRefsFullFilePath, updatedPackedRefsFileContents));
             });
         });
-    
+
         describe("gitPushMirror", () => {
-            const sourceFolder = "sourceFolder";
+            const sourceRepoGitDir = "vsts-mirror-git-repository.git";
             beforeEach(() => {
-                task.getSourceGitFolder = () => sourceFolder;
                 task.getDestinationVerifySSLCertificate = () => shouldVerifySSLCertificate;
                 task.getAuthenticatedGitUri = () => authenticatedUri;
             });
 
-            it("should construct and execute a 'git push --mirror ...' task", () => {   
+            it("should construct and execute a 'git push --mirror ...' task with default source clone directory", () => {
                 task.gitPushMirror();
 
                 expect(toolStub.calledWith("git")).to.be.true;
                 expect(argStub.getCall(0).calledWith("-C")).to.be.true;
-                expect(argStub.getCall(1).calledWith(sourceFolder)).to.be.true;
+                expect(argStub.getCall(1).calledWith(sourceRepoGitDir)).to.be.true;
                 expect(argStub.getCall(2).calledWith("push")).to.be.true;
                 expect(argStub.getCall(3).calledWith("--mirror")).to.be.true;
                 expect(argStub.getCall(4).calledWith(authenticatedUri)).to.be.true;
                 expect(execStub.called).to.be.true;
             });
-            
+
+            it("should construct and execute a 'git push --mirror ...' task with custom source clone directory", () => {
+                const expectedCloneDir = "baz";
+                getInputStub.withArgs(sourceRepoCloneDirInputKey, false).callsFake(() => expectedCloneDir);
+                const task = new GitMirrorTask();
+                task.getAuthenticatedGitUri = () => authenticatedUri;
+                task.gitPushMirror();
+
+                expect(toolStub.calledWith("git")).to.be.true;
+                expect(argStub.getCall(0).calledWith("-C")).to.be.true;
+                expect(argStub.getCall(1).calledWith(expectedCloneDir)).to.be.true;
+                expect(argStub.getCall(2).calledWith("push")).to.be.true;
+                expect(argStub.getCall(3).calledWith("--mirror")).to.be.true;
+                expect(argStub.getCall(4).calledWith(authenticatedUri)).to.be.true;
+                expect(execStub.called).to.be.true;
+            });
+
             it("should enable SSL certificate verification", () => {
                 task.getDestinationVerifySSLCertificate = () => true;
                 task.gitPushMirror();
-    
+
                 expect(argIfStub.calledWithExactly(true, [ "-c", "http.sslVerify=true" ])).to.be.true;
                 expect(argIfStub.calledWithExactly(false, [ "-c", "http.sslVerify=false" ])).to.be.true;
                 expect(execStub.called).to.be.true;
             });
-            
+
             it("should disable SSL certificate verification", () => {
                 task.getDestinationVerifySSLCertificate = () => false;
                 task.gitPushMirror();
-    
+
                 expect(argIfStub.calledWithExactly(false, [ "-c", "http.sslVerify=true" ])).to.be.true;
                 expect(argIfStub.calledWithExactly(true, [ "-c", "http.sslVerify=false" ])).to.be.true;
                 expect(execStub.called).to.be.true;
@@ -384,28 +426,28 @@ describe("GitMirrorTask", () => {
         });
     });
 
-    describe("getSourceGitFolder", () => {
+    describe("getDefaultGitCloneDirectory", () => {
         it("should fail if the given URI is undefined", () => {
             const sourceGitUri = undefined;
             const expErrorMessage = buildInvalidURIErrorMessage(sourceGitUri);
-            expect(() => task.getSourceGitFolder(sourceGitUri)).to.throw(expErrorMessage);
+            expect(() => task.getDefaultGitCloneDirectory(sourceGitUri)).to.throw(expErrorMessage);
         });
 
         it("should fail if the given URI is not a valid URI", () => {
             const sourceGitUri = "invalidUri";
             const expErrorMessage = buildInvalidURIErrorMessage(sourceGitUri);
-            expect(() => task.getSourceGitFolder(sourceGitUri)).to.throw(expErrorMessage);
+            expect(() => task.getDefaultGitCloneDirectory(sourceGitUri)).to.throw(expErrorMessage);
         });
 
         it("should extract a folder name from a given uri", () => {
             const sourceGitUri = "https://github.com/swellaby/vsts-mirror-git-repository";
-            const folder = task.getSourceGitFolder(sourceGitUri);
+            const folder = task.getDefaultGitCloneDirectory(sourceGitUri);
             expect(folder).to.be.equal("vsts-mirror-git-repository.git");
         });
 
         it("should extract a folder name from a given uri with a .git extension", () => {
             const sourceGitUri = "https://github.com/swellaby/vsts-mirror-git-repository.git";
-            const folder = task.getSourceGitFolder(sourceGitUri);
+            const folder = task.getDefaultGitCloneDirectory(sourceGitUri);
             expect(folder).to.be.equal("vsts-mirror-git-repository.git");
         });
     });
