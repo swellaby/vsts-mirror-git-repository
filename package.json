@@ -1,6 +1,6 @@
 {
   "name": "vsts-mirror-git-repository",
-  "version": "1.1.9",
+  "version": "1.1.10",
   "description": "A straightforward utility to mirror one Git repository to another location",
   "scripts": {
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
@@ -19,6 +19,7 @@
     "prepackage": "npm run transpile && npm run package-deps && npm run package-task",
     "package": "tfx extension create --manifest-globs vss-extension.json",
     "pretask-upload": "npm run prepackage",
+    "tfx": "tfx",
     "tfx-login": "tfx login",
     "task-upload": "tfx build tasks upload --task-path .release/git-mirror/",
     "task-delete": "tfx build tasks delete --task-id 4e842f83-9438-4acb-994c-c8c31137dea9",
@@ -68,7 +69,7 @@
     "rimraf": "^3.0.0",
     "run-sequence": "^2.2.1",
     "sinon": "^7.3.2",
-    "tfx-cli": "^0.7.0",
+    "tfx-cli": "^0.7.9",
     "tslint": "^5.16.0",
     "tslint-no-unused-expression-chai": "^0.1.4",
     "typescript": "^3.4.4"
