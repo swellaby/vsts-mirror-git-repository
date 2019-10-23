@@ -23,7 +23,7 @@ steps:
       taskDisplayName: 'Publish unit test results'
       testResultsFormat: 'JUnit'
       testResultsFiles: 'xunit.xml'
-      searchFolder: '$(Build.SourcesDirectory)/.testresults/unit'
+      searchFolder: '$(Build.SourcesDirectory)/.test-results'
       testRunTitle: 'vsts-mirror-git-repository::Unit Tests::Linux PR - Build $(Build.BuildId)'
 
 - script: |
