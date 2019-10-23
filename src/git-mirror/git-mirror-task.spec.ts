@@ -12,6 +12,7 @@ describe("GitMirrorTask", () => {
     const sourceUri = "https://github.com/swellaby/vsts-mirror-git-repository";
     const sourceUriInputKey = "sourceGitRepositoryUri";
     const sourcePAT = "xxxxxxxxxx";
+    const sourceRepoCloneDirInputKey = "sourceGitRepositoryCloneDirectoryName";
     const sourceTokenInputKey = "sourceGitRepositoryPersonalAccessToken";
     const sourceVerifySSLCertificate = true;
     const sourceSSLInputKey = "sourceVerifySSLCertificate";
@@ -195,9 +196,9 @@ describe("GitMirrorTask", () => {
 
     describe("mirror", () => {
         const toolRunnerStub: ToolRunner = {
-            arg: (val) => null,
-            argIf: (condition, val) => null,
-            exec: (options) => null
+            arg: (_val) => null,
+            argIf: (_condition, _val) => null,
+            exec: (_options) => null
         } as ToolRunner;
         const authenticatedUri = "authenticatedUri";
         const shouldVerifySSLCertificate = true;
@@ -217,7 +218,7 @@ describe("GitMirrorTask", () => {
         });
 
         describe("gitCloneMirror", () => {
-            it("should construct and execute a 'git clone --mirror ...' task", () => {
+            it("should construct and execute a 'git clone --mirror ...' task with default clone directory", () => {
                 task.gitCloneMirror();
 
                 expect(getAuthenticatedGitUriStub.called).to.be.true;
@@ -225,6 +226,23 @@ describe("GitMirrorTask", () => {
                 expect(argStub.firstCall.calledWith("clone")).to.be.true;
                 expect(argStub.secondCall.calledWith("--mirror")).to.be.true;
                 expect(argStub.thirdCall.calledWith(authenticatedUri)).to.be.true;
+                expect(argStub.getCall(3).calledWith("vsts-mirror-git-repository.git")).to.be.true;
+                expect(execStub.called).to.be.true;
+            });
+
+            it("should construct and execute a 'git clone --mirror ...' task with custom clone directory", () => {
+                const expectedCloneDir = "foo";
+                getInputStub.withArgs(sourceRepoCloneDirInputKey, false).callsFake(() => expectedCloneDir);
+                const task = new GitMirrorTask();
+                getAuthenticatedGitUriStub = sinon.stub(task, "getAuthenticatedGitUri").callsFake(() => authenticatedUri);
+                task.gitCloneMirror();
+
+                expect(getAuthenticatedGitUriStub.called).to.be.true;
+                expect(toolStub.calledWith("git")).to.be.true;
+                expect(argStub.firstCall.calledWith("clone")).to.be.true;
+                expect(argStub.secondCall.calledWith("--mirror")).to.be.true;
+                expect(argStub.thirdCall.calledWith(authenticatedUri)).to.be.true;
+                expect(argStub.getCall(3).calledWith(expectedCloneDir)).to.be.true;
                 expect(execStub.called).to.be.true;
             });
 
@@ -303,9 +321,18 @@ describe("GitMirrorTask", () => {
                 }
             });
 
-            it("should use correct file path to packed-refs file", async () => {
+            it("should use correct file path to packed-refs file with default source clone directory", async () => {
                 await task.removePullRequestRefs();
                 expect(pathJoinStub.calledWithExactly(".", expPackedRefsFile));
+                expect(pathResolveStub.calledWithExactly(expPackedRefsFile)).to.be.true;
+            });
+
+            it("should use correct file path to packed-refs file with custom source clone directory", async () => {
+                const expectedCloneDir = "bar";
+                getInputStub.withArgs(sourceRepoCloneDirInputKey, false).callsFake(() => expectedCloneDir);
+                await new GitMirrorTask().removePullRequestRefs();
+
+                expect(pathJoinStub.calledWithExactly(".", `${expectedCloneDir}/packed-refs`));
                 expect(pathResolveStub.calledWithExactly(expPackedRefsFile)).to.be.true;
             });
 
@@ -327,12 +354,28 @@ describe("GitMirrorTask", () => {
                 task.getAuthenticatedGitUri = () => authenticatedUri;
             });
 
-            it("should construct and execute a 'git push --mirror ...' task", () => {
+            it("should construct and execute a 'git push --mirror ...' task with default source clone directory", () => {
                 task.gitPushMirror();
 
                 expect(toolStub.calledWith("git")).to.be.true;
                 expect(argStub.getCall(0).calledWith("-C")).to.be.true;
                 expect(argStub.getCall(1).calledWith(sourceRepoGitDir)).to.be.true;
+                expect(argStub.getCall(2).calledWith("push")).to.be.true;
+                expect(argStub.getCall(3).calledWith("--mirror")).to.be.true;
+                expect(argStub.getCall(4).calledWith(authenticatedUri)).to.be.true;
+                expect(execStub.called).to.be.true;
+            });
+
+            it("should construct and execute a 'git push --mirror ...' task with custom source clone directory", () => {
+                const expectedCloneDir = "baz";
+                getInputStub.withArgs(sourceRepoCloneDirInputKey, false).callsFake(() => expectedCloneDir);
+                const task = new GitMirrorTask();
+                task.getAuthenticatedGitUri = () => authenticatedUri;
+                task.gitPushMirror();
+
+                expect(toolStub.calledWith("git")).to.be.true;
+                expect(argStub.getCall(0).calledWith("-C")).to.be.true;
+                expect(argStub.getCall(1).calledWith(expectedCloneDir)).to.be.true;
                 expect(argStub.getCall(2).calledWith("push")).to.be.true;
                 expect(argStub.getCall(3).calledWith("--mirror")).to.be.true;
                 expect(argStub.getCall(4).calledWith(authenticatedUri)).to.be.true;
