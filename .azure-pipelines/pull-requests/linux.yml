@@ -16,7 +16,7 @@ resources:
 steps:
 - template: '../steps/run-tests.yml'
   parameters:
-    envName: Linux
+    envName: 'Linux'
 # - template: templates/yml/node/combo/npm-build-validation-xunit-cobertura.yml@templates
 #   parameters:
 #     runNpmBuildScript:
