@@ -1,0 +1,22 @@
+parameters:
+  envName: ''
+
+steps:
+- template: templates/yml/node/combo/npm-build-validation-xunit-cobertura.yml@templates
+  parameters:
+    runNpmBuildScript:
+      buildNpmScriptName: 'test'
+      taskDisplayName: 'Enforce code coverage'
+    publishTestResults:
+      taskDisplayName: 'Publish unit test results'
+      testResultsFormat: 'JUnit'
+      testResultsFiles: 'test-results.xml'
+      searchFolder: '$(Build.SourcesDirectory)/.test-results'
+      testRunTitle: 'vsts-mirror-git-repository::Unit Tests::${{ parameters.envName }} PR - Build $(Build.BuildId)'
+    publishCoverage:
+      taskDisplayName: 'Publish coverage results'
+      codeCoverageTool: 'Cobertura'
+      summaryFileLocation: '$(Build.SourcesDirectory)/.coverage/cobertura-coverage.xml'
+      reportDirectory: '$(Build.SourcesDirectory)/.coverage'
+      additionalCodeCoverageFiles: ''
+      failIfCoverageEmpty: false
