@@ -64,7 +64,7 @@
     "ncp": "^2.0.0",
     "nyc": "^14.0.0",
     "opn-cli": "^4.1.0",
-    "replace-in-file": "^4.0.0",
+    "replace-in-file": "^5.0.0",
     "require-dir": "^1.2.0",
     "rimraf": "^3.0.0",
     "run-sequence": "^2.2.1",
