@@ -62,7 +62,7 @@
     "mocha-multi-reporters": "^1.1.7",
     "mocha-sonarqube-reporter": "^1.0.1",
     "ncp": "^2.0.0",
-    "nyc": "^14.0.0",
+    "nyc": "^15.0.0",
     "opn-cli": "^4.1.0",
     "replace-in-file": "^5.0.0",
     "require-dir": "^1.2.0",
