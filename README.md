@@ -44,7 +44,7 @@ Verifying SSL certificates is a default behavior of Git. Disabling this option w
 The HTTPS endpoint of the Git Repository you want to copy to. This field is **required**.
 
 **Destination Repository - Personal Access Token**
-A Personal Access Token (PAT) that grants write access to the repository in the `Destination Git Repository` field. This field is **required**. Check out the **Best Practices** section below for more details on managing PAT Tokens securely.
+A Personal Access Token (PAT) that grants write access to the repository in the `Destination Git Repository` field. This field is **optional**. Check out the **Best Practices** section below for more details on managing PAT Tokens securely.
 
 **Verify SSL Certificate on Destination Repository**
 Verifiying SSL certificates is a default behavior of Git. Unchecking this option will turn off SSL certificate validation as a part of the Destination Repository push process. _If you are using a Git server with a Self-Signing certificate, you will likely need to uncheck this option._

@@ -57,7 +57,7 @@
       "name": "destinationGitRepositoryPersonalAccessToken",
       "type": "string",
       "label": "Destination Repository - Personal Access Token",
-      "required": true,
+      "required": false,
       "helpMarkDown": "A Personal Access Token that grants write access to the Git repository used as the Destination Git Repository",
       "defaultValue": ""
     },
