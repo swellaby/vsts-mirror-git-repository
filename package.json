@@ -68,7 +68,7 @@
     "require-dir": "^1.2.0",
     "rimraf": "^3.0.0",
     "run-sequence": "^2.2.1",
-    "sinon": "^8.0.0",
+    "sinon": "^9.0.0",
     "tfx-cli": "^0.7.9",
     "tslint": "^5.16.0",
     "tslint-no-unused-expression-chai": "^0.1.4",
