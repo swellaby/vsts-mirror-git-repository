@@ -48,7 +48,7 @@
     "valid-url": "^1.0.9"
   },
   "devDependencies": {
-    "@swellaby/nyc-config": "^2.0.0",
+    "@swellaby/nyc-config": "^3.0.0",
     "@types/chai": "^4.1.7",
     "@types/mocha": "^7.0.0",
     "@types/node": "^11.13.6",
