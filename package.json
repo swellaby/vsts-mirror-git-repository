@@ -52,7 +52,7 @@
     "@types/chai": "^4.1.7",
     "@types/mocha": "^7.0.0",
     "@types/node": "^11.13.6",
-    "@types/sinon": "^7.0.11",
+    "@types/sinon": "^9.0.0",
     "@types/valid-url": "^1.0.2",
     "chai": "^4.2.0",
     "copy-node-modules": "^1.1.1",
