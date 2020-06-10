@@ -57,7 +57,7 @@
     "chai": "^4.2.0",
     "copy-node-modules": "^1.1.1",
     "mkdirp": "^1.0.4",
-    "mocha": "^7.1.1",
+    "mocha": "^8.0.0",
     "mocha-junit-reporter": "^2.0.0",
     "mocha-multi-reporters": "^1.1.7",
     "mocha-sonarqube-reporter": "^1.0.1",
