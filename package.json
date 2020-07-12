@@ -50,7 +50,7 @@
   "devDependencies": {
     "@swellaby/nyc-config": "^3.0.0",
     "@types/chai": "^4.1.7",
-    "@types/mocha": "^7.0.0",
+    "@types/mocha": "^8.0.0",
     "@types/node": "^11.13.6",
     "@types/sinon": "^9.0.0",
     "@types/valid-url": "^1.0.3",
