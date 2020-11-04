@@ -60,7 +60,7 @@
     "mocha": "^8.0.0",
     "mocha-junit-reporter": "^2.0.0",
     "mocha-multi-reporters": "^1.1.7",
-    "mocha-sonarqube-reporter": "^1.0.1",
+    "mocha-sonarqube-reporter": "^1.0.2",
     "ncp": "^2.0.0",
     "nyc": "^15.0.1",
     "opn-cli": "^4.1.0",
