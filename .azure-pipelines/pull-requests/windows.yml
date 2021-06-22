@@ -20,11 +20,6 @@ steps:
   inputs:
     version: 16.x
 
-- script: |
-    npm install -g npm@6.9.0
-    npm run prepare - successful
-  displayName: 'Temp npm version set'
-
 - template: '../steps/run-tests.yml'
   parameters:
     envName: 'Windows'
