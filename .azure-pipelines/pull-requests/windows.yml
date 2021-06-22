@@ -5,7 +5,7 @@ pr:
 - master
 
 pool:
-  vmImage: 'vs2017-win2016'
+  vmImage: 'windows-latest'
 
 resources:
   repositories:
@@ -16,7 +16,9 @@ resources:
 
 steps:
 - task: UseNode@1
-  displayName: 'Use Node 10.x'
+  displayName: 'Use Node 16.x'
+  inputs:
+    version: 16.x
 
 - script: |
     npm install -g npm@6.9.0
