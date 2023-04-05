@@ -283,12 +283,13 @@ describe("GitMirrorTask", () => {
             const tagRef2 = "366ba8247ffda31a4ab8ee75cf636c46405a26fc refs/tags/v1.0.1";
             const pullRef1 = "66e5b2e17de107f5aa9ef0b64be8a0eeeb7511cf refs/pull/12/head";
             const pullRef2 = "9eb061c8e73b4c0a08613710daa3f5a93d47061d refs/pull/13/head";
+            const mergeRequest1 = "1b60f335a6f3a4bbf7d56a8ae3106f6b3ea77891 refs/merge-requests/10/head";
 
             const updatedPackedRefsFileContents = "data: # pack-refs with: peeled fully-peeled sorted \\n" +
             `${branchRef1}\\n${branchRef2}\\n${tagRef1}\\n${tagRef2}\\n`;
 
             const originalPackedRefsFileContents = updatedPackedRefsFileContents +
-                `${pullRef1}\\n${pullRef2}\\n`;
+                `${pullRef1}\\n${pullRef2}\\n${mergeRequest1}\\n`;
 
             beforeEach(() => {
                 task.getDefaultGitCloneDirectory = () => sourceRepoDirectory;
