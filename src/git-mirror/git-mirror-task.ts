@@ -78,9 +78,7 @@ export class GitMirrorTask {
                         reject(err);
                     }
 
-                    const nonPullRefLines = data.split("\n")
-                    .filter((line) => !line.includes("refs/pull"))
-                    .filter((line) => !line.includes("refs/merge-requests"));
+                    const nonPullRefLines = data.split("\n").filter((line) => !line.includes("refs/pull")).filter((line) => !line.includes("refs/merge-requests"));
                     writeFileSync(packedRefsFileName, nonPullRefLines.join("\n"));
                     resolve();
                 });
