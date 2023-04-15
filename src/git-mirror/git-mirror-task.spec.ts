@@ -324,7 +324,7 @@ describe("GitMirrorTask", () => {
 
             it("should use correct file path to packed-refs file with default source clone directory", async () => {
                 await task.removePullRequestRefs();
-                expect(pathJoinStub.calledWithExactly(".", expPackedRefsFile));
+                expect(pathJoinStub.calledWithExactly(".", expPackedRefsFile)).to.be.true;
                 expect(pathResolveStub.calledWithExactly(expPackedRefsFile)).to.be.true;
             });
 
@@ -333,18 +333,18 @@ describe("GitMirrorTask", () => {
                 getInputStub.withArgs(sourceRepoCloneDirInputKey, false).callsFake(() => expectedCloneDir);
                 await new GitMirrorTask().removePullRequestRefs();
 
-                expect(pathJoinStub.calledWithExactly(".", `${expectedCloneDir}/packed-refs`));
+                expect(pathJoinStub.calledWithExactly(".", `${expectedCloneDir}/packed-refs`)).to.be.true;
                 expect(pathResolveStub.calledWithExactly(expPackedRefsFile)).to.be.true;
             });
 
             it("should use correct file encoding for read", async () => {
                 await task.removePullRequestRefs();
-                expect(fsReadFileStub.calledWith(expPackedRefsFullFilePath, "utf8"));
+                expect(fsReadFileStub.calledWith(expPackedRefsFullFilePath, "utf8")).to.be.true;
             });
 
             it("should update packed-refs file with no pull request refs", async () => {
                 await task.removePullRequestRefs();
-                expect(fsWriteFileSyncStub.calledWithExactly(expPackedRefsFullFilePath, updatedPackedRefsFileContents));
+                expect(fsWriteFileSyncStub.calledWithExactly(expPackedRefsFullFilePath, updatedPackedRefsFileContents)).to.be.true;
             });
         });
 
