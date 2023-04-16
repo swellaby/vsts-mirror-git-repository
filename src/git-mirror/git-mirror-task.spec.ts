@@ -270,7 +270,7 @@ describe("GitMirrorTask", () => {
 
         describe("removePullRequestRefs", () => {
             const sourceRepoDirectory = "my-awesome-repo";
-            const expPackedRefsFile = `${sourceRepoDirectory}.git/packed-refs`;
+            const expPackedRefsFile = `${sourceRepoDirectory}/.git/packed-refs`;
             const expPackedRefsFullFilePath = `/usr/foo/repo/${expPackedRefsFile}`;
             let pathResolveStub: sinon.SinonStub;
             let pathJoinStub: sinon.SinonStub;
@@ -285,18 +285,27 @@ describe("GitMirrorTask", () => {
             const pullRef2 = "9eb061c8e73b4c0a08613710daa3f5a93d47061d refs/pull/13/head";
             const mergeRequest1 = "1b60f335a6f3a4bbf7d56a8ae3106f6b3ea77891 refs/merge-requests/10/head";
 
-            const updatedPackedRefsFileContents = "data: # pack-refs with: peeled fully-peeled sorted \\n" +
-            `${branchRef1}\\n${branchRef2}\\n${tagRef1}\\n${tagRef2}\\n`;
+            const updatedPackedRefsFileContents = "data: # pack-refs with: peeled fully-peeled sorted \n" +
+            `${branchRef1}\n${branchRef2}\n${tagRef1}\n${tagRef2}\n`;
 
             const originalPackedRefsFileContents = updatedPackedRefsFileContents +
-                `${pullRef1}\\n${pullRef2}\\n${mergeRequest1}\\n`;
+                `${pullRef1}\n${pullRef2}\n${mergeRequest1}\n`;
+
+            const getDefaultGitCloneDirectory = GitMirrorTask.prototype.getDefaultGitCloneDirectory;
+
+            before(() => {
+                GitMirrorTask.prototype.getDefaultGitCloneDirectory = () => sourceRepoDirectory;
+            });
 
             beforeEach(() => {
-                task.getDefaultGitCloneDirectory = () => sourceRepoDirectory;
                 pathResolveStub = sinon.stub(path, "resolve").callsFake(() => expPackedRefsFullFilePath);
                 pathJoinStub = sinon.stub(path, "join").callsFake(() => expPackedRefsFile);
                 fsReadFileStub = sinon.stub(fs, "readFile").yields(null, originalPackedRefsFileContents);
                 fsWriteFileSyncStub = sinon.stub(fs, "writeFileSync");
+            });
+
+            after(() => {
+                GitMirrorTask.prototype.getDefaultGitCloneDirectory = getDefaultGitCloneDirectory;
             });
 
             it("should reject when an error occurs", async () => {
@@ -324,8 +333,9 @@ describe("GitMirrorTask", () => {
 
             it("should use correct file path to packed-refs file with default source clone directory", async () => {
                 await task.removePullRequestRefs();
-                expect(pathJoinStub.calledWithExactly(".", expPackedRefsFile)).to.be.true;
-                expect(pathResolveStub.calledWithExactly(expPackedRefsFile)).to.be.true;
+                expect(pathJoinStub.firstCall.firstArg).to.equal(".");
+                expect(pathJoinStub.firstCall.args[1]).to.equal(`${sourceRepoDirectory}/packed-refs`);
+                expect(pathResolveStub.firstCall.firstArg).to.equal(expPackedRefsFile);
             });
 
             it("should use correct file path to packed-refs file with custom source clone directory", async () => {
@@ -344,7 +354,12 @@ describe("GitMirrorTask", () => {
 
             it("should update packed-refs file with no pull request refs", async () => {
                 await task.removePullRequestRefs();
-                expect(fsWriteFileSyncStub.calledWithExactly(expPackedRefsFullFilePath, updatedPackedRefsFileContents)).to.be.true;
+                const args = fsWriteFileSyncStub.firstCall.args;
+                const actualPath = args[0];
+                const actualRefsContents = args[1];
+                expect(fsWriteFileSyncStub.callCount).to.equal(1);
+                expect(actualPath).to.deep.equal(expPackedRefsFullFilePath);
+                expect(actualRefsContents).to.deep.equal(updatedPackedRefsFileContents);
             });
         });
 
